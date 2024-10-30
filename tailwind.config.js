@@ -1,6 +1,4 @@
 // tailwind.config.js
-const plugin = require('tailwindcss/plugin');
-
 module.exports = {
   content: [
     "./index.html",
@@ -32,92 +30,7 @@ module.exports = {
     },
   },
   plugins: [
-    plugin(function({ addUtilities }) {
-      addUtilities({
-        // Desktop
-        '.text-h1-desktop': {
-          fontSize: '3.125rem',   // 50pt -> 3.125rem
-          lineHeight: '3.375rem', // 54pt -> 3.375rem
-          fontWeight: '500',      // Medium
-          color: '#BF1E2E',       // Red
-          fontFamily: 'Oswald, sans-serif', // Header font
-        },
-        '.text-h2-desktop': {
-          fontSize: '2.375rem',   // 38pt -> 2.375rem
-          lineHeight: '2.625rem', // 42pt -> 2.625rem
-          fontWeight: '500',      // Medium
-          color: '#353A5D',       // Blue
-          fontFamily: 'Oswald, sans-serif', // Header font
-        },
-        '.text-h3-desktop': {
-          fontSize: '1.625rem',    // 26pt -> 1.625rem
-          lineHeight: '2.4375rem', // 39pt -> 2.4375rem
-          fontWeight: '500',       // Medium
-          color: '#353A5D',        // Blue
-          fontFamily: 'Oswald, sans-serif', // Header font
-        },
-        // Mobile
-          '.text-h1-mobile': {
-            fontSize: '1.875rem',    // 30pt -> 1.875rem
-            lineHeight: '2.125rem',  // 34pt -> 2.125rem
-            fontWeight: '500',       // Medium
-            color: '#BF1E2E',        // Red
-            fontFamily: 'Oswald, sans-serif', // Header font
-          },
-          '.text-h2-mobile': {
-            fontSize: '1.875rem',    // 30pt -> 1.875rem
-            lineHeight: '2.125rem',  // 34pt -> 2.125rem
-            fontWeight: '500',       // Medium
-            color: '#353A5D',        // Blue
-            fontFamily: 'Oswald, sans-serif', // Header font
-          },
-          '.text-h3-mobile': {
-            fontSize: '1.25rem',     // 20pt -> 1.25rem
-            lineHeight: '1.875rem',  // 30pt -> 1.875rem
-            fontWeight: '500',       // Medium
-            color: '#353A5D',        // Blue
-            fontFamily: 'Oswald, sans-serif', // Header font
-          },
-        // Button label
-        '.text-button': {
-          fontSize: '1rem',        // 16pt -> 1rem
-          lineHeight: '1.1875rem', // 19pt -> 1.1875rem
-          fontWeight: '700',       // Bold
-          color: '#353A5D',        // Blue
-          fontFamily: 'Montserrat, sans-serif', // Body font
-        },
-        '.text-button-label-white': {
-          fontSize: '1rem',        // 16pt -> 1rem
-          lineHeight: '1.1875rem', // 19pt -> 1.1875rem
-          fontWeight: '700',       // Bold
-          color: '#FFFFFF',        // White text
-          fontFamily: 'Montserrat, sans-serif', // Body font
-        },
-        // Body text
-        '.text-body': {
-          fontSize: '1rem',       // 16pt -> 1rem
-          lineHeight: '1.625rem', // 26pt -> 1.625rem
-          fontWeight: '400',      // Regular
-          color: '#777777',        //dark-gray
-          fontFamily: 'Montserrat, sans-serif', // Body font
-        },
-        '.text-body-small': {
-          fontSize: '0.875rem',  // 14pt -> 0.875rem
-          lineHeight: '1.625rem', // 26pt -> 1.625rem
-          fontWeight: '400',      // Regular
-          color: '#DDDDDD',        //medium-dark-gray
-          fontFamily: 'Montserrat, sans-serif', // Body font
-        },
-        // Tiny button
-        '.text-tiny-button': {
-          fontSize: '0.75rem',   // 12pt -> 0.75rem
-          lineHeight: '0.9375rem', // 15pt -> 0.9375rem
-          fontWeight: '700',       // Bold
-          color: '#777777',        //dark-gray
-          fontFamily: 'Montserrat, sans-serif', // Body font
-        },
-      }, ['responsive', 'hover']);
-    }),
+
   ],
 }}
 
