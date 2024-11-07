@@ -1,5 +1,6 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
-import reactLogo from "../assets/react.svg";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Button } from "../components/Button";
+import { Chip } from "../components/Chip";
 
 export const Route = createFileRoute("/react")({
   component: React,
@@ -8,21 +9,20 @@ export const Route = createFileRoute("/react")({
 function React() {
   return (
     <>
-      <div>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>React</h1>
-      <div className="card">
+      <div className="p-10">
         <Link to="/">
-          <button>Go back</button>
+          <p className="pb-10">Back to Index</p>
         </Link>
-        <p>
-          Edit <code>src/routes/react.tsx</code> and save to test HMR
+
+        <p className="font-header font-bold py-3 text-red">
+          Main Button - Primary and Secondary
         </p>
+        <Button variant="primary">Label</Button>
+        <Button variant="secondary">Label</Button>
+
+        <p className="font-header font-bold py-3 text-red">Multi-select chip</p>
+        <Chip>Chip-text</Chip>
       </div>
-      <p className="read-the-docs">Click on the React logo to learn more</p>
     </>
   );
 }

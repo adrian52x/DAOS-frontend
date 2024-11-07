@@ -8,16 +8,13 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <>
-      <div>
-        <Button buttonText="Click me I'm a button" variant="primary" />
-      </div>
       <div className="card">
         <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
           <Link to="/vite">
             <button>Vite</button>
           </Link>
           <Link to="/react">
-            <button>React</button>
+            <Button buttonText="Components library" variant="primary" />
           </Link>
         </div>
         <p>
