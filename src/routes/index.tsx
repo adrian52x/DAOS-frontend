@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import reactLogo from "../assets/react.svg";
 import viteLogo from "/vite.svg";
+import ButtonBlue from "../components/ButtonBlue";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -10,6 +11,7 @@ function Index() {
   return (
     <>
       <div>
+        <ButtonBlue buttonText="Click me"></ButtonBlue>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
