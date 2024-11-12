@@ -30,7 +30,7 @@ export function Button({
   children,
   onClick,
   variant = "primary",
-  ...props // Capture any additional props
+  ...rest // Capture any additional props
 }: ButtonProps) {
   const baseStyles =
     "font-body font-semibold text-sm p-3 px-20 rounded-xl shadow-md";
@@ -43,7 +43,7 @@ export function Button({
     <button
       className={`${baseStyles} ${variantStyles}`}
       onClick={onClick}
-      {...props} // Spread additional props like `disabled`, `type`, etc.
+      {...rest} // Spread additional props like `disabled`, `type`, etc.
     >
       {children}
     </button>

@@ -19,12 +19,12 @@ type ChipProps = {
   onClick?: () => void;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export function Chip({ children, onClick, ...props }: ChipProps) {
+export function Chip({ children, onClick, ...rest }: ChipProps) {
   return (
     <button
       className="flex items-center gap-x-2 font-body font-semibold text-xs bg-blue-800 hover:bg-blue-600 text-white p-1 px-3 rounded shadow-sm"
       onClick={onClick}
-      {...props}
+      {...rest}
     >
       {children}
       <svg
