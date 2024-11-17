@@ -10,104 +10,142 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as ViteImport } from "./routes/vite";
-import { Route as ReactImport } from "./routes/react";
-import { Route as IndexImport } from "./routes/index";
+import { Route as rootRoute } from './routes/__root'
+import { Route as ViteImport } from './routes/vite'
+import { Route as RegisterImport } from './routes/register'
+import { Route as ReactImport } from './routes/react'
+import { Route as LoginImport } from './routes/login'
+import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
 const ViteRoute = ViteImport.update({
-  id: "/vite",
-  path: "/vite",
+  id: '/vite',
+  path: '/vite',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
+
+const RegisterRoute = RegisterImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const ReactRoute = ReactImport.update({
-  id: "/react",
-  path: "/react",
+  id: '/react',
+  path: '/react',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
+
+const LoginRoute = LoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/react": {
-      id: "/react";
-      path: "/react";
-      fullPath: "/react";
-      preLoaderRoute: typeof ReactImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/vite": {
-      id: "/vite";
-      path: "/vite";
-      fullPath: "/vite";
-      preLoaderRoute: typeof ViteImport;
-      parentRoute: typeof rootRoute;
-    };
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/react': {
+      id: '/react'
+      path: '/react'
+      fullPath: '/react'
+      preLoaderRoute: typeof ReactImport
+      parentRoute: typeof rootRoute
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterImport
+      parentRoute: typeof rootRoute
+    }
+    '/vite': {
+      id: '/vite'
+      path: '/vite'
+      fullPath: '/vite'
+      preLoaderRoute: typeof ViteImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/react": typeof ReactRoute;
-  "/vite": typeof ViteRoute;
+  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/react': typeof ReactRoute
+  '/register': typeof RegisterRoute
+  '/vite': typeof ViteRoute
 }
 
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/react": typeof ReactRoute;
-  "/vite": typeof ViteRoute;
+  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/react': typeof ReactRoute
+  '/register': typeof RegisterRoute
+  '/vite': typeof ViteRoute
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute;
-  "/": typeof IndexRoute;
-  "/react": typeof ReactRoute;
-  "/vite": typeof ViteRoute;
+  __root__: typeof rootRoute
+  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/react': typeof ReactRoute
+  '/register': typeof RegisterRoute
+  '/vite': typeof ViteRoute
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/react" | "/vite";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/react" | "/vite";
-  id: "__root__" | "/" | "/react" | "/vite";
-  fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/login' | '/react' | '/register' | '/vite'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/login' | '/react' | '/register' | '/vite'
+  id: '__root__' | '/' | '/login' | '/react' | '/register' | '/vite'
+  fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  ReactRoute: typeof ReactRoute;
-  ViteRoute: typeof ViteRoute;
+  IndexRoute: typeof IndexRoute
+  LoginRoute: typeof LoginRoute
+  ReactRoute: typeof ReactRoute
+  RegisterRoute: typeof RegisterRoute
+  ViteRoute: typeof ViteRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LoginRoute: LoginRoute,
   ReactRoute: ReactRoute,
+  RegisterRoute: RegisterRoute,
   ViteRoute: ViteRoute,
-};
+}
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {
@@ -116,15 +154,23 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/login",
         "/react",
+        "/register",
         "/vite"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/login": {
+      "filePath": "login.tsx"
+    },
     "/react": {
       "filePath": "react.tsx"
+    },
+    "/register": {
+      "filePath": "register.tsx"
     },
     "/vite": {
       "filePath": "vite.tsx"

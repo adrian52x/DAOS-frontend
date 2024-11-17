@@ -14,8 +14,17 @@ function Index() {
             <button>Vite</button>
           </Link>
           <Link to="/react">
-            <Button buttonText="Components library" variant="primary" />
+            <Button variant="primary">React</Button>
           </Link>
+
+
+          <Link to="/login">
+            <button>Login</button>
+          </Link>
+          <Link to="/register">
+            <button>Register</button>
+          </Link>
+
         </div>
         <p>
           Edit <code>src/routes/index.tsx</code> and save to test HMR
