@@ -1,6 +1,7 @@
 
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Navigate } from '@tanstack/react-router';
 import React, { useState } from 'react';
+import { useAuth } from '../auth/AuthContext';
 
 export const Route = createFileRoute("/login")({
     component: Login,
@@ -9,6 +10,7 @@ export const Route = createFileRoute("/login")({
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { user, setUser } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -24,27 +26,39 @@ function Login() {
             const data = await response.json();
             console.log(data);
 
-            if (data.message === 'Success') {
+            if (response.ok) {
+                setUser(data);
                 alert('Login successful');
+
+            } else {
+                alert(data.message)
             }
+
         } catch (error) {
             console.error(error);
         }
     };
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Email:</label>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            </div>
-            <div>
-                <label>Password:</label>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            </div>
-            <br />
+    console.log("user", user);
+    
+    
+    if (!user) {  
+        return (  
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Email:</label>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                <br />
 
-            <button className="underline" type="submit">Login</button>
-        </form>
-    );
+                <button className="underline" type="submit">Login</button>
+            </form>
+        );
+    } else {
+        return <Navigate to="/" />;
+    }
 };
