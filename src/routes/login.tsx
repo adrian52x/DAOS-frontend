@@ -38,8 +38,6 @@ function Login() {
             console.error(error);
         }
     };
-
-    console.log("user", user);
     
     
     if (!user) {  
