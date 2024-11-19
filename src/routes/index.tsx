@@ -13,7 +13,7 @@ function Index() {
 
         <div>
           <Link to="/react">
-            <Button variant="primary">Components pages</Button>
+            <Button variant="primary">Components page</Button>
           </Link>
         </div>
       </div>

@@ -32,6 +32,9 @@ const Header = () => {
           <Link to="/profile" className="font-bold text-blue-800">
             Profile
           </Link>
+          <Link to="/posts" className="font-bold text-blue-800">
+            See posts
+          </Link>
           <Button
             variant="secondary"
             onClick={async () => await singOut(setUser)}
