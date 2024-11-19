@@ -10,33 +10,34 @@ const Header = () => {
   return (
     <header className="flex items-center justify-between p-4 bg-white shadow-md">
       <div>
-        <h1 className="text-red font-header text-3xl font-bold">
-          Musik Samspil
-        </h1>
+        <Link to="/" className="font-bold text-blue-800">
+          <h1 className="text-red font-header text-3xl font-bold">
+            Musik Samspil
+          </h1>
+        </Link>
         <p className="text-gray-800 font-body text-sm">
           Skabt af DAOS - Dansk Amatørorkester Samvirke
         </p>
       </div>
 
       <div className="cursor-pointer">
-        <MdMenu className="w-8 h-8 text-black" />{" "}
-        {/* Material Icon styled with Tailwind */}
+        <MdMenu className="w-8 h-8 text-black" />
       </div>
 
       {user ? (
         <div className="flex flex-col items-start space-y-2">
-          <h3 className="italic">Welcome, {user.name}</h3>
-          <Link to="/profile">
-            <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-              Profile
-            </button>
+          <Link to="/" className="font-bold text-blue-800">
+            Home
           </Link>
-          <button
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+          <Link to="/profile" className="font-bold text-blue-800">
+            Profile
+          </Link>
+          <Button
+            variant="secondary"
             onClick={async () => await singOut(setUser)}
           >
             Logout
-          </button>
+          </Button>
         </div>
       ) : (
         <div className="flex flex-col items-start space-y-2">

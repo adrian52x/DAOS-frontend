@@ -7,21 +7,16 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <>
+    <div className="p-10">
       <div className="card">
-        <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
-          <Link to="/vite">
-            <button>Vite</button>
-          </Link>
-          <Link to="/react">
-            <Button variant="primary">React</Button>
-          </Link>
+        <p>hi, welcome, thats it</p>
 
+        <div>
+          <Link to="/react">
+            <Button variant="primary">Components pages</Button>
+          </Link>
         </div>
-        <p>
-          Edit <code>src/routes/index.tsx</code> and save to test HMR
-        </p>
       </div>
-    </>
+    </div>
   );
 }
