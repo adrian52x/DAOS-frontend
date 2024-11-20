@@ -1,8 +1,8 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { Button } from "../components/Button";
 import HeroImage from "../assets/hero-illustration.svg";
-import MusikerIcon from "../assets/musiker-icon.png";
-import EnsembleIcon from "../assets/ensemble-icon.png";
+import { SecondaryCTA } from "../components/SecondaryCTA";
+import { PrimaryCTA } from "../components/PrimaryCTA";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -11,49 +11,31 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div>
-      <section id="hero" className="p-6">
-        <img
-          src={HeroImage}
-          alt="Hero illustration"
-          className="w-full h-auto p-10"
-        />
-        <h1 className="font-header text-red font-medium text-3xl">
-          Stedet hvor musikere finder musikere og spiller musik sammen
-        </h1>
-
-        <div className="flex space-x-4 ">
-          <button className="flex flex-col basis-1/2  items-center justify-center border rounded-lg border-gray-400 p-4 ">
-            <img
-              src={MusikerIcon}
-              alt="Musiker Icon"
-              className="w-8 h-auto mb-2"
-            />
-            <p className="font-body text-blue-800 text-sm font-bold">
-              Find musiker
-            </p>
-          </button>
-
-          <button className="flex flex-col basis-1/2 items-center justify-center border rounded-lg border-gray-400 p-4 ">
-            <img
-              src={EnsembleIcon}
-              alt="Ensemble Icon"
-              className="w-8 h-auto mb-2"
-            />
-            <p className="font-body text-blue-800 text-sm font-bold ">
-              Find ensemble
-            </p>
-          </button>
+      <section id="hero" className="w-full lg:p-16 p-6">
+        <div className="flex flex-col lg:flex-row-reverse lg:gap-6 items-center">
+          <img
+            src={HeroImage}
+            alt="Hero illustration"
+            className="lg:w-1/2 p-10"
+          />
+          <div>
+            <h1 className="font-header text-red font-medium text-3xl lg:text-6xl pb-6">
+              Stedet hvor musikere finder musikere og spiller musik sammen
+            </h1>
+            <PrimaryCTA></PrimaryCTA> {/* Visible on desktop */}
+          </div>
         </div>
+        <SecondaryCTA></SecondaryCTA> {/* Visible on mobile */}
       </section>
 
-      <section id="reviews" className="bg-blue-800 p-6">
-        <h2 className="font-header text-white font-medium text-3xl">
+      <section id="reviews" className="bg-blue-800 p-6 lg:p-16">
+        <h2 className="font-header text-white font-medium text-3xl lg:text-4xl">
           Det siger vores brugere
         </h2>
       </section>
 
-      <section id="latest-posts" className="p-6">
-        <h2 className="font-header text-blue-800 font-medium text-3xl">
+      <section id="latest-posts" className="p-6 lg:p-16">
+        <h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl">
           Seneste opslag
         </h2>
       </section>
