@@ -4,7 +4,7 @@ import HeroImage from "../assets/hero-illustration.svg";
 import { SecondaryCTA } from "../components/SecondaryCTA";
 import { PrimaryCTA } from "../components/PrimaryCTA";
 import { ReviewCard } from "../components/ReviewCard";
-
+import { PostCardEnsemble } from "../components/PostCard";
 export const Route = createFileRoute("/")({
   component: Index,
 });
@@ -37,9 +37,17 @@ function Index() {
       </section>
 
       <section id="latest-posts" className="p-6 lg:p-16">
-        <h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl">
+        <h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl pb-6">
           Seneste opslag
         </h2>
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <PostCardEnsemble></PostCardEnsemble>
+          <PostCardEnsemble></PostCardEnsemble>
+          <PostCardEnsemble></PostCardEnsemble>
+          <PostCardEnsemble></PostCardEnsemble>
+          <PostCardEnsemble></PostCardEnsemble>
+          <PostCardEnsemble></PostCardEnsemble>
+        </div>
       </section>
 
       <div className="card">
