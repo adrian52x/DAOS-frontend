@@ -5,10 +5,7 @@ type DropdownProps = {
   placeholder?: string; // Optional placeholder text
 };
 
-export const Dropdown: React.FC<DropdownProps> = ({
-  options,
-  placeholder = "Vælg instrument",
-}) => {
+export function Dropdown({ options, placeholder }: DropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -59,4 +56,4 @@ export const Dropdown: React.FC<DropdownProps> = ({
       )}
     </div>
   );
-};
+}

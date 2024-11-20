@@ -3,6 +3,7 @@ import { Button } from "../components/Button";
 import HeroImage from "../assets/hero-illustration.svg";
 import { SecondaryCTA } from "../components/SecondaryCTA";
 import { PrimaryCTA } from "../components/PrimaryCTA";
+import { ReviewCard } from "../components/ReviewCard";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -29,9 +30,10 @@ function Index() {
       </section>
 
       <section id="reviews" className="bg-blue-800 p-6 lg:p-16">
-        <h2 className="font-header text-white font-medium text-3xl lg:text-4xl">
+        <h2 className="font-header text-white font-medium text-3xl lg:text-4xl pb-8">
           Det siger vores brugere
         </h2>
+        <ReviewCard></ReviewCard>
       </section>
 
       <section id="latest-posts" className="p-6 lg:p-16">
