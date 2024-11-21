@@ -19,19 +19,20 @@ const Header = () => {
         Home
       </Link>
       <Link
-        to="/profile"
-        className="font-bold text-blue-800"
-        onClick={() => setMenuOpen(false)}
-      >
-        Profile
-      </Link>
-      <Link
         to="/posts"
         className="font-bold text-blue-800"
         onClick={() => setMenuOpen(false)}
       >
         See posts
       </Link>
+      <Link
+        to="/profile"
+        className="font-bold text-blue-800"
+        onClick={() => setMenuOpen(false)}
+      >
+        Profile
+      </Link>
+
       <Button
         variant="secondary"
         onClick={async () => {
@@ -68,15 +69,15 @@ const Header = () => {
   );
 
   return (
-    <header className="flex items-center justify-between p-4 bg-white shadow-md relative">
+    <header className="flex items-center justify-between p-4 bg-white shadow-md sticky top-0 z-50">
       {/* Logo Section */}
       <div>
         <Link to="/" className="font-bold text-blue-800">
-          <h1 className="text-red font-header text-3xl font-bold">
+          <h1 className="text-red font-header text-2xl sm:text-3xl font-bold">
             Musik Samspil
           </h1>
         </Link>
-        <p className="text-gray-800 font-body text-sm">
+        <p className="text-gray-800 font-body text-xs sm:text-sm">
           Skabt af DAOS - Dansk Amatørorkester Samvirke
         </p>
       </div>
