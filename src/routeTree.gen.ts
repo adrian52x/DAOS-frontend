@@ -11,7 +11,6 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ViteImport } from './routes/vite'
 import { Route as RegisterImport } from './routes/register'
 import { Route as ReactImport } from './routes/react'
 import { Route as ProfileImport } from './routes/profile'
@@ -20,12 +19,6 @@ import { Route as LoginImport } from './routes/login'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
-
-const ViteRoute = ViteImport.update({
-  id: '/vite',
-  path: '/vite',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const RegisterRoute = RegisterImport.update({
   id: '/register',
@@ -109,13 +102,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
-    '/vite': {
-      id: '/vite'
-      path: '/vite'
-      fullPath: '/vite'
-      preLoaderRoute: typeof ViteImport
-      parentRoute: typeof rootRoute
-    }
   }
 }
 
@@ -128,7 +114,6 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/react': typeof ReactRoute
   '/register': typeof RegisterRoute
-  '/vite': typeof ViteRoute
 }
 
 export interface FileRoutesByTo {
@@ -138,7 +123,6 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/react': typeof ReactRoute
   '/register': typeof RegisterRoute
-  '/vite': typeof ViteRoute
 }
 
 export interface FileRoutesById {
@@ -149,21 +133,13 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/react': typeof ReactRoute
   '/register': typeof RegisterRoute
-  '/vite': typeof ViteRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/login'
-    | '/posts'
-    | '/profile'
-    | '/react'
-    | '/register'
-    | '/vite'
+  fullPaths: '/' | '/login' | '/posts' | '/profile' | '/react' | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/posts' | '/profile' | '/react' | '/register' | '/vite'
+  to: '/' | '/login' | '/posts' | '/profile' | '/react' | '/register'
   id:
     | '__root__'
     | '/'
@@ -172,7 +148,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/react'
     | '/register'
-    | '/vite'
   fileRoutesById: FileRoutesById
 }
 
@@ -183,7 +158,6 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   ReactRoute: typeof ReactRoute
   RegisterRoute: typeof RegisterRoute
-  ViteRoute: typeof ViteRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -193,7 +167,6 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   ReactRoute: ReactRoute,
   RegisterRoute: RegisterRoute,
-  ViteRoute: ViteRoute,
 }
 
 export const routeTree = rootRoute
@@ -211,8 +184,7 @@ export const routeTree = rootRoute
         "/posts",
         "/profile",
         "/react",
-        "/register",
-        "/vite"
+        "/register"
       ]
     },
     "/": {
@@ -232,9 +204,6 @@ export const routeTree = rootRoute
     },
     "/register": {
       "filePath": "register.tsx"
-    },
-    "/vite": {
-      "filePath": "vite.tsx"
     }
   }
 }
