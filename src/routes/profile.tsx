@@ -1,25 +1,35 @@
 import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { useAuth } from "../auth/AuthContext";
+import { UserHeader } from "../components/profile/UserHeader";
+import { ProfileText } from "../components/profile/ProfileText";
+import { Instruments } from "../components/profile/Instruments";
+import { Ensembles } from "../components/profile/ensemble";
+import { Posts } from "../components/profile/Posts";
 
 export const Route = createFileRoute("/profile")({
   component: Profile,
 });
 
 function Profile() {
-  const { user, loading } = useAuth();
+    const { user, loading } = useAuth();
+    console.log("user", user);
+    
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
+    if (!user) {
+        return <Navigate to="/login" />;
+    }
 
-  return (
-    <div className="p-10">
-      <h1>Profile</h1>
-      <p>{user.name}</p>
-    </div>
-  );
+    return (
+        <div className="container mx-auto p-4 space-y-8">
+            <UserHeader user={user} />
+            <ProfileText text={user.profileText} />
+            <Instruments instruments={user.instruments} />
+            <Ensembles userId={user._id} />
+            <Posts userId={user._id} />
+        </div>
+    );
 }
