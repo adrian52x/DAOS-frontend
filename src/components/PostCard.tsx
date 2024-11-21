@@ -25,9 +25,9 @@ export const PostCard: React.FC<PostCardProps> = ({ id, title, ensemble, locatio
       <p>
         <span className="font-semibold">Experience:</span> {experience} years
       </p>
-      {/* <Link to={`/posts/${id}`} className="inline-block mt-4 text-blue-600 hover:underline">
+      <Link to="/posts/$postId" params={{ postId: id }} className="inline-block mt-4 text-blue-600 hover:underline">
         View Details
-      </Link> */}
+      </Link>
     </div>
   );
 };

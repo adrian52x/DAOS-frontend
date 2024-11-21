@@ -18,6 +18,7 @@ import { Route as ProfileImport } from './routes/profile'
 import { Route as PostsImport } from './routes/posts'
 import { Route as LoginImport } from './routes/login'
 import { Route as IndexImport } from './routes/index'
+import { Route as PostsPostIdImport } from './routes/posts.$postId'
 
 // Create/Update Routes
 
@@ -61,6 +62,12 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const PostsPostIdRoute = PostsPostIdImport.update({
+  id: '/$postId',
+  path: '/$postId',
+  getParentRoute: () => PostsRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -116,40 +123,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ViteImport
       parentRoute: typeof rootRoute
     }
+    '/posts/$postId': {
+      id: '/posts/$postId'
+      path: '/$postId'
+      fullPath: '/posts/$postId'
+      preLoaderRoute: typeof PostsPostIdImport
+      parentRoute: typeof PostsImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface PostsRouteChildren {
+  PostsPostIdRoute: typeof PostsPostIdRoute
+}
+
+const PostsRouteChildren: PostsRouteChildren = {
+  PostsPostIdRoute: PostsPostIdRoute,
+}
+
+const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/posts': typeof PostsRoute
+  '/posts': typeof PostsRouteWithChildren
   '/profile': typeof ProfileRoute
   '/react': typeof ReactRoute
   '/register': typeof RegisterRoute
   '/vite': typeof ViteRoute
+  '/posts/$postId': typeof PostsPostIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/posts': typeof PostsRoute
+  '/posts': typeof PostsRouteWithChildren
   '/profile': typeof ProfileRoute
   '/react': typeof ReactRoute
   '/register': typeof RegisterRoute
   '/vite': typeof ViteRoute
+  '/posts/$postId': typeof PostsPostIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/posts': typeof PostsRoute
+  '/posts': typeof PostsRouteWithChildren
   '/profile': typeof ProfileRoute
   '/react': typeof ReactRoute
   '/register': typeof RegisterRoute
   '/vite': typeof ViteRoute
+  '/posts/$postId': typeof PostsPostIdRoute
 }
 
 export interface FileRouteTypes {
@@ -162,8 +189,17 @@ export interface FileRouteTypes {
     | '/react'
     | '/register'
     | '/vite'
+    | '/posts/$postId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/posts' | '/profile' | '/react' | '/register' | '/vite'
+  to:
+    | '/'
+    | '/login'
+    | '/posts'
+    | '/profile'
+    | '/react'
+    | '/register'
+    | '/vite'
+    | '/posts/$postId'
   id:
     | '__root__'
     | '/'
@@ -173,13 +209,14 @@ export interface FileRouteTypes {
     | '/react'
     | '/register'
     | '/vite'
+    | '/posts/$postId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
-  PostsRoute: typeof PostsRoute
+  PostsRoute: typeof PostsRouteWithChildren
   ProfileRoute: typeof ProfileRoute
   ReactRoute: typeof ReactRoute
   RegisterRoute: typeof RegisterRoute
@@ -189,7 +226,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
-  PostsRoute: PostsRoute,
+  PostsRoute: PostsRouteWithChildren,
   ProfileRoute: ProfileRoute,
   ReactRoute: ReactRoute,
   RegisterRoute: RegisterRoute,
@@ -222,7 +259,10 @@ export const routeTree = rootRoute
       "filePath": "login.tsx"
     },
     "/posts": {
-      "filePath": "posts.tsx"
+      "filePath": "posts.tsx",
+      "children": [
+        "/posts/$postId"
+      ]
     },
     "/profile": {
       "filePath": "profile.tsx"
@@ -235,6 +275,10 @@ export const routeTree = rootRoute
     },
     "/vite": {
       "filePath": "vite.tsx"
+    },
+    "/posts/$postId": {
+      "filePath": "posts.$postId.tsx",
+      "parent": "/posts"
     }
   }
 }
