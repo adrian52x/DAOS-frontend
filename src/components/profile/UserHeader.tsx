@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router"
 import { Button } from "../Button"
 
 export function UserHeader({ user }: { user: any }) {
@@ -19,7 +20,9 @@ export function UserHeader({ user }: { user: any }) {
                     <p className="text-muted-foreground">Member since: {memberSince}</p>
                 </div>
             </div>
-            <Button variant="tertiary">Update profile</Button>
+            <Link to="/profile/update">
+                <Button variant="tertiary">Update profile</Button>
+            </Link>
         </div>
     )
 }
