@@ -12,10 +12,11 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ReactImport } from './routes/react'
-import { Route as PostsImport } from './routes/posts'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProfileIndexImport } from './routes/profile/index'
+import { Route as PostsIndexImport } from './routes/posts/index'
 import { Route as ProfileUpdateImport } from './routes/profile/update'
+import { Route as PostsPostIdImport } from './routes/posts/$postId'
 import { Route as authRegisterImport } from './routes/(auth)/register'
 import { Route as authLoginImport } from './routes/(auth)/login'
 
@@ -24,12 +25,6 @@ import { Route as authLoginImport } from './routes/(auth)/login'
 const ReactRoute = ReactImport.update({
   id: '/react',
   path: '/react',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PostsRoute = PostsImport.update({
-  id: '/posts',
-  path: '/posts',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -45,9 +40,21 @@ const ProfileIndexRoute = ProfileIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const PostsIndexRoute = PostsIndexImport.update({
+  id: '/posts/',
+  path: '/posts/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ProfileUpdateRoute = ProfileUpdateImport.update({
   id: '/profile/update',
   path: '/profile/update',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostsPostIdRoute = PostsPostIdImport.update({
+  id: '/posts/$postId',
+  path: '/posts/$postId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,13 +81,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/posts': {
-      id: '/posts'
-      path: '/posts'
-      fullPath: '/posts'
-      preLoaderRoute: typeof PostsImport
-      parentRoute: typeof rootRoute
-    }
     '/react': {
       id: '/react'
       path: '/react'
@@ -102,11 +102,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authRegisterImport
       parentRoute: typeof rootRoute
     }
+    '/posts/$postId': {
+      id: '/posts/$postId'
+      path: '/posts/$postId'
+      fullPath: '/posts/$postId'
+      preLoaderRoute: typeof PostsPostIdImport
+      parentRoute: typeof rootRoute
+    }
     '/profile/update': {
       id: '/profile/update'
       path: '/profile/update'
       fullPath: '/profile/update'
       preLoaderRoute: typeof ProfileUpdateImport
+      parentRoute: typeof rootRoute
+    }
+    '/posts/': {
+      id: '/posts/'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsIndexImport
       parentRoute: typeof rootRoute
     }
     '/profile/': {
@@ -123,32 +137,35 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/posts': typeof PostsRoute
   '/react': typeof ReactRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
+  '/posts/$postId': typeof PostsPostIdRoute
   '/profile/update': typeof ProfileUpdateRoute
+  '/posts': typeof PostsIndexRoute
   '/profile': typeof ProfileIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/posts': typeof PostsRoute
   '/react': typeof ReactRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
+  '/posts/$postId': typeof PostsPostIdRoute
   '/profile/update': typeof ProfileUpdateRoute
+  '/posts': typeof PostsIndexRoute
   '/profile': typeof ProfileIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/posts': typeof PostsRoute
   '/react': typeof ReactRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
+  '/posts/$postId': typeof PostsPostIdRoute
   '/profile/update': typeof ProfileUpdateRoute
+  '/posts/': typeof PostsIndexRoute
   '/profile/': typeof ProfileIndexRoute
 }
 
@@ -156,50 +173,55 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/posts'
     | '/react'
     | '/login'
     | '/register'
+    | '/posts/$postId'
     | '/profile/update'
+    | '/posts'
     | '/profile'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/posts'
     | '/react'
     | '/login'
     | '/register'
+    | '/posts/$postId'
     | '/profile/update'
+    | '/posts'
     | '/profile'
   id:
     | '__root__'
     | '/'
-    | '/posts'
     | '/react'
     | '/(auth)/login'
     | '/(auth)/register'
+    | '/posts/$postId'
     | '/profile/update'
+    | '/posts/'
     | '/profile/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  PostsRoute: typeof PostsRoute
   ReactRoute: typeof ReactRoute
   authLoginRoute: typeof authLoginRoute
   authRegisterRoute: typeof authRegisterRoute
+  PostsPostIdRoute: typeof PostsPostIdRoute
   ProfileUpdateRoute: typeof ProfileUpdateRoute
+  PostsIndexRoute: typeof PostsIndexRoute
   ProfileIndexRoute: typeof ProfileIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  PostsRoute: PostsRoute,
   ReactRoute: ReactRoute,
   authLoginRoute: authLoginRoute,
   authRegisterRoute: authRegisterRoute,
+  PostsPostIdRoute: PostsPostIdRoute,
   ProfileUpdateRoute: ProfileUpdateRoute,
+  PostsIndexRoute: PostsIndexRoute,
   ProfileIndexRoute: ProfileIndexRoute,
 }
 
@@ -214,19 +236,17 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/posts",
         "/react",
         "/(auth)/login",
         "/(auth)/register",
+        "/posts/$postId",
         "/profile/update",
+        "/posts/",
         "/profile/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
-    },
-    "/posts": {
-      "filePath": "posts.tsx"
     },
     "/react": {
       "filePath": "react.tsx"
@@ -237,8 +257,14 @@ export const routeTree = rootRoute
     "/(auth)/register": {
       "filePath": "(auth)/register.tsx"
     },
+    "/posts/$postId": {
+      "filePath": "posts/$postId.tsx"
+    },
     "/profile/update": {
       "filePath": "profile/update.tsx"
+    },
+    "/posts/": {
+      "filePath": "posts/index.tsx"
     },
     "/profile/": {
       "filePath": "profile/index.tsx"
