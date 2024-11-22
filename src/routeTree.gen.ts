@@ -17,7 +17,7 @@ import { Route as ProfileImport } from './routes/profile'
 import { Route as LoginImport } from './routes/login'
 import { Route as IndexImport } from './routes/index'
 import { Route as PostsIndexImport } from './routes/posts/index'
-import { Route as PostsPostsImport } from './routes/posts/$posts'
+import { Route as PostsPostIdImport } from './routes/posts/$postId'
 
 // Create/Update Routes
 
@@ -57,9 +57,9 @@ const PostsIndexRoute = PostsIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const PostsPostsRoute = PostsPostsImport.update({
-  id: '/posts/$posts',
-  path: '/posts/$posts',
+const PostsPostIdRoute = PostsPostIdImport.update({
+  id: '/posts/$postId',
+  path: '/posts/$postId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -102,11 +102,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
-    '/posts/$posts': {
-      id: '/posts/$posts'
-      path: '/posts/$posts'
-      fullPath: '/posts/$posts'
-      preLoaderRoute: typeof PostsPostsImport
+    '/posts/$postId': {
+      id: '/posts/$postId'
+      path: '/posts/$postId'
+      fullPath: '/posts/$postId'
+      preLoaderRoute: typeof PostsPostIdImport
       parentRoute: typeof rootRoute
     }
     '/posts/': {
@@ -127,7 +127,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/react': typeof ReactRoute
   '/register': typeof RegisterRoute
-  '/posts/$posts': typeof PostsPostsRoute
+  '/posts/$postId': typeof PostsPostIdRoute
   '/posts': typeof PostsIndexRoute
 }
 
@@ -137,7 +137,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/react': typeof ReactRoute
   '/register': typeof RegisterRoute
-  '/posts/$posts': typeof PostsPostsRoute
+  '/posts/$postId': typeof PostsPostIdRoute
   '/posts': typeof PostsIndexRoute
 }
 
@@ -148,7 +148,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/react': typeof ReactRoute
   '/register': typeof RegisterRoute
-  '/posts/$posts': typeof PostsPostsRoute
+  '/posts/$postId': typeof PostsPostIdRoute
   '/posts/': typeof PostsIndexRoute
 }
 
@@ -160,7 +160,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/react'
     | '/register'
-    | '/posts/$posts'
+    | '/posts/$postId'
     | '/posts'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -169,7 +169,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/react'
     | '/register'
-    | '/posts/$posts'
+    | '/posts/$postId'
     | '/posts'
   id:
     | '__root__'
@@ -178,7 +178,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/react'
     | '/register'
-    | '/posts/$posts'
+    | '/posts/$postId'
     | '/posts/'
   fileRoutesById: FileRoutesById
 }
@@ -189,7 +189,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   ReactRoute: typeof ReactRoute
   RegisterRoute: typeof RegisterRoute
-  PostsPostsRoute: typeof PostsPostsRoute
+  PostsPostIdRoute: typeof PostsPostIdRoute
   PostsIndexRoute: typeof PostsIndexRoute
 }
 
@@ -199,7 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   ReactRoute: ReactRoute,
   RegisterRoute: RegisterRoute,
-  PostsPostsRoute: PostsPostsRoute,
+  PostsPostIdRoute: PostsPostIdRoute,
   PostsIndexRoute: PostsIndexRoute,
 }
 
@@ -218,7 +218,7 @@ export const routeTree = rootRoute
         "/profile",
         "/react",
         "/register",
-        "/posts/$posts",
+        "/posts/$postId",
         "/posts/"
       ]
     },
@@ -237,8 +237,8 @@ export const routeTree = rootRoute
     "/register": {
       "filePath": "register.tsx"
     },
-    "/posts/$posts": {
-      "filePath": "posts/$posts.tsx"
+    "/posts/$postId": {
+      "filePath": "posts/$postId.tsx"
     },
     "/posts/": {
       "filePath": "posts/index.tsx"

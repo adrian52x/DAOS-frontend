@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import PostDetails from "../../components/PostDetails";
 
-export const Route = createFileRoute("/posts/$posts")({
+export const Route = createFileRoute("/posts/$postId")({
   // Ensure dynamic segment matches
   component: PostDetailsRoute,
 });
