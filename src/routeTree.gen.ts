@@ -11,27 +11,16 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ViteImport } from './routes/vite'
-import { Route as RegisterImport } from './routes/register'
 import { Route as ReactImport } from './routes/react'
-import { Route as ProfileImport } from './routes/profile'
-import { Route as PostsImport } from './routes/posts'
-import { Route as LoginImport } from './routes/login'
 import { Route as IndexImport } from './routes/index'
+import { Route as ProfileIndexImport } from './routes/profile/index'
+import { Route as PostsIndexImport } from './routes/posts/index'
+import { Route as ProfileUpdateImport } from './routes/profile/update'
+import { Route as PostsPostIdImport } from './routes/posts/$postId'
+import { Route as authRegisterImport } from './routes/(auth)/register'
+import { Route as authLoginImport } from './routes/(auth)/login'
 
 // Create/Update Routes
-
-const ViteRoute = ViteImport.update({
-  id: '/vite',
-  path: '/vite',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const RegisterRoute = RegisterImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const ReactRoute = ReactImport.update({
   id: '/react',
@@ -39,27 +28,45 @@ const ReactRoute = ReactImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ProfileRoute = ProfileImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PostsRoute = PostsImport.update({
-  id: '/posts',
-  path: '/posts',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const LoginRoute = LoginImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileIndexRoute = ProfileIndexImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostsIndexRoute = PostsIndexImport.update({
+  id: '/posts/',
+  path: '/posts/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileUpdateRoute = ProfileUpdateImport.update({
+  id: '/profile/update',
+  path: '/profile/update',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostsPostIdRoute = PostsPostIdImport.update({
+  id: '/posts/$postId',
+  path: '/posts/$postId',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const authRegisterRoute = authRegisterImport.update({
+  id: '/(auth)/register',
+  path: '/register',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const authLoginRoute = authLoginImport.update({
+  id: '/(auth)/login',
+  path: '/login',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,27 +81,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
-      parentRoute: typeof rootRoute
-    }
-    '/posts': {
-      id: '/posts'
-      path: '/posts'
-      fullPath: '/posts'
-      preLoaderRoute: typeof PostsImport
-      parentRoute: typeof rootRoute
-    }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileImport
-      parentRoute: typeof rootRoute
-    }
     '/react': {
       id: '/react'
       path: '/react'
@@ -102,18 +88,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReactImport
       parentRoute: typeof rootRoute
     }
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterImport
+    '/(auth)/login': {
+      id: '/(auth)/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof authLoginImport
       parentRoute: typeof rootRoute
     }
-    '/vite': {
-      id: '/vite'
-      path: '/vite'
-      fullPath: '/vite'
-      preLoaderRoute: typeof ViteImport
+    '/(auth)/register': {
+      id: '/(auth)/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof authRegisterImport
+      parentRoute: typeof rootRoute
+    }
+    '/posts/$postId': {
+      id: '/posts/$postId'
+      path: '/posts/$postId'
+      fullPath: '/posts/$postId'
+      preLoaderRoute: typeof PostsPostIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/update': {
+      id: '/profile/update'
+      path: '/profile/update'
+      fullPath: '/profile/update'
+      preLoaderRoute: typeof ProfileUpdateImport
+      parentRoute: typeof rootRoute
+    }
+    '/posts/': {
+      id: '/posts/'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/': {
+      id: '/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -123,77 +137,92 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/posts': typeof PostsRoute
-  '/profile': typeof ProfileRoute
   '/react': typeof ReactRoute
-  '/register': typeof RegisterRoute
-  '/vite': typeof ViteRoute
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
+  '/posts/$postId': typeof PostsPostIdRoute
+  '/profile/update': typeof ProfileUpdateRoute
+  '/posts': typeof PostsIndexRoute
+  '/profile': typeof ProfileIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/posts': typeof PostsRoute
-  '/profile': typeof ProfileRoute
   '/react': typeof ReactRoute
-  '/register': typeof RegisterRoute
-  '/vite': typeof ViteRoute
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
+  '/posts/$postId': typeof PostsPostIdRoute
+  '/profile/update': typeof ProfileUpdateRoute
+  '/posts': typeof PostsIndexRoute
+  '/profile': typeof ProfileIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/posts': typeof PostsRoute
-  '/profile': typeof ProfileRoute
   '/react': typeof ReactRoute
-  '/register': typeof RegisterRoute
-  '/vite': typeof ViteRoute
+  '/(auth)/login': typeof authLoginRoute
+  '/(auth)/register': typeof authRegisterRoute
+  '/posts/$postId': typeof PostsPostIdRoute
+  '/profile/update': typeof ProfileUpdateRoute
+  '/posts/': typeof PostsIndexRoute
+  '/profile/': typeof ProfileIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/react'
     | '/login'
+    | '/register'
+    | '/posts/$postId'
+    | '/profile/update'
     | '/posts'
     | '/profile'
-    | '/react'
-    | '/register'
-    | '/vite'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/posts' | '/profile' | '/react' | '/register' | '/vite'
+  to:
+    | '/'
+    | '/react'
+    | '/login'
+    | '/register'
+    | '/posts/$postId'
+    | '/profile/update'
+    | '/posts'
+    | '/profile'
   id:
     | '__root__'
     | '/'
-    | '/login'
-    | '/posts'
-    | '/profile'
     | '/react'
-    | '/register'
-    | '/vite'
+    | '/(auth)/login'
+    | '/(auth)/register'
+    | '/posts/$postId'
+    | '/profile/update'
+    | '/posts/'
+    | '/profile/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  LoginRoute: typeof LoginRoute
-  PostsRoute: typeof PostsRoute
-  ProfileRoute: typeof ProfileRoute
   ReactRoute: typeof ReactRoute
-  RegisterRoute: typeof RegisterRoute
-  ViteRoute: typeof ViteRoute
+  authLoginRoute: typeof authLoginRoute
+  authRegisterRoute: typeof authRegisterRoute
+  PostsPostIdRoute: typeof PostsPostIdRoute
+  ProfileUpdateRoute: typeof ProfileUpdateRoute
+  PostsIndexRoute: typeof PostsIndexRoute
+  ProfileIndexRoute: typeof ProfileIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  LoginRoute: LoginRoute,
-  PostsRoute: PostsRoute,
-  ProfileRoute: ProfileRoute,
   ReactRoute: ReactRoute,
-  RegisterRoute: RegisterRoute,
-  ViteRoute: ViteRoute,
+  authLoginRoute: authLoginRoute,
+  authRegisterRoute: authRegisterRoute,
+  PostsPostIdRoute: PostsPostIdRoute,
+  ProfileUpdateRoute: ProfileUpdateRoute,
+  PostsIndexRoute: PostsIndexRoute,
+  ProfileIndexRoute: ProfileIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -207,34 +236,38 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/login",
-        "/posts",
-        "/profile",
         "/react",
-        "/register",
-        "/vite"
+        "/(auth)/login",
+        "/(auth)/register",
+        "/posts/$postId",
+        "/profile/update",
+        "/posts/",
+        "/profile/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/login": {
-      "filePath": "login.tsx"
-    },
-    "/posts": {
-      "filePath": "posts.tsx"
-    },
-    "/profile": {
-      "filePath": "profile.tsx"
-    },
     "/react": {
       "filePath": "react.tsx"
     },
-    "/register": {
-      "filePath": "register.tsx"
+    "/(auth)/login": {
+      "filePath": "(auth)/login.tsx"
     },
-    "/vite": {
-      "filePath": "vite.tsx"
+    "/(auth)/register": {
+      "filePath": "(auth)/register.tsx"
+    },
+    "/posts/$postId": {
+      "filePath": "posts/$postId.tsx"
+    },
+    "/profile/update": {
+      "filePath": "profile/update.tsx"
+    },
+    "/posts/": {
+      "filePath": "posts/index.tsx"
+    },
+    "/profile/": {
+      "filePath": "profile/index.tsx"
     }
   }
 }
