@@ -34,7 +34,7 @@ function RouteComponent() {
     <>
       <div className="p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
-          <PostCard key={post._id} id={post._id} title={post.title} ensemble={post.ensemble || "Unknown Ensemble"} location={post.location} musicians={post.musicians} instrument={post.instrument} experience={post.experience} />
+          <PostCard key={post._id} id={post._id} title={post.title} ensemble={post.ensemble || "Unknown Ensemble"} location={post.location || "Location"} musicians={post.musicians || "Members"} instrument={post.instrument || "Unknown Instrument"} experience={post.experience} />
         ))}
       </div>
       <Outlet />
