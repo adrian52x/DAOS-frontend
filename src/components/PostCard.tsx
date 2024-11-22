@@ -14,7 +14,7 @@ export interface PostProps {
 // Accepting dynamic post data as props
 export function PostCardEnsemble({ post }: { post: PostProps }) {
 	return (
-		<article className="border border-2 border-gray-400 rounded-xl">
+		<article className="border-2 border-gray-400 rounded-xl">
 			<div className="flex flex-row justify-between bg-gray-200 pt-4 px-4">
 				<img
 					src={EnsemblePortrait} // You can later make this dynamic if needed
