@@ -5,6 +5,7 @@ import { ProfileText } from '../../components/profile/ProfileText'
 import { Instruments } from '../../components/profile/Instruments'
 import { Ensembles } from '../../components/profile/Ensembles'
 import { Posts } from '../../components/profile/Posts'
+import { useQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/profile/')({
   component: Profile,
@@ -13,6 +14,16 @@ export const Route = createFileRoute('/profile/')({
 function Profile() {
     const { user, loading } = useAuth()
     console.log('user', user)
+
+    const postQuery = useQuery({
+        queryKey: ['posts', user?._id], // Include userId in the query key
+        queryFn: async () => {
+            const response = await fetch(`http://localhost:3000/api/posts/author/${user._id}`);
+            const data = await response.json();
+            return data;
+        },
+        enabled: !!user, // Only run the query if user is available
+    });
 
     if (loading) {
         return <div>Loading...</div>
@@ -29,7 +40,7 @@ function Profile() {
             <ProfileText text={user.profileText} />
             <Instruments instruments={user.instruments} />
             <Ensembles userId={user._id} />
-            <Posts userId={user._id} />
+            <Posts posts={postQuery.data}/>
         </div>
         <Outlet />
         </div>
