@@ -8,12 +8,12 @@ import { Posts } from '../../components/profile/Posts'
 import { useQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/profile/')({
-  component: Profile,
-})
+	component: Profile,
+});
 
 function Profile() {
-    const { user, loading } = useAuth()
-    console.log('user', user)
+	const { user, loading } = useAuth();
+	console.log('user', user);
 
     const postQuery = useQuery({
         queryKey: ['posts', user?._id], // Include userId in the query key
@@ -29,9 +29,9 @@ function Profile() {
         return <div>Loading...</div>
     }
 
-    if (!user) {
-        return <Navigate to="/login" />
-    }
+	if (!user) {
+		return <Navigate to="/login" />;
+	}
 
     return (
         <div>

@@ -1,11 +1,11 @@
-import { Button } from "../Button"
+import { Button } from '../Button';
 
 type Instrument = {
-    name: string
-    level: number
-    genre: string
-  }
-  
+	name: string;
+	level: number;
+	genre: string;
+};
+
 export function Instruments({ instruments }: { instruments: Instrument[] }) {
     return (
         <div className="bg-white shadow rounded-lg p-6">

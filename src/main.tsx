@@ -1,4 +1,4 @@
-import "./main.css";
+import './main.css';
 
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import React from "react";
@@ -9,10 +9,10 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 const router = createRouter({ routeTree });
 const queryClient = new QueryClient();
 
-declare module "@tanstack/react-router" {
-  interface Register {
-    router: typeof router;
-  }
+declare module '@tanstack/react-router' {
+	interface Register {
+		router: typeof router;
+	}
 }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
