@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { PostCard } from "../../components/PostCard";
+import { PostCard } from "../../components/PostCardMine";
 
 export const Route = createFileRoute("/posts/")({
   component: RouteComponent,
