@@ -19,7 +19,7 @@ export const PostCard: React.FC<PostCardProps> = ({ id, title, ensemble, locatio
       {/* Header Section */}
       <div className="flex flex-row gap-4 justify-between bg-gray-200 pt-4 px-4">
         {/* Ensemble Portrait */}
-        <img src={EnsemblePortrait} alt={`${ensemble} profile`} className="w-[50px] h-[50px] object-cover rounded-lg" />
+        <img src={EnsemblePortrait} alt="propic" className="w-[50px] h-[50px] object-cover rounded-lg" />
         {/* Ensemble Details */}
         <div className="grow">
           <h3 className="font-body font-bold text-red">{ensemble}</h3>
