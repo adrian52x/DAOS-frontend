@@ -6,7 +6,7 @@ export const Route = createFileRoute("/posts/$postId")({
 
 function PostDetails() {
   const { postId } = Route.useParams();
-  console.log("wtf!!!!!!!!!");
+  console.log(postId);
 
   return <div>{postId}</div>;
 }
