@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "@tanstack/react-router";
+import EnsembleIcon from "../assets/ensemble-icon.png";
+import EnsemblePortrait from "../assets/ensemble-portrait.jpeg";
 
 type PostCardProps = {
   id: string;
@@ -13,21 +15,40 @@ type PostCardProps = {
 
 export const PostCard: React.FC<PostCardProps> = ({ id, title, ensemble, location, musicians, instrument, experience }) => {
   return (
-    <div className="border rounded-lg shadow-sm p-4 bg-white hover:shadow-md transition">
-      <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
-      <p className="text-sm text-gray-600">{ensemble}</p>
-      <p className="text-sm text-gray-500">
-        {location} • {musicians}
-      </p>
-      <p className="mt-2">
-        <span className="font-semibold">Instrument:</span> {instrument}
-      </p>
-      <p>
-        <span className="font-semibold">Experience:</span> {experience} years
-      </p>
-      <Link to="/posts/$postId" params={{ postId: id }} className="inline-block mt-4 text-blue-600 hover:underline">
-        View Details
-      </Link>
-    </div>
+    <article className="border-2 border-gray-400 rounded-xl shadow-sm hover:shadow-md transition">
+      {/* Header Section */}
+      <div className="flex flex-row gap-4 justify-between bg-gray-200 pt-4 px-4">
+        {/* Ensemble Portrait */}
+        <img src={EnsemblePortrait} alt={`${ensemble} profile`} className="w-[50px] h-[50px] object-cover rounded-lg" />
+        {/* Ensemble Details */}
+        <div className="grow">
+          <h3 className="font-body font-bold text-red">{ensemble}</h3>
+          <p className="text-gray-800">
+            <span className="font-body text-sm font-bold pr-2">{location}</span>• <span className="font-body text-sm pl-2">{musicians}</span>
+          </p>
+        </div>
+        {/* Icon */}
+        <img src={EnsembleIcon} alt="ensemble icon" className="self-end opacity-20" />
+      </div>
+
+      {/* Post Title */}
+      <h4 className="font-body text-xl font-bold text-blue-800 p-4">{title}</h4>
+
+      {/* Instrument and Experience Section */}
+      <div className="flex flex-row justify-between px-4 pb-4">
+        <h5 className="font-header text-xl text-blue font-bold">{instrument}</h5>
+        <p className="font-body text-md text-gray-800 font-bold">
+          Erfaring
+          <span className="text-white bg-blue-800 p-2 rounded-xl ml-2">{experience}+</span>
+        </p>
+      </div>
+
+      {/* Link to Details */}
+      <div className="px-4 pb-4">
+        <Link to="/posts/$postId" params={{ postId: id }} className="text-blue-600 hover:underline font-body">
+          View Details
+        </Link>
+      </div>
+    </article>
   );
 };
