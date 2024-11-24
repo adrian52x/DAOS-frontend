@@ -40,7 +40,9 @@ function Register() {
 
 	if (!user) {
 		return (
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} className="bg-gray-200 p-6 lg:p-16">
+				<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl pb-6">Register</h2>
+
 				<InputField label="Name" name="name" placeholder="Enter your username" value={name} onChange={(e) => setName(e.target.value)} required />
 
 				<InputField label="Email" name="email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
