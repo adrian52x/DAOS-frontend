@@ -10,7 +10,7 @@ export function Instruments({ instruments }: { instruments: Instrument[] }) {
 	return (
 		<div className="bg-white shadow rounded-lg p-6">
 			<h2 className="text-xl font-bold mb-4">My Instruments</h2>
-			{instruments.length === 0 ? (
+			{!instruments || instruments.length === 0 ? (
 				<div className="text-center">
 					<p className="mb-4">You haven't added any instruments yet.</p>
 					<Button variant="primary">Add an instrument</Button>

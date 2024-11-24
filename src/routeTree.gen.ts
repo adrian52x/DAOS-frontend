@@ -16,7 +16,9 @@ import { Route as IndexImport } from './routes/index';
 import { Route as ProfileIndexImport } from './routes/profile/index';
 import { Route as PostsIndexImport } from './routes/posts/index';
 import { Route as ProfileUpdateImport } from './routes/profile/update';
+import { Route as PostsCreateImport } from './routes/posts/create';
 import { Route as PostsPostIdImport } from './routes/posts/$postId';
+import { Route as EnsemblesCreateImport } from './routes/ensembles/create';
 import { Route as authRegisterImport } from './routes/(auth)/register';
 import { Route as authLoginImport } from './routes/(auth)/login';
 
@@ -52,9 +54,21 @@ const ProfileUpdateRoute = ProfileUpdateImport.update({
 	getParentRoute: () => rootRoute,
 } as any);
 
+const PostsCreateRoute = PostsCreateImport.update({
+	id: '/posts/create',
+	path: '/posts/create',
+	getParentRoute: () => rootRoute,
+} as any);
+
 const PostsPostIdRoute = PostsPostIdImport.update({
 	id: '/posts/$postId',
 	path: '/posts/$postId',
+	getParentRoute: () => rootRoute,
+} as any);
+
+const EnsemblesCreateRoute = EnsemblesCreateImport.update({
+	id: '/ensembles/create',
+	path: '/ensembles/create',
 	getParentRoute: () => rootRoute,
 } as any);
 
@@ -102,11 +116,25 @@ declare module '@tanstack/react-router' {
 			preLoaderRoute: typeof authRegisterImport;
 			parentRoute: typeof rootRoute;
 		};
+		'/ensembles/create': {
+			id: '/ensembles/create';
+			path: '/ensembles/create';
+			fullPath: '/ensembles/create';
+			preLoaderRoute: typeof EnsemblesCreateImport;
+			parentRoute: typeof rootRoute;
+		};
 		'/posts/$postId': {
 			id: '/posts/$postId';
 			path: '/posts/$postId';
 			fullPath: '/posts/$postId';
 			preLoaderRoute: typeof PostsPostIdImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/posts/create': {
+			id: '/posts/create';
+			path: '/posts/create';
+			fullPath: '/posts/create';
+			preLoaderRoute: typeof PostsCreateImport;
 			parentRoute: typeof rootRoute;
 		};
 		'/profile/update': {
@@ -140,7 +168,9 @@ export interface FileRoutesByFullPath {
 	'/react': typeof ReactRoute;
 	'/login': typeof authLoginRoute;
 	'/register': typeof authRegisterRoute;
+	'/ensembles/create': typeof EnsemblesCreateRoute;
 	'/posts/$postId': typeof PostsPostIdRoute;
+	'/posts/create': typeof PostsCreateRoute;
 	'/profile/update': typeof ProfileUpdateRoute;
 	'/posts': typeof PostsIndexRoute;
 	'/profile': typeof ProfileIndexRoute;
@@ -151,7 +181,9 @@ export interface FileRoutesByTo {
 	'/react': typeof ReactRoute;
 	'/login': typeof authLoginRoute;
 	'/register': typeof authRegisterRoute;
+	'/ensembles/create': typeof EnsemblesCreateRoute;
 	'/posts/$postId': typeof PostsPostIdRoute;
+	'/posts/create': typeof PostsCreateRoute;
 	'/profile/update': typeof ProfileUpdateRoute;
 	'/posts': typeof PostsIndexRoute;
 	'/profile': typeof ProfileIndexRoute;
@@ -163,7 +195,9 @@ export interface FileRoutesById {
 	'/react': typeof ReactRoute;
 	'/(auth)/login': typeof authLoginRoute;
 	'/(auth)/register': typeof authRegisterRoute;
+	'/ensembles/create': typeof EnsemblesCreateRoute;
 	'/posts/$postId': typeof PostsPostIdRoute;
+	'/posts/create': typeof PostsCreateRoute;
 	'/profile/update': typeof ProfileUpdateRoute;
 	'/posts/': typeof PostsIndexRoute;
 	'/profile/': typeof ProfileIndexRoute;
@@ -171,10 +205,10 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
 	fileRoutesByFullPath: FileRoutesByFullPath;
-	fullPaths: '/' | '/react' | '/login' | '/register' | '/posts/$postId' | '/profile/update' | '/posts' | '/profile';
+	fullPaths: '/' | '/react' | '/login' | '/register' | '/ensembles/create' | '/posts/$postId' | '/posts/create' | '/profile/update' | '/posts' | '/profile';
 	fileRoutesByTo: FileRoutesByTo;
-	to: '/' | '/react' | '/login' | '/register' | '/posts/$postId' | '/profile/update' | '/posts' | '/profile';
-	id: '__root__' | '/' | '/react' | '/(auth)/login' | '/(auth)/register' | '/posts/$postId' | '/profile/update' | '/posts/' | '/profile/';
+	to: '/' | '/react' | '/login' | '/register' | '/ensembles/create' | '/posts/$postId' | '/posts/create' | '/profile/update' | '/posts' | '/profile';
+	id: '__root__' | '/' | '/react' | '/(auth)/login' | '/(auth)/register' | '/ensembles/create' | '/posts/$postId' | '/posts/create' | '/profile/update' | '/posts/' | '/profile/';
 	fileRoutesById: FileRoutesById;
 }
 
@@ -183,7 +217,9 @@ export interface RootRouteChildren {
 	ReactRoute: typeof ReactRoute;
 	authLoginRoute: typeof authLoginRoute;
 	authRegisterRoute: typeof authRegisterRoute;
+	EnsemblesCreateRoute: typeof EnsemblesCreateRoute;
 	PostsPostIdRoute: typeof PostsPostIdRoute;
+	PostsCreateRoute: typeof PostsCreateRoute;
 	ProfileUpdateRoute: typeof ProfileUpdateRoute;
 	PostsIndexRoute: typeof PostsIndexRoute;
 	ProfileIndexRoute: typeof ProfileIndexRoute;
@@ -194,7 +230,9 @@ const rootRouteChildren: RootRouteChildren = {
 	ReactRoute: ReactRoute,
 	authLoginRoute: authLoginRoute,
 	authRegisterRoute: authRegisterRoute,
+	EnsemblesCreateRoute: EnsemblesCreateRoute,
 	PostsPostIdRoute: PostsPostIdRoute,
+	PostsCreateRoute: PostsCreateRoute,
 	ProfileUpdateRoute: ProfileUpdateRoute,
 	PostsIndexRoute: PostsIndexRoute,
 	ProfileIndexRoute: ProfileIndexRoute,
@@ -212,7 +250,9 @@ export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileT
         "/react",
         "/(auth)/login",
         "/(auth)/register",
+        "/ensembles/create",
         "/posts/$postId",
+        "/posts/create",
         "/profile/update",
         "/posts/",
         "/profile/"
@@ -230,8 +270,14 @@ export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileT
     "/(auth)/register": {
       "filePath": "(auth)/register.tsx"
     },
+    "/ensembles/create": {
+      "filePath": "ensembles/create.tsx"
+    },
     "/posts/$postId": {
       "filePath": "posts/$postId.tsx"
+    },
+    "/posts/create": {
+      "filePath": "posts/create.tsx"
     },
     "/profile/update": {
       "filePath": "profile/update.tsx"

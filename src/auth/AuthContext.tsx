@@ -5,6 +5,7 @@ interface AuthContextType {
 	user: any;
 	setUser: React.Dispatch<React.SetStateAction<any>>;
 	loading: boolean;
+	token: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -12,6 +13,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<any>(null);
 	const [loading, setLoading] = useState<boolean>(true);
+	const [token, setToken] = useState<string | null>(null);
 
 	useEffect(() => {
 		const token = getCookie('access_token');
@@ -19,6 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			fetchUserData(token).then((userData) => {
 				if (userData) {
 					setUser(userData);
+					setToken(token);
 				}
 				setLoading(false);
 			});
@@ -27,7 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		}
 	}, []);
 
-	return <AuthContext.Provider value={{ user, setUser, loading }}>{children}</AuthContext.Provider>;
+	return <AuthContext.Provider value={{ user, setUser, loading, token }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = (): AuthContextType => {

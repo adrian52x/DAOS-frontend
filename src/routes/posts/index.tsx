@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { createFileRoute, Link, Outlet } from '@tanstack/react-router';
 import { PostCard } from '../../components/PostCardMine';
+import { Post } from '../../types/types';
+import { Button } from '../../components/Button';
 
 export const Route = createFileRoute('/posts/')({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const [posts, setPosts] = useState<any[]>([]);
+	const [posts, setPosts] = useState<Post[]>([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -32,18 +34,17 @@ function RouteComponent() {
 
 	return (
 		<>
+			<Link to="/posts/create">
+				<Button variant="primary">Create post</Button>
+			</Link>
+
+			<Link to="/ensembles/create">
+				<Button variant="primary">Create ensemble</Button>
+			</Link>
+
 			<div className="p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 				{posts.map((post) => (
-					<PostCard
-						key={post._id}
-						id={post._id}
-						title={post.title}
-						ensemble={post.ensemble || 'Unknown Ensemble'}
-						location={post.location || 'Location'}
-						musicians={post.musicians || 'Members'}
-						instrument={post.instrument || 'Unknown Instrument'}
-						experience={post.experience}
-					/>
+					<PostCard key={post._id} post={post} />
 				))}
 			</div>
 			<Outlet />

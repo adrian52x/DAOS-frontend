@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Navigate } from '@tanstack/react-router';
 import { useAuth } from '../../auth/AuthContext';
 import { FormEvent, useState } from 'react';
 
@@ -7,7 +7,7 @@ export const Route = createFileRoute('/profile/update')({
 });
 
 function ProfileUpdate() {
-	const { user } = useAuth();
+	const { user, loading } = useAuth();
 	const [userData, setUserData] = useState(user);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -21,6 +21,14 @@ function ProfileUpdate() {
 		console.log('Updated user data:', userData);
 		// Add API call here
 	};
+
+	if (loading) {
+		return <div>Loading...</div>;
+	}
+
+	if (!user) {
+		return <Navigate to="/login" />;
+	}
 
 	return (
 		<div className="container mx-auto p-4">

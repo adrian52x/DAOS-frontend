@@ -6,13 +6,14 @@ import { SecondaryCTA } from '../components/SecondaryCTA';
 import { PrimaryCTA } from '../components/PrimaryCTA';
 import { ReviewCard } from '../components/ReviewCard';
 import { PostCardEnsemble } from '../components/PostCard';
+import { Post } from '../types/types';
 
 export const Route = createFileRoute('/')({
 	component: Index,
 });
 
 function Index() {
-	const [posts, setPosts] = useState([]); // State to store posts
+	const [posts, setPosts] = useState<Post[]>([]); // State to store posts
 	const [loading, setLoading] = useState(true); // Loading state to show a spinner or message
 
 	useEffect(() => {
@@ -22,6 +23,7 @@ function Index() {
 			.then((data) => {
 				setPosts(data); // Set the posts in state
 				setLoading(false); // Stop the loading state
+				console.log('Fetched posts:', data); // Log the fetched posts
 			})
 			.catch((error) => {
 				console.error('Error fetching posts:', error); // Log any errors

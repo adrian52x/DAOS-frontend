@@ -11,6 +11,7 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
+		"@tanstack/react-query": "^5.61.0",
 		"@tanstack/react-router": "^1.79.0",
 		"@tanstack/router-vite-plugin": "^1.15.22",
 		"react": "^18.2.0",
