@@ -9,7 +9,7 @@ export const Route = createFileRoute('/(auth)/login')({
 function Login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const { user, setUser } = useAuth();
+	const { user, setUser, setToken } = useAuth();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -27,6 +27,7 @@ function Login() {
 
 			if (response.ok) {
 				setUser(data);
+				setToken(data.access_token);
 				alert('Login successful');
 			} else {
 				alert(data.message);

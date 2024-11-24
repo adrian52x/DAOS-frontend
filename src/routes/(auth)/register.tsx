@@ -10,7 +10,7 @@ function Register() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [name, setName] = useState('');
-	const { user, setUser } = useAuth();
+	const { user, setUser, setToken } = useAuth();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -27,6 +27,7 @@ function Register() {
 
 			if (response.ok) {
 				setUser(data);
+				setToken(data.access_token);
 				alert('Register successful');
 			} else {
 				alert(data.message);
