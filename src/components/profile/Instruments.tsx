@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { Button } from '../Button';
 
 type Instrument = {
@@ -13,7 +14,9 @@ export function Instruments({ instruments }: { instruments: Instrument[] }) {
 			{!instruments || instruments.length === 0 ? (
 				<div className="text-center">
 					<p className="mb-4">You haven't added any instruments yet.</p>
-					<Button variant="primary">Add an instrument</Button>
+					<Link to="/profile/add-instrument">
+						<Button variant="primary">Add an instrument</Button>
+					</Link>
 				</div>
 			) : (
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -26,6 +29,9 @@ export function Instruments({ instruments }: { instruments: Instrument[] }) {
 							<p>Genre: {instrument.genre}</p>
 						</div>
 					))}
+					<Link to="/profile/add-instrument">
+						<Button variant="primary">Add an instrument</Button>
+					</Link>
 				</div>
 			)}
 		</div>

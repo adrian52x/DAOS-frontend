@@ -1,25 +1,67 @@
 import { createFileRoute, Navigate } from '@tanstack/react-router';
 import { useAuth } from '../../auth/AuthContext';
-import { FormEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/profile/update')({
 	component: ProfileUpdate,
 });
 
 function ProfileUpdate() {
-	const { user, loading } = useAuth();
-	const [userData, setUserData] = useState(user);
+	const { user, loading, token } = useAuth();
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-		const { name, value } = e.target;
-		setUserData((prevData: any) => ({ ...prevData, [name]: value }));
-	};
+	const [name, setName] = useState('');
+	const [dateOfBirth, setDateOfBirth] = useState('');
+	const [phone, setPhone] = useState('');
+	const [address, setAddress] = useState('');
+	const [zipCode, setZipcode] = useState('');
+	const [profileText, setProfileText] = useState('');
 
-	const handleSubmit = (e: FormEvent) => {
+
+	useEffect(() => {
+		if (user) {
+			setName(user.name || '');
+			setPhone(user.phone || '');
+			setDateOfBirth(user.dateOfBirth ? new Date(user.dateOfBirth).toISOString().split('T')[0] : '');
+			setProfileText(user.profileText || '');
+			setAddress(user.address || '');
+			setZipcode(user.zipCode || '');
+		}
+	}, [user]);
+
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		// Here you would typically send the updated data to your API
-		console.log('Updated user data:', userData);
-		// Add API call here
+		const userData = {
+			name,
+			dateOfBirth: dateOfBirth ? new Date(dateOfBirth).toISOString() : null,
+			phone,
+			address,
+			zipCode,
+			profileText,
+		};
+
+		console.log('userData', userData);
+		
+		try {
+			const response = await fetch('http://localhost:3000/api/users', {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(userData),
+				credentials: 'include',
+			});
+			const data = await response.json();
+			if (response.ok) {
+				alert('User updated successfully');
+				console.log('User updated:', data);
+			} else {
+				alert(`Error: ${data.message}`);
+			}
+		} catch (error) {
+			console.error('Error updating user:', error);
+			alert('Error updating user');
+		}
 	};
 
 	if (loading) {
@@ -36,7 +78,7 @@ function ProfileUpdate() {
 			<form onSubmit={handleSubmit} className="space-y-6">
 				<div className="flex items-center space-x-6">
 					<div className="shrink-0">
-						<img src={user.img} alt={user.img} className="w-16 h-16" />
+						<img src="/img" alt="/img" className="w-16 h-16" />
 					</div>
 					<label className="block">
 						<span className="sr-only">Choose profile photo</span>
@@ -61,8 +103,22 @@ function ProfileUpdate() {
 						type="text"
 						id="name"
 						name="name"
-						value={userData.name}
-						onChange={handleChange}
+						value={name}
+						onChange={(e) => setName(e.target.value)}
+						className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+					/>
+				</div> 
+
+				<div>
+					<label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700">
+						Date of Birth
+					</label>
+					<input
+						type="date"
+						id="dateOfBirth"
+						name="dateOfBirth"
+						value={dateOfBirth}
+						onChange={(e) => setDateOfBirth(e.target.value)}
 						className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
 					/>
 				</div>
@@ -75,8 +131,8 @@ function ProfileUpdate() {
 						type="tel"
 						id="phone"
 						name="phone"
-						value={userData.phone}
-						onChange={handleChange}
+						value={phone}
+						onChange={(e) => setPhone(e.target.value)}
 						className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
 					/>
 				</div>
@@ -89,8 +145,8 @@ function ProfileUpdate() {
 						type="text"
 						id="address"
 						name="address"
-						value={userData.address}
-						onChange={handleChange}
+						value={address}
+						onChange={(e) => setAddress(e.target.value)}
 						className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
 					/>
 				</div>
@@ -103,8 +159,8 @@ function ProfileUpdate() {
 						type="text"
 						id="zipcode"
 						name="zipcode"
-						value={userData.zipcode}
-						onChange={handleChange}
+						value={zipCode}
+						onChange={(e) => setZipcode(e.target.value)}
 						className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
 					/>
 				</div>
@@ -116,8 +172,8 @@ function ProfileUpdate() {
 					<textarea
 						id="profileText"
 						name="profileText"
-						value={userData.profileText}
-						onChange={handleChange}
+						value={profileText}
+						onChange={(e) => setProfileText(e.target.value)}
 						rows={4}
 						className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
 					></textarea>
