@@ -1,6 +1,8 @@
 import { createFileRoute, Navigate } from '@tanstack/react-router';
 import React, { useState } from 'react';
 import { useAuth } from '../../auth/AuthContext';
+import { InputField } from '../../components/InputField';
+import { Button } from '../../components/Button';
 
 export const Route = createFileRoute('/(auth)/register')({
 	component: Register,
@@ -39,23 +41,22 @@ function Register() {
 	if (!user) {
 		return (
 			<form onSubmit={handleSubmit}>
-				<div>
-					<label>Name:</label>
-					<input type="name" value={name} onChange={(e) => setName(e.target.value)} />
-				</div>
-				<div>
-					<label>Email:</label>
-					<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-				</div>
-				<div>
-					<label>Password:</label>
-					<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-				</div>
+				<InputField label="Name" name="name" placeholder="Enter your username" value={name} onChange={(e) => setName(e.target.value)} required />
+
+				<InputField label="Email" name="email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+
+				<InputField
+					label="Password"
+					name="password"
+					type="password"
+					placeholder="Enter your password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+					required
+				/>
 				<br />
 
-				<button className="underline" type="submit">
-					Register
-				</button>
+				<Button type="submit">Register</Button>
 			</form>
 		);
 	} else {
