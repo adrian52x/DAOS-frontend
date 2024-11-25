@@ -25,6 +25,7 @@ export interface Post {
 	_id: string;
 	title: string;
 	description: string;
+	author: string;
 	instrument: Instrument;
 	ensemble: Ensemble;
 }
