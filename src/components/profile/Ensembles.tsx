@@ -24,6 +24,11 @@ export function Ensembles({ ensembles }: { ensembles: Ensemble[] }) {
 				{ensembles.map((ensemble) => (
 					<li key={ensemble._id}>
 						{ensemble.name} | {ensemble.activeMembers} | {ensemble.address} | {ensemble.zipCode}{' '}
+						<div className="px-4 pb-4">
+							<Link to={`/ensembles/${ensemble._id}`} className="text-blue-600 hover:underline font-body">
+								View Details
+							</Link>
+						</div>
 					</li>
 				))}
 			</ul>

@@ -10,10 +10,22 @@ export interface Ensemble {
 	pendingRequests: string[];
 }
 
+export interface EnsembleById {
+	_id: string;
+	name: string;
+	address: string;
+	zipCode: string;
+	activeMembers: string;
+	owner: User;
+	members: string[];
+	pendingRequests: string[];
+}
+
 export interface Post {
 	_id: string;
 	title: string;
 	description: string;
+	author: string;
 	instrument: Instrument;
 	ensemble: Ensemble;
 }
