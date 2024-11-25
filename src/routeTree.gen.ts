@@ -20,6 +20,7 @@ import { Route as ProfileAddInstrumentImport } from './routes/profile/add-instru
 import { Route as PostsCreateImport } from './routes/posts/create'
 import { Route as PostsPostIdImport } from './routes/posts/$postId'
 import { Route as EnsemblesCreateImport } from './routes/ensembles/create'
+import { Route as EnsemblesEnsembleIdImport } from './routes/ensembles/$ensembleId'
 import { Route as authRegisterImport } from './routes/(auth)/register'
 import { Route as authLoginImport } from './routes/(auth)/login'
 
@@ -79,6 +80,12 @@ const EnsemblesCreateRoute = EnsemblesCreateImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const EnsemblesEnsembleIdRoute = EnsemblesEnsembleIdImport.update({
+  id: '/ensembles/$ensembleId',
+  path: '/ensembles/$ensembleId',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const authRegisterRoute = authRegisterImport.update({
   id: '/(auth)/register',
   path: '/register',
@@ -121,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof authRegisterImport
+      parentRoute: typeof rootRoute
+    }
+    '/ensembles/$ensembleId': {
+      id: '/ensembles/$ensembleId'
+      path: '/ensembles/$ensembleId'
+      fullPath: '/ensembles/$ensembleId'
+      preLoaderRoute: typeof EnsemblesEnsembleIdImport
       parentRoute: typeof rootRoute
     }
     '/ensembles/create': {
@@ -182,6 +196,7 @@ export interface FileRoutesByFullPath {
   '/react': typeof ReactRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
+  '/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute
   '/ensembles/create': typeof EnsemblesCreateRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/posts/create': typeof PostsCreateRoute
@@ -196,6 +211,7 @@ export interface FileRoutesByTo {
   '/react': typeof ReactRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
+  '/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute
   '/ensembles/create': typeof EnsemblesCreateRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/posts/create': typeof PostsCreateRoute
@@ -211,6 +227,7 @@ export interface FileRoutesById {
   '/react': typeof ReactRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
+  '/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute
   '/ensembles/create': typeof EnsemblesCreateRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/posts/create': typeof PostsCreateRoute
@@ -227,6 +244,7 @@ export interface FileRouteTypes {
     | '/react'
     | '/login'
     | '/register'
+    | '/ensembles/$ensembleId'
     | '/ensembles/create'
     | '/posts/$postId'
     | '/posts/create'
@@ -240,6 +258,7 @@ export interface FileRouteTypes {
     | '/react'
     | '/login'
     | '/register'
+    | '/ensembles/$ensembleId'
     | '/ensembles/create'
     | '/posts/$postId'
     | '/posts/create'
@@ -253,6 +272,7 @@ export interface FileRouteTypes {
     | '/react'
     | '/(auth)/login'
     | '/(auth)/register'
+    | '/ensembles/$ensembleId'
     | '/ensembles/create'
     | '/posts/$postId'
     | '/posts/create'
@@ -268,6 +288,7 @@ export interface RootRouteChildren {
   ReactRoute: typeof ReactRoute
   authLoginRoute: typeof authLoginRoute
   authRegisterRoute: typeof authRegisterRoute
+  EnsemblesEnsembleIdRoute: typeof EnsemblesEnsembleIdRoute
   EnsemblesCreateRoute: typeof EnsemblesCreateRoute
   PostsPostIdRoute: typeof PostsPostIdRoute
   PostsCreateRoute: typeof PostsCreateRoute
@@ -282,6 +303,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReactRoute: ReactRoute,
   authLoginRoute: authLoginRoute,
   authRegisterRoute: authRegisterRoute,
+  EnsemblesEnsembleIdRoute: EnsemblesEnsembleIdRoute,
   EnsemblesCreateRoute: EnsemblesCreateRoute,
   PostsPostIdRoute: PostsPostIdRoute,
   PostsCreateRoute: PostsCreateRoute,
@@ -305,6 +327,7 @@ export const routeTree = rootRoute
         "/react",
         "/(auth)/login",
         "/(auth)/register",
+        "/ensembles/$ensembleId",
         "/ensembles/create",
         "/posts/$postId",
         "/posts/create",
@@ -325,6 +348,9 @@ export const routeTree = rootRoute
     },
     "/(auth)/register": {
       "filePath": "(auth)/register.tsx"
+    },
+    "/ensembles/$ensembleId": {
+      "filePath": "ensembles/$ensembleId.tsx"
     },
     "/ensembles/create": {
       "filePath": "ensembles/create.tsx"

@@ -37,6 +37,10 @@ function Profile() {
 				},
 			});
 			const data = await response.json();
+			console.log('user', user);
+
+			console.log('ensembles', data);
+
 			return data;
 		},
 		enabled: !!user, // Only run the query if user is available
