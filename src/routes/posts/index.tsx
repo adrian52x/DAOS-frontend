@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { createFileRoute, Link, Outlet } from '@tanstack/react-router';
 import { PostCard } from '../../components/PostCardMine';
 import { Post } from '../../types/types';
-import { Button } from '../../components/Button';
+import { Button } from '../../components/elements/Button';
 
 export const Route = createFileRoute('/posts/')({
 	component: RouteComponent,

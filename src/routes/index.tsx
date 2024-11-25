@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, createFileRoute } from '@tanstack/react-router';
-import { Button } from '../components/Button';
+import { Button } from '../components/elements/Button';
 import HeroImage from '../assets/hero-illustration.svg';
 import { SecondaryCTA } from '../components/SecondaryCTA';
 import { PrimaryCTA } from '../components/PrimaryCTA';

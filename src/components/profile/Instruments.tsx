@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { Button } from '../Button';
+import { Button } from '../elements/Button';
 
 type Instrument = {
 	name: string;

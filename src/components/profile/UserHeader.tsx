@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { Button } from '../Button';
+import { Button } from '../elements/Button';
 
 export function UserHeader({ user }: { user: any }) {
 	const memberSince = new Date(user.createdAt).toLocaleDateString('en-US', {

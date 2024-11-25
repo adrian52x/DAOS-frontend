@@ -1,5 +1,5 @@
 import { Dropdown } from './DropdownMenu';
-import { Button } from './Button';
+import { Button } from './elements/Button';
 
 export function PrimaryCTA() {
 	const instruments = ['Guitar', 'Piano', 'Drums', 'Violin', 'Flute'];

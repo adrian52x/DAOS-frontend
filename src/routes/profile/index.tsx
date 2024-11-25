@@ -26,10 +26,10 @@ function Profile() {
 	});
 
 	// Query to get ensembles that the user owns
-	const ensemblesUserOwn = useQuery({
+	const ensemblesUserMember = useQuery({
 		queryKey: ['ensembles', user?._id], // Include userId in the query key
 		queryFn: async () => {
-			const response = await fetch(`http://localhost:3000/api/ensembles/own`, {
+			const response = await fetch(`http://localhost:3000/api/ensembles/member`, {
 				credentials: 'include',
 				headers: {
 					'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ function Profile() {
 				<UserHeader user={user} />
 				<ProfileText text={user.profileText} />
 				<Instruments instruments={user.instruments} />
-				<Ensembles ensembles={ensemblesUserOwn.data} />
+				<Ensembles ensembles={ensemblesUserMember.data} />
 				<Posts posts={postQuery.data} />
 			</div>
 			<Outlet />

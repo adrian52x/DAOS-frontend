@@ -113,6 +113,20 @@ function ProfileUpdate() {
 				</div> 
 
 				<div>
+					<label htmlFor="email" className="block text-sm font-medium text-gray-700">
+						Email
+					</label>
+					<input
+						type="email"
+						id="email"
+						name="email"
+						value={user?.email || ''}
+						disabled
+						className="mt-1 block w-full cursor-not-allowed"
+					/>
+				</div>
+
+				<div>
 					<label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700">
 						Date of Birth
 					</label>

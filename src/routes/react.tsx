@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button } from '../components/Button';
-import { Chip } from '../components/Chip';
-import { Tag } from '../components/Tag';
-import { TagFilter } from '../components/Tag-Filter';
+import { Button } from '../components/elements/Button';
+import { Chip } from '../components/elements/Chip';
+import { Tag } from '../components/elements/Tag';
+import { TagFilter } from '../components/elements/Tag-Filter';
 import { PrimaryCTA } from '../components/PrimaryCTA';
 import { ReviewCard } from '../components/ReviewCard';
 import { PostCardEnsemble } from '../components/PostCard';

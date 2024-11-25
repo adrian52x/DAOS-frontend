@@ -1,8 +1,8 @@
 import { createFileRoute, Navigate } from '@tanstack/react-router';
 import React, { useState } from 'react';
 import { useAuth } from '../../auth/AuthContext';
-import { InputField } from '../../components/InputField';
-import { Button } from '../../components/Button';
+import { InputField } from '../../components/elements/InputField';
+import { Button } from '../../components/elements/Button';
 
 export const Route = createFileRoute('/(auth)/register')({
 	component: Register,

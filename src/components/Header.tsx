@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { useAuth } from '../auth/AuthContext';
 import { singOut } from '../auth/utils';
-import { Button } from './Button';
+import { Button } from './elements/Button';
 import { MdMenu } from 'react-icons/md';
 import { useState } from 'react';
 
