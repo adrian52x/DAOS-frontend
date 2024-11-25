@@ -15,11 +15,22 @@ export function PostCard({ post }: { post: Post }) {
 				<img src={EnsemblePortrait} alt="propic" className="w-[50px] h-[50px] object-cover rounded-lg" />
 
 				<div className="grow">
-					<h3 className="font-body font-bold text-red">{post.ensemble?.name}</h3>
-					<p className="text-gray-800">
-						<span className="font-body text-sm font-bold pr-2">{post.ensemble?.address}</span>•{' '}
-						<span className="font-body text-sm pl-2">{post.ensemble?.activeMembers}</span>
-					</p>
+					{post.ensemble ? (
+						<>
+							<h3 className="font-body font-bold text-red">{post.ensemble.name}</h3>
+							<p className="text-gray-800 whitespace-nowrap">
+								<span className="font-body text-sm font-bold pr-2">{post.ensemble.address}</span>•{' '}
+								<span className="font-body text-sm pl-2">{post.ensemble.activeMembers} musikere</span>
+							</p>
+						</>
+					) : (
+						<>
+							<h3 className="font-body font-bold text-red">{post.author.name}</h3>
+							<p className="text-gray-800">
+								<span className="font-body text-sm font-bold pr-2">{post.author.address}</span>
+							</p>
+						</>
+					)}
 				</div>
 
 				<img src={EnsembleIcon} alt="ensemble icon" className="self-end opacity-20" />
