@@ -1,0 +1,13 @@
+.pageWrapper {
+	margin: 2rem 1rem; /* margin-top/bottom: 2rem, margin-left/right: 1rem for mobile */
+	display: flex;
+	flex-direction: column;
+	gap: 2rem; /* 32px spacing between elements */
+}
+
+@media (min-width: 640px) {
+	.pageWrapper {
+		margin: 4rem 6rem; /* Adds 4rem margin on all sides for larger screens */
+		gap: 4rem; /* 64px spacing between elements for larger screens */
+	}
+}

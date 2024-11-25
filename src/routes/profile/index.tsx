@@ -6,6 +6,7 @@ import { Instruments } from '../../components/profile/Instruments';
 import { Ensembles } from '../../components/profile/Ensembles';
 import { Posts } from '../../components/profile/Posts';
 import { useQuery } from '@tanstack/react-query';
+import styles from './ProfileIndex.module.css';
 
 export const Route = createFileRoute('/profile/')({
 	component: Profile,
@@ -56,7 +57,7 @@ function Profile() {
 
 	return (
 		<div>
-			<div className="container mx-auto p-4 space-y-8">
+			<div className={styles.pageWrapper}>
 				<UserHeader user={user} />
 				<ProfileText text={user.profileText} />
 				<Instruments instruments={user.instruments} />
