@@ -59,16 +59,27 @@ function RouteComponent() {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		const post = {
-			title,
-			description,
-			instrument: {
+		let post;
+
+		if (postType === 'play') {
+			const selectedInstrumentFromUser = user.instruments.find((inst: any) => inst.name === instrumentName);
+			post = {
+				title,
+				description,
+				instrument: selectedInstrumentFromUser,
+			};
+		} else if (postType === 'looking') {
+			post = {
+				title,
+				description,
+				instrument: {
 				name: instrumentName,
 				level: instrumentLevel,
 				genre: instrumentGenre,
-			},
-			ensemble: postType === 'looking' ? ensembleId : undefined,
-		};
+				},
+				ensemble: ensembleId,
+			};
+		}
 
 		try {
 			const response = await fetch('http://localhost:3000/api/posts', {
@@ -111,6 +122,7 @@ function RouteComponent() {
 				</label>
 			</div>{' '}
 			<br />
+
 			{postType && (
 				<form onSubmit={handleSubmit}>
 					<div>
@@ -125,58 +137,79 @@ function RouteComponent() {
 							<input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} required />
 						</label>
 					</div>
-					<div>
-						<label>
-							Instrument:
-							<select name="instrument" value={instrumentName} onChange={(e) => setInstrumentName(e.target.value)} required>
+					{postType === 'play' && (
+						<div>
+							<label>
+								Instrument:
+								<select value={instrumentName} onChange={(e) => setInstrumentName(e.target.value)} required>
 								<option value="" disabled>
 									Select an instrument
 								</option>
-								{instrumentsList.map((instrument) => (
-									<option key={instrument} value={instrument}>
-										{instrument}
+								{user.instruments.map((instrument: any, index: number) => (
+									<option key={index} value={instrument.name}>
+									{instrument.name} - Level {instrument.level} - {instrument.genre}
 									</option>
 								))}
-							</select>
-						</label>
-					</div>
-					<div>
-						<label>
-							Level:
-							<input type="number" name="level" value={instrumentLevel} min="1" max="5" onChange={(e) => setInstrumentLevel(Number(e.target.value))} required />
-						</label>
-					</div>
-					<div>
-						<label>
-							Genre:
-							<select name="genre" value={instrumentGenre} onChange={(e) => setInstrumentGenre(e.target.value)} required>
-								<option value="" disabled>
-									Select a genre
-								</option>
-								{genresList.map((genre) => (
-									<option key={genre} value={genre}>
-										{genre}
-									</option>
-								))}
-							</select>{' '}
-						</label>
-					</div>
-					{postType === 'looking' && (
-						<div>
-							<label>
-								Ensemble:
-								<select name="ensemble" value={ensembleId} onChange={(e) => setEnsembleId(e.target.value)} required>
-									<option value="" disabled>
-										Select an ensemble
-									</option>
-									{ensemblesUserOwn.data?.map((ensemble: any) => (
-										<option key={ensemble._id} value={ensemble._id}>
-											{ensemble.name}
-										</option>
-									))}
 								</select>
 							</label>
 						</div>
+					)}
+					
+					{postType === 'looking' && (
+						<>
+							<div>
+								<label>
+									Instrument:
+									<select name="instrument" value={instrumentName} onChange={(e) => setInstrumentName(e.target.value)} required>
+										<option value="" disabled>
+											Select an instrument
+										</option>
+										{instrumentsList.map((instrument) => (
+											<option key={instrument} value={instrument}>
+												{instrument}
+											</option>
+										))}
+									</select>
+								</label>
+							</div>
+							<div>
+								<label>
+									Level:
+									<input type="number" name="level" value={instrumentLevel} min="1" max="5" onChange={(e) => setInstrumentLevel(Number(e.target.value))} required />
+								</label>
+							</div>
+							<div>
+								<label>
+									Genre:
+									<select name="genre" value={instrumentGenre} onChange={(e) => setInstrumentGenre(e.target.value)} required>
+										<option value="" disabled>
+											Select a genre
+										</option>
+										{genresList.map((genre) => (
+											<option key={genre} value={genre}>
+												{genre}
+											</option>
+										))}
+									</select>{' '}
+								</label>
+							</div>
+							
+							<div>
+								<label>
+									Ensemble:
+									<select name="ensemble" value={ensembleId} onChange={(e) => setEnsembleId(e.target.value)} required>
+										<option value="" disabled>
+											Select an ensemble
+										</option>
+										{ensemblesUserOwn.data?.map((ensemble: any) => (
+											<option key={ensemble._id} value={ensemble._id}>
+												{ensemble.name}
+											</option>
+										))}
+									</select>
+								</label>
+							</div>
+						</>
 					)}
 					<br />
 					<button type="submit">Submit</button>

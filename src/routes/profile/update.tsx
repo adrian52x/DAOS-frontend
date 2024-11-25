@@ -1,13 +1,14 @@
 import { createFileRoute, Navigate } from '@tanstack/react-router';
 import { useAuth } from '../../auth/AuthContext';
 import { useEffect, useState } from 'react';
+import { fetchUserData } from '../../auth/utils';
 
 export const Route = createFileRoute('/profile/update')({
 	component: ProfileUpdate,
 });
 
 function ProfileUpdate() {
-	const { user, loading, token } = useAuth();
+	const { user, setUser, loading, token } = useAuth();
 
 	const [name, setName] = useState('');
 	const [dateOfBirth, setDateOfBirth] = useState('');
@@ -54,7 +55,9 @@ function ProfileUpdate() {
 			const data = await response.json();
 			if (response.ok) {
 				alert('User updated successfully');
-				console.log('User updated:', data);
+				if (token) {
+					setUser(await fetchUserData(token));
+				}
 			} else {
 				alert(`Error: ${data.message}`);
 			}
