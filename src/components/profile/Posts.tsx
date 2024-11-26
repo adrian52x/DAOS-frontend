@@ -1,8 +1,6 @@
-type Post = {
-	_id: string;
-	title: string;
-	content: string;
-};
+import { Link } from "@tanstack/react-router";
+import { Post } from "../../types/types";
+
 export function Posts({ posts }: { posts: Post[] }) {
 	console.log('posts', posts);
 
@@ -16,7 +14,14 @@ export function Posts({ posts }: { posts: Post[] }) {
 					{posts.map((post) => (
 						<li key={post._id} className="border-b border-gray-200 pb-4 last:border-b-0">
 							<h3 className="text-lg font-semibold mb-2">{post.title}</h3>
-							<p className="text-gray-600">{post.content}</p>
+							<p className="text-gray-600">{post.description}</p>
+              
+				        {post.ensemble && post.ensemble.pendingRequests?.length > 0 && (
+                    <Link to={`/ensembles/${post.ensemble._id}`}>
+                      <button className="bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-700">Incoming Requests</button>
+                    </Link>
+                )}
+              <hr />
 						</li>
 					))}
 				</ul>

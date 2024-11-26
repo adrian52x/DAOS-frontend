@@ -26,22 +26,7 @@ function PostDetailsRoute() {
 				}
 				const data = await response.json();
 
-				// Add missing fields to the response
-				const enrichedData = {
-					...data,
-					createdAt: '13. august 2020', // Replace with actual data
-					organization: {
-						name: 'Musician Network', // Replace with actual data
-						location: 'Copenhagen', // Replace with actual data
-						size: '10 - 20 musicians', // Replace with actual data
-					},
-					minimumLevel: {
-						level: 3, // Replace with actual data
-						description: 'Suitable for someone with 2-4 years of experience and basic sight-reading skills.', // Replace with actual data
-					},
-				};
-
-				setPostData(enrichedData);
+				setPostData(data);
 			} catch (err) {
 				const errorMessage = err instanceof Error ? err.message : String(err);
 				setError(errorMessage);

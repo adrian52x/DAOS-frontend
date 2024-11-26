@@ -47,3 +47,9 @@ export interface User {
 	profileText: string;
 	createDate: string;
 }
+
+export enum JoinRequestAction {
+	ACCEPT = 'accept',
+	REJECT = 'reject',
+}
+  

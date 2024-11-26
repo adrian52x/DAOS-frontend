@@ -1,17 +1,45 @@
 import React from 'react';
 import { Post } from '../types/types';
 import EnsemblePortrait from '../assets/ensemble-portrait.jpeg';
-
+import { useAuth } from '../auth/AuthContext';
 interface PostDetailsProps {
 	postData: Post;
 }
 const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
+	const { token } = useAuth();
+
 	if (!postData) {
 		return <p>Loading...</p>;
 	}
 
 	console.log('postData', postData);
-	
+
+
+	async function handleJoin() {
+		try {
+			const response = await fetch(`http://localhost:3000/api/ensembles/join/${postData.ensemble._id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				credentials: 'include',
+			});
+			const data = await response.json();
+			if (response.ok) {
+				alert('Request sent successfully');
+				console.log(data);
+				
+			} else {
+				alert(`Error: ${data.message}`);
+			}
+		} catch (error) {
+			console.error('Error updating user:', error);
+			alert('Error updating user');
+		}
+		
+
+	}
 
 	return (
 		<div className="p-6 max-w-4xl mx-auto bg-gray-50 border border-gray-300 rounded-lg shadow-md">
@@ -66,7 +94,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 			</div>
 			{/* Contact Button - is not doing anything */}
 			<div className="flex justify-center mt-8">
-				<button className="bg-blue-900 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-blue-700">Kontakt</button>
+				<button onClick={handleJoin} className="bg-blue-900 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-blue-700">Join Ensemble</button>
 			</div>
 		</div>
 	);
