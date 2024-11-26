@@ -6,7 +6,7 @@ import { Instruments } from '../../components/profile/Instruments';
 import { Ensembles } from '../../components/profile/Ensembles';
 import { Posts } from '../../components/profile/Posts';
 import { useQuery } from '@tanstack/react-query';
-import styles from './ProfileIndex.module.css';
+import styles from '/src/styles/globalStyles.module.css';
 
 export const Route = createFileRoute('/profile/')({
 	component: Profile,
