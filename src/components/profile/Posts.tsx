@@ -17,7 +17,7 @@ export function Posts({ posts }: { posts: Post[] }) {
 							<p className="text-gray-600">{post.description}</p>
               
 				        {post.ensemble && post.ensemble.pendingRequests?.length > 0 && (
-                    <Link to={`/ensembles/${post.ensemble._id}`}>
+                    <Link to={`/posts/${post._id}`}>
                       <button className="bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-700">Incoming Requests</button>
                     </Link>
                 )}

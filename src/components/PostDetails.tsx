@@ -1,19 +1,18 @@
 import React from 'react';
-import { Post } from '../types/types';
+import { JoinRequestAction, Post } from '../types/types';
 import EnsemblePortrait from '../assets/ensemble-portrait.jpeg';
 import { useAuth } from '../auth/AuthContext';
 interface PostDetailsProps {
 	postData: Post;
 }
 const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
-	const { token } = useAuth();
+	const { user, token } = useAuth();
 
 	if (!postData) {
 		return <p>Loading...</p>;
 	}
 
 	console.log('postData', postData);
-
 
 	async function handleJoin() {
 		try {
@@ -37,8 +36,30 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 			console.error('Error updating user:', error);
 			alert('Error updating user');
 		}
-		
+	}
 
+	async function handleJoinRequest(action: JoinRequestAction, userId: string) {
+		try {
+			const response = await fetch(`http://localhost:3000/api/ensembles/${postData.ensemble._id}/handle-request/${userId}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({ action }),
+				credentials: 'include',
+			});
+			const data = await response.json();
+			
+			if (response.ok) {
+				alert('Request handled successfully');
+				console.log(data);
+			} else {
+				alert(`Error: ${data.message}`);
+			}
+		} catch (error) {
+			console.error('Error handling join request:', error);
+		}
 	}
 
 	return (
@@ -93,9 +114,44 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 				</div>
 			</div>
 			{/* Contact Button - is not doing anything */}
-			<div className="flex justify-center mt-8">
-				<button onClick={handleJoin} className="bg-blue-900 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-blue-700">Join Ensemble</button>
-			</div>
+			
+
+			{user && user._id === postData.ensemble.owner ? (
+				// {/* Pending Requests */}
+				<div className="bg-white border border-gray-600 rounded-lg p-4 shadow-sm mt-8">
+					<h3 className="text-xl font-header text-blue-800 mb-2">Pending Requests</h3>
+					{postData.ensemble.pendingRequests?.length > 0 ? (
+						<ul>
+							{postData.ensemble.pendingRequests.map((userId, index) => (
+								<div key={index}>
+									<li className="text-base text-gray-800 font-body leading-relaxed">
+										{userId} 
+									</li>
+									<div className="flex space-x-6">
+									<button onClick={() => handleJoinRequest(JoinRequestAction.ACCEPT, userId)}>Accept</button>
+									<button onClick={() => handleJoinRequest(JoinRequestAction.REJECT, userId)}>Reject</button>
+									</div>
+								
+								</div>
+							))}
+						</ul>
+					) : (
+						<div className="flex justify-center mt-8">
+							<p>No pending requests</p>
+						</div>
+					)}
+				</div>
+			): (
+				<div className="flex justify-center mt-8">
+					<button 
+						onClick={handleJoin} 
+						className="bg-blue-900 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-blue-700"
+						disabled={postData.ensemble.members.includes(user?._id)}
+					>
+						Join Ensemble
+					</button>
+				</div>
+			)}
 		</div>
 	);
 };
