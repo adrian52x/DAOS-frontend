@@ -10,6 +10,9 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 		return <p>Loading...</p>;
 	}
 
+	console.log('postData', postData);
+	
+
 	return (
 		<div className="p-6 max-w-4xl mx-auto bg-gray-50 border border-gray-300 rounded-lg shadow-md">
 			{/* Title Section */}
@@ -17,15 +20,25 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 			<p className="text-sm text-gray-600">date</p>
 
 			{/* Ensemble Info */}
-			<div className="flex items-center bg-white border border-gray-300 rounded-lg p-4 shadow-sm mt-6">
-				<img src={EnsemblePortrait} alt={postData.ensemble.name} className="rounded-lg w-16 h-16 object-cover" />
-				<div className="ml-4">
-					<h2 className="font-bold text-lg text-red-800">{postData.ensemble?.name}</h2>
-					<p className="text-gray-700 text-sm">
-						{postData.ensemble.address} • {postData.ensemble?.activeMembers}
-					</p>
+			{postData.ensemble ? (
+				<div className="flex items-center bg-white border border-gray-300 rounded-lg p-4 shadow-sm mt-6">
+					<img src={EnsemblePortrait} alt={postData.ensemble.name} className="rounded-lg w-16 h-16 object-cover" />
+					<div className="ml-4">
+						<h2 className="font-bold text-lg text-red-800">{postData.ensemble.name}</h2>
+						<p className="text-gray-700 text-sm">
+							{postData.ensemble.address} • {postData.ensemble.activeMembers}
+						</p>
+					</div>
 				</div>
-			</div>
+			) : (
+				// User info
+				<div className="flex items-center bg-white border border-gray-300 rounded-lg p-4 shadow-sm mt-6">
+					<div className="ml-4">
+						<h2 className="font-bold text-lg text-red-800">{postData.author.name}</h2>
+						<h2 className="font-bold text-lg text-red-800">{postData.author.address}</h2>
+					</div>
+				</div>
+			)}
 			{/* Edit Button - we need to have that only when you are the owner of the post */}
 			<div className="flex justify-center mt-6">
 				<button className="bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-700">Rediger opslag</button>

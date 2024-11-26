@@ -32,6 +32,9 @@ function RouteComponent() {
 		return <div className="text-center text-gray-600">Loading posts...</div>;
 	}
 
+	console.log('posts', posts);
+	
+
 	return (
 		<>
 			<Link to="/posts/create">
