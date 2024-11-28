@@ -3,6 +3,7 @@ import { createFileRoute, Link, Outlet } from '@tanstack/react-router';
 import { PostCard } from '../../components/PostCardMine';
 import { Post } from '../../types/types';
 import { Button } from '../../components/elements/Button';
+import styles from '/src/styles/globalStyles.module.css';
 
 export const Route = createFileRoute('/posts/')({
 	component: RouteComponent,
@@ -33,24 +34,21 @@ function RouteComponent() {
 	}
 
 	console.log('posts', posts);
-	
 
 	return (
-		<>
+		<div className={styles.sectionWrapper}>
+			<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">All posts</h2>
+
 			<Link to="/posts/create">
 				<Button variant="primary">Create post</Button>
 			</Link>
 
-			<Link to="/ensembles/create">
-				<Button variant="primary">Create ensemble</Button>
-			</Link>
-
-			<div className="p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 				{posts.map((post) => (
 					<PostCard key={post._id} post={post} />
 				))}
 			</div>
 			<Outlet />
-		</>
+		</div>
 	);
 }
