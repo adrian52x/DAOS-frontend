@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../auth/AuthContext';
 import { InputField } from '../../components/elements/InputField';
 import { Button } from '../../components/elements/Button';
+import styles from '/src/styles/globalStyles.module.css';
 
 export const Route = createFileRoute('/(auth)/register')({
 	component: Register,
@@ -41,26 +42,28 @@ function Register() {
 
 	if (!user) {
 		return (
-			<form onSubmit={handleSubmit} className="bg-gray-200 p-6 lg:p-16">
-				<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl pb-6">Register</h2>
+			<div className={styles.grayBackground}>
+				<form onSubmit={handleSubmit} className={styles.pageWrapper}>
+					<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">Register</h2>
+					<div className="space-y-6">
+						<InputField label="Name" name="name" placeholder="Enter your username" value={name} onChange={(e) => setName(e.target.value)} required />
 
-				<InputField label="Name" name="name" placeholder="Enter your username" value={name} onChange={(e) => setName(e.target.value)} required />
+						<InputField label="Email" name="email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
-				<InputField label="Email" name="email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+						<InputField
+							label="Password"
+							name="password"
+							type="password"
+							placeholder="Enter your password"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							required
+						/>
+					</div>
 
-				<InputField
-					label="Password"
-					name="password"
-					type="password"
-					placeholder="Enter your password"
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-					required
-				/>
-				<br />
-
-				<Button type="submit">Register</Button>
-			</form>
+					<Button type="submit">Register</Button>
+				</form>
+			</div>
 		);
 	} else {
 		return <Navigate to="/" />;

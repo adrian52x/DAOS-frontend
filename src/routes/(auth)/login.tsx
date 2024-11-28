@@ -1,6 +1,9 @@
 import { createFileRoute, Navigate } from '@tanstack/react-router';
 import React, { useState } from 'react';
 import { useAuth } from '../../auth/AuthContext';
+import styles from '/src/styles/globalStyles.module.css';
+import { InputField } from '../../components/elements/InputField';
+import { Button } from '../../components/elements/Button';
 
 export const Route = createFileRoute('/(auth)/login')({
 	component: Login,
@@ -39,21 +42,27 @@ function Login() {
 
 	if (!user) {
 		return (
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label>Email:</label>
-					<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-				</div>
-				<div>
-					<label>Password:</label>
-					<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-				</div>
-				<br />
+			<div className={styles.grayBackground}>
+				<form onSubmit={handleSubmit} className={styles.pageWrapper}>
+					<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">Login</h2>
 
-				<button className="underline" type="submit">
-					Login
-				</button>
-			</form>
+					<div className="space-y-6">
+						<InputField label="Email" name="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+
+						<InputField
+							label="Password"
+							name="password"
+							type="password"
+							placeholder="Enter your password"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							required
+						/>
+					</div>
+
+					<Button type="submit">Register</Button>
+				</form>
+			</div>
 		);
 	} else {
 		return <Navigate to="/" />;
