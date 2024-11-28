@@ -1,8 +1,11 @@
 import { createFileRoute, Navigate } from '@tanstack/react-router';
 import { useAuth } from '../../auth/AuthContext';
 import { useState } from 'react';
-
 import { acitveMembersList } from '../../types/data';
+import styles from '/src/styles/globalStyles.module.css';
+import { InputField } from '../../components/elements/InputField';
+import { Button } from '../../components/elements/Button';
+import { Dropdown } from '../../components/Dropdown';
 
 export const Route = createFileRoute('/ensembles/create')({
 	component: RouteComponent,
@@ -56,45 +59,24 @@ function RouteComponent() {
 	}
 
 	return (
-		<div>
-			<h1>Create Ensemble</h1> <br />
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label>
-						name:
-						<input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} required />
-					</label>
-				</div>
-				<div>
-					<label>
-						address:
-						<input type="text" name="address" value={address} onChange={(e) => setAddress(e.target.value)} required />
-					</label>
-				</div>
-				<div>
-					<label>
-						zipCode:
-						<input type="text" name="zipCode" value={zipCode} onChange={(e) => setZipCode(e.target.value)} required />
-					</label>
-				</div>
-				<div>
-					<label>
-						activeMembers:
-						<select name="activeMembers" value={activeMembers} onChange={(e) => setActiveMembers(e.target.value)} required>
-							<option value="" disabled>
-								Select how many active memmbers
-							</option>
-							{acitveMembersList.map((active) => (
-								<option key={active} value={active}>
-									{active}
-								</option>
-							))}
-						</select>
-					</label>
+		<div className={styles.grayBackground}>
+			<form onSubmit={handleSubmit} className={styles.sectionWrapper}>
+				<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">Create ensemble</h2>
+
+				<div className={styles.gaps}>
+					<InputField label="Name" name="name" placeholder="Enter your username" value={name} onChange={(e) => setName(e.target.value)} required />
+					<InputField label="Address" name="address" placeholder="Eensemble address" value={address} onChange={(e) => setAddress(e.target.value)} required />
+					<InputField label="Zip Code" name="zipcode" placeholder="****" value={zipCode} onChange={(e) => setZipCode(e.target.value)} required />
+					<Dropdown
+						options={acitveMembersList}
+						label="Active members"
+						placeholder="Select the number of active members"
+						value={activeMembers}
+						onChange={(value) => setActiveMembers(value)}
+					/>
 				</div>
 
-				<br />
-				<button type="submit">Submit</button>
+				<Button type="submit">Create ensenble</Button>
 			</form>
 		</div>
 	);
