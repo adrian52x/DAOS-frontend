@@ -8,8 +8,6 @@ import { ReviewCard } from '../components/ReviewCard';
 import { PostCardEnsemble } from '../components/PostCard';
 import { Post } from '../types/types';
 import styles from '/src/styles/globalStyles.module.css';
-import { Dropdown } from '../components/Dropdown';
-
 export const Route = createFileRoute('/')({
 	component: Index,
 });
