@@ -1,17 +1,32 @@
-.pageWrapper {
-	padding: 2rem 1rem;
+/* Section styling */
+.sectionWrapper {
+	padding: 3rem 4rem 3rem 4rem;
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
 }
-
-@media (min-width: 640px) {
-	.pageWrapper {
-		padding: 4rem 6rem;
-		gap: 4rem;
+@media (max-width: 640px) {
+	.sectionWrapper {
+		padding: 1.5rem 2rem 1.5rem 2rem;
+		gap: 1rem;
 	}
 }
 
 .grayBackground {
 	background-color: #f9f9f9;
+}
+
+.blueBackground {
+	background-color: #353a5d;
+}
+
+.gaps {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+@media (max-width: 640px) {
+	.gaps {
+		gap: 1rem;
+	}
 }

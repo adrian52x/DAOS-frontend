@@ -11,7 +11,6 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ReactImport } from './routes/react'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProfileIndexImport } from './routes/profile/index'
 import { Route as PostsIndexImport } from './routes/posts/index'
@@ -25,12 +24,6 @@ import { Route as authRegisterImport } from './routes/(auth)/register'
 import { Route as authLoginImport } from './routes/(auth)/login'
 
 // Create/Update Routes
-
-const ReactRoute = ReactImport.update({
-  id: '/react',
-  path: '/react',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -107,13 +100,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/react': {
-      id: '/react'
-      path: '/react'
-      fullPath: '/react'
-      preLoaderRoute: typeof ReactImport
       parentRoute: typeof rootRoute
     }
     '/(auth)/login': {
@@ -193,7 +179,6 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/react': typeof ReactRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute
@@ -208,7 +193,6 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/react': typeof ReactRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute
@@ -224,7 +208,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/react': typeof ReactRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
   '/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute
@@ -241,7 +224,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/react'
     | '/login'
     | '/register'
     | '/ensembles/$ensembleId'
@@ -255,7 +237,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/react'
     | '/login'
     | '/register'
     | '/ensembles/$ensembleId'
@@ -269,7 +250,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/react'
     | '/(auth)/login'
     | '/(auth)/register'
     | '/ensembles/$ensembleId'
@@ -285,7 +265,6 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ReactRoute: typeof ReactRoute
   authLoginRoute: typeof authLoginRoute
   authRegisterRoute: typeof authRegisterRoute
   EnsemblesEnsembleIdRoute: typeof EnsemblesEnsembleIdRoute
@@ -300,7 +279,6 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ReactRoute: ReactRoute,
   authLoginRoute: authLoginRoute,
   authRegisterRoute: authRegisterRoute,
   EnsemblesEnsembleIdRoute: EnsemblesEnsembleIdRoute,
@@ -324,7 +302,6 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/react",
         "/(auth)/login",
         "/(auth)/register",
         "/ensembles/$ensembleId",
@@ -339,9 +316,6 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
-    },
-    "/react": {
-      "filePath": "react.tsx"
     },
     "/(auth)/login": {
       "filePath": "(auth)/login.tsx"

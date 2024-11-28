@@ -57,7 +57,7 @@ function Profile() {
 
 	return (
 		<div>
-			<div className={styles.pageWrapper}>
+			<div className={styles.sectionWrapper}>
 				<UserHeader user={user} />
 				<ProfileText text={user.profileText} />
 				<Instruments instruments={user.instruments} />

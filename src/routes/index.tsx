@@ -7,6 +7,7 @@ import { PrimaryCTA } from '../components/PrimaryCTA';
 import { ReviewCard } from '../components/ReviewCard';
 import { PostCardEnsemble } from '../components/PostCard';
 import { Post } from '../types/types';
+import styles from '/src/styles/globalStyles.module.css';
 
 export const Route = createFileRoute('/')({
 	component: Index,
@@ -32,8 +33,9 @@ function Index() {
 	}, []); // Empty dependency array to fetch once on mount
 
 	return (
-		<div>
-			<section id="hero" className="w-full lg:p-16 p-6">
+		<>
+			{/* section 1 */}
+			<section id="hero" className={styles.sectionWrapper}>
 				<div className="flex flex-col lg:flex-row-reverse lg:gap-6 items-center">
 					<img src={HeroImage} alt="Hero illustration" className="lg:w-1/2 p-10" />
 					<div>
@@ -44,13 +46,16 @@ function Index() {
 				<SecondaryCTA /> {/* Visible on mobile */}
 			</section>
 
-			<section id="reviews" className="bg-blue-800 p-6 lg:p-16">
-				<h2 className="font-header text-white font-medium text-3xl lg:text-4xl pb-8">Det siger vores brugere</h2>
+			{/* section 2 */}
+			<section id="reviews" className={`${styles.blueBackground} ${styles.sectionWrapper}`}>
+				<h2 className="font-header text-white font-medium text-3xl lg:text-4xl ">Det siger vores brugere</h2>
+
 				<ReviewCard />
 			</section>
 
-			<section id="latest-posts" className="p-6 lg:p-16">
-				<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl pb-6">Seneste opslag</h2>
+			{/* section 3 */}
+			<section id="latest-posts" className={styles.sectionWrapper}>
+				<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">Seneste opslag</h2>
 
 				{/* Display loading spinner or message */}
 				{loading ? (
@@ -63,7 +68,7 @@ function Index() {
 					</div>
 				)}
 
-				{/* Show "See More Posts" button if there are at least 5 posts */}
+				{/* "See More" button if there are at least 5 posts */}
 				{posts.length >= 5 && (
 					<div className="mt-6 flex justify-center">
 						<Link to="/posts">
@@ -72,15 +77,7 @@ function Index() {
 					</div>
 				)}
 			</section>
-
-			<div className="card">
-				<div>
-					<Link to="/react">
-						<Button variant="primary">Components page</Button>
-					</Link>
-				</div>
-			</div>
-		</div>
+		</>
 	);
 }
 

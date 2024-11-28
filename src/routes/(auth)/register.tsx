@@ -43,9 +43,9 @@ function Register() {
 	if (!user) {
 		return (
 			<div className={styles.grayBackground}>
-				<form onSubmit={handleSubmit} className={styles.pageWrapper}>
-					<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">Register</h2>
-					<div className="space-y-6">
+				<form onSubmit={handleSubmit} className={styles.sectionWrapper}>
+					<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl">Register</h2>
+					<div className={styles.gaps}>
 						<InputField label="Name" name="name" placeholder="Enter your username" value={name} onChange={(e) => setName(e.target.value)} required />
 
 						<InputField label="Email" name="email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
