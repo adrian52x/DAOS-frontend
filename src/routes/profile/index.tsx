@@ -13,7 +13,7 @@ export const Route = createFileRoute('/profile/')({
 });
 
 function Profile() {
-	const { user, loading, token } = useAuth();
+	const { user, loading } = useAuth();
 	console.log('user', user);
 
 	const postQuery = useQuery({
@@ -26,16 +26,12 @@ function Profile() {
 		enabled: !!user, // Only run the query if user is available
 	});
 
-	// Query to get ensembles that the user owns
-	const ensemblesUserMember = useQuery({
+	// Query to get ensembles by user ID
+	const ensemblesByUserId = useQuery({
 		queryKey: ['ensembles', user?._id], // Include userId in the query key
 		queryFn: async () => {
-			const response = await fetch(`http://localhost:3000/api/ensembles/member`, {
+			const response = await fetch(`http://localhost:3000/api/ensembles/member/${user._id}`, {
 				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
 			});
 			const data = await response.json();
 			console.log('user', user);
@@ -61,7 +57,7 @@ function Profile() {
 				<UserHeader user={user} />
 				<ProfileText text={user.profileText} />
 				<Instruments instruments={user.instruments} />
-				<Ensembles ensembles={ensemblesUserMember.data} />
+				<Ensembles ensembles={ensemblesByUserId.data} />
 				<Posts posts={postQuery.data} />
 			</div>
 			<Outlet />
