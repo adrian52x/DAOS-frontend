@@ -52,4 +52,12 @@ export enum JoinRequestAction {
 	ACCEPT = 'accept',
 	REJECT = 'reject',
 }
-  
+
+export interface UserDataUpdate {
+    name: string;
+    dateOfBirth: string | null;
+    phone: string;
+    address: string;
+    zipCode: string;
+    profileText: string;
+}

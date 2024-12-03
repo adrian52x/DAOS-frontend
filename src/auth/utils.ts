@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+
 export async function fetchUserData(token: string) {
 	try {
 		const response = await fetch('http://localhost:3000/auth/profile', {
@@ -12,6 +14,37 @@ export async function fetchUserData(token: string) {
 		console.error(error);
 		return null;
 	}
+}
+
+export async function updateUser(token: string, userData: any) {
+	try {
+		const response = await fetch('http://localhost:3000/api/users', {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(userData),
+			credentials: 'include',
+		});
+		const data = await response.json();
+		if (response.ok) {
+			alert('User updated successfully');
+		} else {
+			alert(`Error: ${data.message}`);
+		}
+	} catch (error) {
+		alert('Error updating user');
+	}
+}	
+
+
+export function useUserData(token: string) {
+	return useQuery({
+		queryKey: ['user'],
+		queryFn: () => fetchUserData(token),
+		enabled: !!token,
+	});
 }
 
 export function getCookie(name: string) {
