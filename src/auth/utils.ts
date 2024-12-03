@@ -23,7 +23,7 @@ export function getCookie(name: string) {
 	return null;
 }
 
-export async function singOut(setUser: React.Dispatch<React.SetStateAction<any>>) {
+export async function singOut(setUser: React.Dispatch<React.SetStateAction<any>>, setToken: React.Dispatch<React.SetStateAction<any>>) {
 	try {
 		const response = await fetch('http://localhost:3000/auth/logout', {
 			method: 'POST',
@@ -37,5 +37,6 @@ export async function singOut(setUser: React.Dispatch<React.SetStateAction<any>>
 	}
 
 	// Update the user state in the context to null
+	setToken(null);
 	setUser(null);
 }

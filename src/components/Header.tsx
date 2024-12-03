@@ -6,7 +6,7 @@ import { MdMenu } from 'react-icons/md';
 import { useState } from 'react';
 
 const Header = () => {
-	const { user, setUser } = useAuth();
+	const { user, setUser, setToken } = useAuth();
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	const links = user ? (
@@ -24,7 +24,7 @@ const Header = () => {
 			<Button
 				variant="secondary"
 				onClick={async () => {
-					await singOut(setUser);
+					await singOut(setUser, setToken);
 					setMenuOpen(false); // Close menu after logout
 				}}
 			>
