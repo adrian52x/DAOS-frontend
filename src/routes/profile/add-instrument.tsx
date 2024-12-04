@@ -2,17 +2,23 @@ import { createFileRoute, Navigate } from '@tanstack/react-router'
 import { useAuth } from '../../auth/AuthContext';
 import { instrumentsList, genresList } from '../../types/data';
 import { useState } from 'react';
-import { fetchUserData } from '../../auth/utils';
+import { updateUser } from '../../utils/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { UserDataUpdate } from '../../types/types';
+
 
 export const Route = createFileRoute('/profile/add-instrument')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-    const { user, setUser, loading, token } = useAuth();
+    const { user, loading, token } = useAuth();
     const [instrumentName, setInstrumentName] = useState('');
     const [level, setLevel] = useState(0);
     const [genre, setGenre] = useState('');
+
+    const queryClient = useQueryClient();
+	const navigate = Route.useNavigate()
 
     if (loading) {
         return <div>Loading...</div>;
@@ -22,6 +28,14 @@ function RouteComponent() {
         return <Navigate to="/login" />;
     }
 
+    const updateUserData = useMutation({
+        mutationFn: (data: UserDataUpdate) => updateUser(token, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['current-user'] });
+            navigate({ to: '/profile' })
+        },
+    })
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const newInstrument = {
@@ -30,34 +44,12 @@ function RouteComponent() {
           genre,
         };
     
-        const updatedUser = {
+        const userData = {
           instruments: [...(user.instruments || []), newInstrument],
         };
-    
-        try {
-            const response = await fetch('http://localhost:3000/api/users', {
-                method: 'PUT',
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
 
-                },
-                body: JSON.stringify(updatedUser),
-                credentials: 'include',
-            });
-            const data = await response.json();
-            if (response.ok) {
-                alert('Instrument added successfully');
-                if (token) {
-                    setUser(await fetchUserData(token));
-                }
-            } else {
-                alert(`Error: ${data.message}`);
-            }
-        } catch (error) {
-            console.error('Error adding instrument:', error);
-            alert('Error adding instrument');
-        }
+        // Update user data
+		updateUserData.mutateAsync(userData);
     };
  
     return (

@@ -7,6 +7,7 @@ import { Ensembles } from '../../components/profile/Ensembles';
 import { Posts } from '../../components/profile/Posts';
 import { useQuery } from '@tanstack/react-query';
 import styles from '/src/styles/globalStyles.module.css';
+import { fetchAllEnsemblesByUser, fetchAllPostsByUser } from '../../utils/api';
 
 export const Route = createFileRoute('/profile/')({
 	component: Profile,
@@ -16,30 +17,17 @@ function Profile() {
 	const { user, loading } = useAuth();
 	console.log('user', user);
 
-	const postQuery = useQuery({
-		queryKey: ['posts', user?._id], // Include userId in the query key
-		queryFn: async () => {
-			const response = await fetch(`http://localhost:3000/api/posts/author/${user._id}`);
-			const data = await response.json();
-			return data;
-		},
-		enabled: !!user, // Only run the query if user is available
+	// Query to get all user's posts by user ID
+	const userPosts = useQuery({
+		queryKey: ['user-posts', user?._id], 
+		queryFn: () => fetchAllPostsByUser(user._id),
+		enabled: !!user, 
 	});
 
-	// Query to get ensembles by user ID
-	const ensemblesByUserId = useQuery({
-		queryKey: ['ensembles', user?._id], // Include userId in the query key
-		queryFn: async () => {
-			const response = await fetch(`http://localhost:3000/api/ensembles/member/${user._id}`, {
-				credentials: 'include',
-			});
-			const data = await response.json();
-			console.log('user', user);
-
-			console.log('ensembles', data);
-
-			return data;
-		},
+	// Query to get all user's ensembles by user ID (member of)
+	const userEnsembles = useQuery({
+		queryKey: ['user-ensembles', user?._id], 
+		queryFn: () => fetchAllEnsemblesByUser(user._id),
 		enabled: !!user, // Only run the query if user is available
 	});
 
@@ -57,8 +45,8 @@ function Profile() {
 				<UserHeader user={user} />
 				<ProfileText text={user.profileText} />
 				<Instruments instruments={user.instruments} />
-				<Ensembles ensembles={ensemblesByUserId.data} />
-				<Posts posts={postQuery.data} />
+				<Ensembles ensembles={userEnsembles.data} />
+				<Posts posts={userPosts.data} />
 			</div>
 			<Outlet />
 		</div>

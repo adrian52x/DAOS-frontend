@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useUserData, getCookie } from './utils';
+import { useCurrentUserData } from '../hooks/useCurrentUserData';
 
 interface AuthContextType {
 	user: any;
@@ -17,9 +17,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [token, setToken] = useState<string>('');
 	
 	const cookieToken = getCookie('access_token');
-	const { data, isLoading, isSuccess } = useUserData(cookieToken || '');
-	console.log("data", data);
-	
+	const { data, isLoading, isSuccess } = useCurrentUserData(cookieToken || '');
 
 	useEffect(() => {
 		if(isLoading) {
@@ -34,35 +32,40 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		}
     }, [cookieToken, data]);
 
-	// useEffect(() => {
-	// 	const token = getCookie('access_token');
-	// 	if (token) {
-	// 		// fetchUserData(token).then((userData) => {
-	// 		// 	if (userData) {
-	// 		// 		setUser(userData);
-	// 		// 		setToken(token);
-	// 		// 	}
-	// 		// 	setLoading(false);
-	// 		// });
-	// 		const { data } = useUserData(token);
-	// 		if (data) {
-	// 			setUser(data);
-	// 			setToken(token);
-	// 		}
-	// 	} else {
-	// 		setLoading(false);
-	// 	}
-	// }, []);
-
 	return <AuthContext.Provider value={{ user, setUser, loading, setToken, token }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = (): AuthContextType => {
 	const context = useContext(AuthContext);
-	//console.log("context", context);
 
 	if (context === undefined) {
 		throw new Error('useAuth must be used within an AuthProvider');
 	}
 	return context;
 };
+
+
+export function getCookie(name: string) {
+	const value = `; ${document.cookie}`;
+	const parts = value.split(`; ${name}=`);
+	if (parts.length === 2) {
+		return parts.pop()?.split(';').shift();
+	}
+	return null;
+}
+
+export async function singOut(setUser: React.Dispatch<React.SetStateAction<any>>, setToken: React.Dispatch<React.SetStateAction<any>>) {
+	try {
+		await fetch('http://localhost:3000/auth/logout', {
+			method: 'POST',
+			credentials: 'include',
+		});
+
+	} catch (error) {
+		console.error('Error during sign out:', error);
+	}
+
+	// Update the user state in the context to null
+	setToken(null);
+	setUser(null);
+}

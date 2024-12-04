@@ -2,7 +2,8 @@ import { createFileRoute, Navigate } from '@tanstack/react-router';
 import { useAuth } from '../../auth/AuthContext';
 import { useState } from 'react';
 import { instrumentsList, genresList } from '../../types/data';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { createNewPost, fetchAllEnsemblesUserOwns } from '../../utils/api';
 
 export const Route = createFileRoute('/posts/create')({
 	component: RouteComponent,
@@ -19,6 +20,9 @@ function RouteComponent() {
 	const [instrumentGenre, setInstrumentGenre] = useState('');
 	const [ensembleId, setEnsembleId] = useState('');
 
+	//const queryClient = useQueryClient();
+	const navigate = Route.useNavigate()
+
 	// Reset form fields when post type changes
 	const handlePostTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setPostType(e.target.value);
@@ -32,20 +36,8 @@ function RouteComponent() {
 
 	// Query to get ensembles that the user owns
 	const ensemblesUserOwn = useQuery({
-		queryKey: ['ensembles', user?._id], // Include userId in the query key
-		queryFn: async () => {
-			const response = await fetch(`http://localhost:3000/api/ensembles/own`, {
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-			});
-			const data = await response.json();
-			console.log('ensemblesUserOwn', data);
-
-			return data;
-		},
+		queryKey: ['user-ensembles-own', user?._id], 
+		queryFn: () => fetchAllEnsemblesUserOwns(token),
 		enabled: !!user, // Only run the query if user is available
 	});
 
@@ -56,6 +48,13 @@ function RouteComponent() {
 	if (!user) {
 		return <Navigate to="/login" />;
 	}
+
+	const createPost = useMutation({
+        mutationFn: (post: any) => createNewPost(token, post),
+        onSuccess: () => {
+            navigate({ to: '/posts' })
+        },
+    })
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -81,27 +80,8 @@ function RouteComponent() {
 			};
 		}
 
-		try {
-			const response = await fetch('http://localhost:3000/api/posts', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify(post),
-				credentials: 'include',
-			});
-			const data = await response.json();
-			if (response.ok) {
-				alert('Post created successfully');
-				console.log('Post created:', data);
-			} else {
-				alert(`Error: ${data.message}`);
-			}
-		} catch (error) {
-			console.error('Error creating post:', error);
-			alert('Error creating post');
-		}
+		// Create post
+		createPost.mutateAsync(post);
 	};
 
 	return (

@@ -1,11 +1,9 @@
 import { createFileRoute, Navigate } from '@tanstack/react-router';
 import { useAuth } from '../../auth/AuthContext';
 import { useEffect, useState } from 'react';
-import { updateUser, } from '../../auth/utils';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UserDataUpdate } from '../../types/types';
-
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updateUser } from '../../utils/api';
 
 
 export const Route = createFileRoute('/profile/update')({
@@ -13,8 +11,10 @@ export const Route = createFileRoute('/profile/update')({
 });
 
 function ProfileUpdate() {
-	const { user, loading, token } = useAuth();
 	const queryClient = useQueryClient();
+	const navigate = Route.useNavigate()
+	
+	const { user, loading, token } = useAuth();
 
 	const [name, setName] = useState('');
 	const [dateOfBirth, setDateOfBirth] = useState('');
@@ -22,7 +22,6 @@ function ProfileUpdate() {
 	const [address, setAddress] = useState('');
 	const [zipCode, setZipcode] = useState('');
 	const [profileText, setProfileText] = useState('');
-
 
 	useEffect(() => {
 		if (user) {
@@ -35,16 +34,19 @@ function ProfileUpdate() {
 		}
 	}, [user]);
 
-	const updateUserMutation = useMutation({
+
+	const updateUserData = useMutation({
 		mutationFn: (userData: UserDataUpdate) => updateUser(token, userData),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['user'] });
+			queryClient.invalidateQueries({ queryKey: ['current-user'] });
+			navigate({ to: '/profile' })
 		},
 	})
 
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		const userData : UserDataUpdate = {
+		const userData = {
 			name,
 			dateOfBirth: dateOfBirth ? new Date(dateOfBirth).toISOString() : null,
 			phone,
@@ -53,33 +55,8 @@ function ProfileUpdate() {
 			profileText,
 		};
 
-		console.log('userData', userData);
-
-		updateUserMutation.mutate(userData);
-		
-		// try {
-		// 	const response = await fetch('http://localhost:3000/api/users', {
-		// 		method: 'PUT',
-		// 		headers: {
-		// 			'Content-Type': 'application/json',
-		// 			Authorization: `Bearer ${token}`,
-		// 		},
-		// 		body: JSON.stringify(userData),
-		// 		credentials: 'include',
-		// 	});
-		// 	const data = await response.json();
-		// 	if (response.ok) {
-		// 		alert('User updated successfully');
-		// 		if (token) {
-		// 			setUser(await fetchUserData(token));
-		// 		}
-		// 	} else {
-		// 		alert(`Error: ${data.message}`);
-		// 	}
-		// } catch (error) {
-		// 	console.error('Error updating user:', error);
-		// 	alert('Error updating user');
-		// }
+		// Update user data
+		updateUserData.mutateAsync(userData);
 	};
 
 	if (loading) {

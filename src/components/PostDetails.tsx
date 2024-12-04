@@ -2,6 +2,8 @@ import React from 'react';
 import { JoinRequestAction, Post } from '../types/types';
 import EnsemblePortrait from '../assets/ensemble-portrait.jpeg';
 import { useAuth } from '../auth/AuthContext';
+import { handleJoin, handleJoinRequest } from '../utils/api';
+import { formatDate, formatTime } from '../utils/dateAndTimeUtils';
 interface PostDetailsProps {
 	postData: Post;
 }
@@ -14,59 +16,14 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 
 	console.log('postData', postData);
 
-	async function handleJoin() {
-		try {
-			const response = await fetch(`http://localhost:3000/api/ensembles/join/${postData.ensemble._id}`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-				credentials: 'include',
-			});
-			const data = await response.json();
-			if (response.ok) {
-				alert('Request sent successfully');
-				console.log(data);
-				
-			} else {
-				alert(`Error: ${data.message}`);
-			}
-		} catch (error) {
-			console.error('Error updating user:', error);
-			alert('Error updating user');
-		}
-	}
-
-	async function handleJoinRequest(action: JoinRequestAction, userId: string) {
-		try {
-			const response = await fetch(`http://localhost:3000/api/ensembles/${postData.ensemble._id}/handle-request/${userId}`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify({ action }),
-				credentials: 'include',
-			});
-			const data = await response.json();
-			
-			if (response.ok) {
-				alert('Request handled successfully');
-				console.log(data);
-			} else {
-				alert(`Error: ${data.message}`);
-			}
-		} catch (error) {
-			console.error('Error handling join request:', error);
-		}
-	}
+	const formattedTime = formatTime(postData.createdAt);
+	const formattedDate = formatDate(postData.createdAt);
 
 	return (
 		<div className="p-6 max-w-4xl mx-auto bg-gray-50 border border-gray-300 rounded-lg shadow-md">
 			{/* Title Section */}
 			<h1 className="text-3xl font-bold text-blue-800 mb-2">{postData.title}</h1>
-			<p className="text-sm text-gray-600">date</p>
+			<p className="text-sm text-gray-800">{`${formattedDate} at ${formattedTime}`}</p>
 
 			{/* Ensemble Info */}
 			{postData.ensemble ? (
@@ -89,13 +46,15 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 				</div>
 			)}
 			{/* Edit Button - we need to have that only when you are the owner of the post */}
-			<div className="flex justify-center mt-6">
-				<button className="bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-700">Rediger opslag</button>
-			</div>
+			{user && user._id === postData.author._id && (
+				<div className="flex justify-center mt-6">
+					<button className="bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-700">Rediger opslag</button>
+				</div>
+			)}
 
 			{/* Description Section */}
 			<div className="mt-8">
-				<h2 className="text-2xl font-bold text-blue-800 mb-4">Beskrivelse</h2>
+				<h2 className="text-2xl font-bold text-blue-800 mb-4">Description</h2>
 				<p className="text-base text-gray-800 leading-relaxed">{postData.description}</p>
 			</div>
 
@@ -115,41 +74,46 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 			</div>
 			{/* Contact Button - is not doing anything */}
 			
-
-			{user && user._id === postData.ensemble.owner ? (
-				// {/* Pending Requests */}
-				<div className="bg-white border border-gray-600 rounded-lg p-4 shadow-sm mt-8">
-					<h3 className="text-xl font-header text-blue-800 mb-2">Pending Requests</h3>
-					{postData.ensemble.pendingRequests?.length > 0 ? (
-						<ul>
-							{postData.ensemble.pendingRequests.map((userId, index) => (
-								<div key={index}>
-									<li className="text-base text-gray-800 font-body leading-relaxed">
-										{userId} 
-									</li>
-									<div className="flex space-x-6">
-									<button onClick={() => handleJoinRequest(JoinRequestAction.ACCEPT, userId)}>Accept</button>
-									<button onClick={() => handleJoinRequest(JoinRequestAction.REJECT, userId)}>Reject</button>
+			{postData.ensemble ? (
+				user && user._id === postData.ensemble?.owner ? (
+					// {/* Pending Requests */}
+					<div className="bg-white border border-gray-600 rounded-lg p-4 shadow-sm mt-8">
+						<h3 className="text-xl font-header text-blue-800 mb-2">Pending Requests</h3>
+						{postData.ensemble.pendingRequests?.length > 0 ? (
+							<ul>
+								{postData.ensemble.pendingRequests.map((userId, index) => (
+									<div key={index}>
+										<li className="text-base text-gray-800 font-body leading-relaxed">
+											{userId} 
+										</li>
+										<div className="flex space-x-6">
+										<button onClick={() => handleJoinRequest(JoinRequestAction.ACCEPT, userId, token, postData.ensemble._id)}>Accept</button>
+										<button onClick={() => handleJoinRequest(JoinRequestAction.REJECT, userId, token, postData.ensemble._id)}>Reject</button>
+										</div>
+									
 									</div>
-								
-								</div>
-							))}
-						</ul>
-					) : (
-						<div className="flex justify-center mt-8">
-							<p>No pending requests</p>
-						</div>
-					)}
-				</div>
-			): (
+								))}
+							</ul>
+						) : (
+							<div className="flex justify-center mt-8">
+								<p>No pending requests</p>
+							</div>
+						)}
+					</div>
+				) : (
+					<div className="flex justify-center mt-8">
+						<button 
+							onClick={() => handleJoin(token, postData.ensemble._id)} 
+							className="bg-blue-900 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-blue-700"
+							disabled={postData.ensemble?.members.includes(user?._id)}
+						>
+							Join Ensemble
+						</button>
+					</div>
+				)
+			) : (
 				<div className="flex justify-center mt-8">
-					<button 
-						onClick={handleJoin} 
-						className="bg-blue-900 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-blue-700"
-						disabled={postData.ensemble.members.includes(user?._id)}
-					>
-						Join Ensemble
-					</button>
+				<button className="bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-700">Contact</button>
 				</div>
 			)}
 		</div>

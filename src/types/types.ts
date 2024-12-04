@@ -28,6 +28,7 @@ export interface Post {
 	author: User;
 	instrument: Instrument;
 	ensemble: Ensemble;
+	createdAt: string;
 }
 
 export interface Instrument {
@@ -54,10 +55,11 @@ export enum JoinRequestAction {
 }
 
 export interface UserDataUpdate {
-    name: string;
-    dateOfBirth: string | null;
-    phone: string;
-    address: string;
-    zipCode: string;
-    profileText: string;
-}
+	name?: string;
+	dateOfBirth?: string | null;
+	phone?: string;
+	address?: string;
+	zipCode?: string;
+	profileText?: string;
+	instruments?: Instrument[];
+  }
