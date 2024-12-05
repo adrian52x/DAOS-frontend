@@ -1,8 +1,25 @@
 import { Link } from '@tanstack/react-router';
-import { EnsembleById } from '../types/types';
+import { EnsembleById, Post } from '../types/types';
 import { Button } from './elements/Button';
+import { fetchPostsByEnsembleId } from '../utils/api';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '../auth/AuthContext';
+import { PostCard } from './PostCardMine';
 
 const EnsembleDetails = ({ ensemble }: { ensemble: EnsembleById }) => {
+	const { token } = useAuth();
+
+	// Fetching the posts associated with this ensemble
+	const {
+		data: posts,
+		isLoading,
+		error,
+	} = useQuery({
+		queryKey: ['ensemble-posts', ensemble._id],
+		queryFn: () => fetchPostsByEnsembleId(token, ensemble._id), // Fetch posts by ensemble ID
+		enabled: !!ensemble._id, // Ensure the query only runs if the ensemble ID exists
+	});
+
 	return (
 		<div className="p-6 max-w-4xl mx-auto bg-gray-200 border border-gray-600 rounded-lg shadow-md">
 			{/* Title Section */}
@@ -46,6 +63,20 @@ const EnsembleDetails = ({ ensemble }: { ensemble: EnsembleById }) => {
 					</ul>
 				) : (
 					<p className="text-base text-gray-800 font-body leading-relaxed">No members yet</p>
+				)}
+			</div>
+
+			{/* show posts for this ensemble */}
+			<div className="bg-white border border-gray-600 rounded-lg p-4 shadow-sm mt-8">
+				<h3 className="text-xl font-header text-blue-800 mb-2">Posts</h3>
+				{isLoading ? (
+					<p>Loading posts...</p>
+				) : error ? (
+					<p>Error loading posts: {error.message}</p>
+				) : posts?.length > 0 ? (
+					posts.map((post: Post) => <PostCard key={post._id} post={post} />)
+				) : (
+					<p>No posts found for this ensemble.</p>
 				)}
 			</div>
 		</div>

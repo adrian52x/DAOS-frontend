@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../auth/AuthContext';
 import { Ensemble, EnsembleDataUpdate } from '../../types/types';
-import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InputField } from '../../components/elements/InputField';
 import { Button } from '../../components/elements/Button';
 
