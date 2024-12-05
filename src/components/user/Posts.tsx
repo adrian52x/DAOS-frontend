@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { Post } from '../../types/types';
 import { Button } from '../elements/Button';
+import { PostCard } from '../PostCardMine';
 
 export function Posts({ posts, user }: { posts: Post[]; user: any }) {
 	console.log('posts', posts);
@@ -10,7 +11,7 @@ export function Posts({ posts, user }: { posts: Post[]; user: any }) {
 			<div className="bg-white shadow rounded-lg p-6">
 				<h2 className="text-xl font-bold mb-4">My Posts</h2>
 				<div className="text-center">
-					<p className="text-gray-500">You don't have any Ensembles yet.</p>
+					<p className="text-gray-500">You don't have any Post yet.</p>
 					<Link to="/posts/create">
 						<Button variant="primary">Create post</Button>
 					</Link>
@@ -21,18 +22,16 @@ export function Posts({ posts, user }: { posts: Post[]; user: any }) {
 
 	return (
 		<div className="bg-white shadow rounded-lg p-6">
-			<h2 className="text-xl font-bold mb-4">{user.name}'s Posts</h2>
-			<ul>
-				{posts.map((post) => (
-					<li key={post._id}>
-						<h3 className="text-lg font-semibold mb-2">{post.title}</h3>
-						<p className="text-gray-800">{post.description}</p>
+			<h2 className="font-header text-2xl text-blue-800 font-bold mb-4 ">{user.name}'s Posts</h2>
 
-						{post.ensemble && post.ensemble.pendingRequests?.length > 0 && (
-							<Link to={`/posts/${post._id}`}>
-								<button className="bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-700">Incoming Requests</button>
-							</Link>
-						)}
+			<ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
+				{posts.map((post) => (
+					<li key={post._id} className="relative">
+						{/* Make entire card a link */}
+						<Link to={`/posts/${post._id}`} className="block relative group">
+							{/* Post Card */}
+							<PostCard key={post._id} post={post} />
+						</Link>
 						<hr />
 					</li>
 				))}

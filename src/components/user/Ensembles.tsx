@@ -5,7 +5,7 @@ export function Ensembles({ ensembles, user }: { ensembles: Ensemble[]; user: an
 	if (!ensembles || ensembles.length === 0) {
 		return (
 			<div className="bg-white shadow rounded-lg p-6">
-				<h2 className="text-xl font-bold mb-4">{user.name}'s Ensembles</h2>
+				<h2 className="font-header text-2xl text-blue-800 font-bold mb-4">{user.name}'s Ensembles</h2>
 				<div className="text-center">
 					<p className="mb-4">This user doesn't have any Ensembles yet.</p>
 				</div>
@@ -15,7 +15,7 @@ export function Ensembles({ ensembles, user }: { ensembles: Ensemble[]; user: an
 
 	return (
 		<div className="bg-white shadow rounded-lg p-6">
-			<h2 className="text-xl font-bold mb-4">{user.name}'s Ensembles</h2>
+			<h2 className="font-header text-2xl text-blue-800 font-bold mb-4">{user.name}'s Ensembles</h2>
 			<ul>
 				{ensembles.map((ensemble) => (
 					<li key={ensemble._id}>
