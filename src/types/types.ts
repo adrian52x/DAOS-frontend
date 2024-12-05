@@ -62,4 +62,4 @@ export interface UserDataUpdate {
 	zipCode?: string;
 	profileText?: string;
 	instruments?: Instrument[];
-  }
+}
