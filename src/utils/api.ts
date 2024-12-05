@@ -1,4 +1,20 @@
-import { JoinRequestAction, UserDataUpdate } from "../types/types";
+import { JoinRequestAction, UserDataUpdate, User } from '../types/types';
+
+export async function fetchUserById(userId: string): Promise<User> {
+	try {
+		const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+
+		if (!response.ok) {
+			throw new Error('Failed to fetch user data');
+		}
+
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error('Error fetching user data:', error);
+		throw error; // Rethrow to let components handle it
+	}
+}
 
 export async function fetchCurrentUserData(token: string) {
 	try {
@@ -107,8 +123,6 @@ export async function createNewPost(token: string, post: any) {
 	}
 }
 
-
-
 // Join ensemble
 export async function handleJoin(token: string, ensembleId: string) {
 	try {
@@ -124,7 +138,6 @@ export async function handleJoin(token: string, ensembleId: string) {
 		if (response.ok) {
 			alert('Request sent successfully');
 			console.log(data);
-			
 		} else {
 			alert(`Error: ${data.message}`);
 		}
@@ -135,7 +148,7 @@ export async function handleJoin(token: string, ensembleId: string) {
 }
 
 // Accept or reject join request
-export async function handleJoinRequest(action: JoinRequestAction, userId: string, token: string, ensembleId: string) {
+export async function handleJoinRequest(action: JoinRequestAction, userId: string, token: string | null, ensembleId: string) {
 	try {
 		const response = await fetch(`http://localhost:3000/api/ensembles/${ensembleId}/handle-request/${userId}`, {
 			method: 'PUT',
@@ -147,7 +160,7 @@ export async function handleJoinRequest(action: JoinRequestAction, userId: strin
 			credentials: 'include',
 		});
 		const data = await response.json();
-		
+
 		if (response.ok) {
 			alert('Request handled successfully');
 			console.log(data);
@@ -158,4 +171,3 @@ export async function handleJoinRequest(action: JoinRequestAction, userId: strin
 		console.error('Error handling join request:', error);
 	}
 }
-

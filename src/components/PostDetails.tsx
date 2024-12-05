@@ -4,11 +4,20 @@ import EnsemblePortrait from '../assets/ensemble-portrait.jpeg';
 import { useAuth } from '../auth/AuthContext';
 import { handleJoin, handleJoinRequest } from '../utils/api';
 import { formatDate, formatTime } from '../utils/dateAndTimeUtils';
+import { useNavigate } from '@tanstack/react-router';
+import { useQuery } from '@tanstack/react-query';
+import { fetchUserById } from '../utils/api';
+
 interface PostDetailsProps {
 	postData: Post;
 }
 const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 	const { user, token } = useAuth();
+	const navigate = useNavigate();
+
+	const navigateProfile = (userId: any) => {
+		navigate({ to: `/user/${userId}` });
+	};
 
 	if (!postData) {
 		return <p>Loading...</p>;
@@ -73,7 +82,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 				</div>
 			</div>
 			{/* Contact Button - is not doing anything */}
-			
+
 			{postData.ensemble ? (
 				user && user._id === postData.ensemble?.owner ? (
 					// {/* Pending Requests */}
@@ -81,18 +90,58 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 						<h3 className="text-xl font-header text-blue-800 mb-2">Pending Requests</h3>
 						{postData.ensemble.pendingRequests?.length > 0 ? (
 							<ul>
-								{postData.ensemble.pendingRequests.map((userId, index) => (
-									<div key={index}>
-										<li className="text-base text-gray-800 font-body leading-relaxed">
-											{userId} 
+								{postData.ensemble.pendingRequests.map((userId, index) => {
+									// Use React Query to fetch user data for each userId
+									const {
+										data: userData,
+										isLoading,
+										isError,
+									} = useQuery({
+										queryKey: ['user', userId],
+										queryFn: () => fetchUserById(userId),
+										enabled: !!userId, // Only fetch when userId is truthy
+									});
+
+									if (isLoading) {
+										// Display a loading state for each user
+										return (
+											<li key={index} className="text-gray-500">
+												Loading user details...
+											</li>
+										);
+									}
+
+									if (isError || !userData) {
+										// Display an error message for failed fetches
+										return (
+											<li key={index} className="text-red-500">
+												Failed to load user data.
+											</li>
+										);
+									}
+
+									// Render user details when data is available
+									return (
+										<li key={index} className="flex justify-between items-center">
+											<div>
+												<a
+													className="font-body font-normal text-blue-800 underline cursor-pointer capitalize hover:font-semibold"
+													onClick={() => navigateProfile(userId)}
+												>
+													{userData.name} {/* Display user's name */}
+												</a>
+											</div>
+											<div className="flex space-x-6">
+												<button className="text-green" onClick={() => handleJoinRequest(JoinRequestAction.ACCEPT, userId, null, postData.ensemble._id)}>
+													Accept
+												</button>
+												<button className="text-red" onClick={() => handleJoinRequest(JoinRequestAction.REJECT, userId, null, postData.ensemble._id)}>
+													Reject
+												</button>
+											</div>
 										</li>
-										<div className="flex space-x-6">
-										<button onClick={() => handleJoinRequest(JoinRequestAction.ACCEPT, userId, token, postData.ensemble._id)}>Accept</button>
-										<button onClick={() => handleJoinRequest(JoinRequestAction.REJECT, userId, token, postData.ensemble._id)}>Reject</button>
-										</div>
-									
-									</div>
-								))}
+									);
+								})}
 							</ul>
 						) : (
 							<div className="flex justify-center mt-8">
@@ -102,8 +151,8 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 					</div>
 				) : (
 					<div className="flex justify-center mt-8">
-						<button 
-							onClick={() => handleJoin(token, postData.ensemble._id)} 
+						<button
+							onClick={() => handleJoin(token, postData.ensemble._id)}
 							className="bg-blue-900 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-blue-700"
 							disabled={postData.ensemble?.members.includes(user?._id)}
 						>
@@ -113,7 +162,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 				)
 			) : (
 				<div className="flex justify-center mt-8">
-				<button className="bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-700">Contact</button>
+					<button className="bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-700">Contact</button>
 				</div>
 			)}
 		</div>
