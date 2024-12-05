@@ -5,8 +5,7 @@ import { useAuth } from '../auth/AuthContext';
 import { handleJoin, handleJoinRequest } from '../utils/api';
 import { formatDate } from '../utils/dateAndTimeUtils';
 import { useNavigate } from '@tanstack/react-router';
-import { useQuery } from '@tanstack/react-query';
-import { fetchUserById } from '../utils/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { SmallButton } from './elements/SmallButton';
 import EnsembleIcon from '../assets/ensemble-icon.png';
 
@@ -16,14 +15,27 @@ interface PostDetailsProps {
 const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 	const { user, token } = useAuth();
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 
-	const navigateProfile = (userId: any) => {
+	const navigateProfile = (userId: string) => {
 		navigate({ to: `/user/${userId}` });
 	};
 
-	if (!postData) {
-		return <p>Loading...</p>;
-	}
+	const acceptRequest =  useMutation({
+		mutationFn: (userId: string) => handleJoinRequest(JoinRequestAction.ACCEPT, userId, token, postData.ensemble._id),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['post'] });
+		},
+	});
+	
+
+	const rejectRequest = useMutation({
+		mutationFn: (userId: string) => handleJoinRequest(JoinRequestAction.REJECT, userId, token, postData.ensemble._id),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['post'] });
+		},
+	});
+	
 
 	const formattedDate = formatDate(postData.createdAt);
 
@@ -108,65 +120,33 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 								<h3 className="text-xl font-header text-blue-800 mb-2">Pending Requests</h3>
 								{postData.ensemble.pendingRequests?.length > 0 ? (
 									<ul>
-										{postData.ensemble.pendingRequests.map((userId, index) => {
-											// Use React Query to fetch user data for each userId
-											const {
-												data: userData,
-												isLoading,
-												isError,
-											} = useQuery({
-												queryKey: ['user', userId],
-												queryFn: () => fetchUserById(userId),
-												enabled: !!userId, // Only fetch when userId is truthy
-											});
-
-											if (isLoading) {
-												// Display a loading state for each user
-												return (
-													<li key={index} className="text-gray-500">
-														Loading user details...
-													</li>
-												);
-											}
-
-											if (isError || !userData) {
-												// Display an error message for failed fetches
-												return (
-													<li key={index} className="text-red-500">
-														Failed to load user data.
-													</li>
-												);
-											}
-
-											// Render user details when data is available
-											return (
-												<li key={index} className="flex justify-between items-center py-4 border-b-solid border-t-2">
-													<div>
-														<a
-															target="_blank"
-															className="font-body font-normal text-blue-800 underline cursor-pointer capitalize hover:font-semibold"
-															onClick={() => navigateProfile(userId)}
-														>
-															{userData.name} {/* Display user's name */}
-														</a>
-													</div>
-													<div className="flex space-x-6">
-														<button
-															className="text-white bg-green p-1 px-4 rounded-full hover:opacity-50"
-															onClick={() => handleJoinRequest(JoinRequestAction.ACCEPT, userId, token, postData.ensemble._id)}
-														>
-															Accept
-														</button>
-														<button
-															className="text-white bg-red p-1 px-4 rounded-full hover:opacity-50"
-															onClick={() => handleJoinRequest(JoinRequestAction.REJECT, userId, token, postData.ensemble._id)}
-														>
-															Reject
-														</button>
-													</div>
-												</li>
-											);
-										})}
+										{postData.ensemble.pendingRequests.map((user, index) => (
+											<li key={index} className="flex justify-between items-center py-4 border-b-solid border-t-2">
+												<div>
+													<a
+														target="_blank"
+														className="font-body font-normal text-blue-800 underline cursor-pointer capitalize hover:font-semibold"
+														onClick={() => navigateProfile(user._id)}
+													>
+														{user.name} {/* Display user's name */}
+													</a>
+												</div>
+												<div className="flex space-x-6">
+													<button
+														className="text-white bg-green p-1 px-4 rounded-full hover:opacity-50"
+														onClick={() => acceptRequest.mutateAsync(user._id)}
+													>
+														Accept
+													</button>
+													<button
+														className="text-white bg-red p-1 px-4 rounded-full hover:opacity-50"
+														onClick={() => rejectRequest.mutateAsync(user._id)}
+													>
+														Reject
+													</button>
+												</div>
+											</li>
+										))}
 									</ul>
 								) : (
 									<div className="flex justify-center mt-8">

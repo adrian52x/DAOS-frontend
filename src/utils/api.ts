@@ -123,6 +123,18 @@ export async function createNewPost(token: string, post: any) {
 	}
 }
 
+// Fetch post by ID
+export async function fetchPostById(postId: string) {
+	try {
+		const response = await fetch(`http://localhost:3000/api/posts/${postId}`);
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}
+
 // Join ensemble
 export async function handleJoin(token: string, ensembleId: string) {
 	try {
@@ -164,7 +176,7 @@ export async function handleJoinRequest(action: JoinRequestAction, userId: strin
 		if (response.ok) {
 			alert('Request handled successfully');
 			console.log(data);
-			window.location.reload();
+			//window.location.reload();
 		} else {
 			alert(`Error: ${data.message}`);
 		}
