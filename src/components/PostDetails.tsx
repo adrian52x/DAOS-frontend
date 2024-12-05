@@ -57,7 +57,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 			{/* Edit Button - we need to have that only when you are the owner of the post */}
 			{user && user._id === postData.author._id && (
 				<div className="flex justify-center mt-6">
-					<button className="bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-700">Rediger opslag</button>
+					<button className="bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-700">Edit post</button>
 				</div>
 			)}
 
@@ -69,13 +69,13 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 
 			{/* Instrument Section */}
 			<div className="bg-white border border-gray-300 rounded-lg p-4 shadow-sm mt-8">
-				<h3 className="text-xl font-bold text-blue-800 mb-2">Minimumsniveau</h3>
-				<p className="text-lg text-black mb-1">Niveau {postData.instrument.level}</p>
-				<p className="text-base text-gray-800">Svarende til en musiker der har spillet 4-6 år og kan spille efter lettere komplekse noder.</p>
+				<h3 className="text-xl font-bold text-blue-800 mb-2">Minimum level</h3>
+				<p className="text-lg text-black mb-1">Level {postData.instrument.level}</p>
+				<p className="text-base text-gray-800">A musician who has been playing for 4-6 years and can play to slightly more complex notes.</p>
 			</div>
 			{/* Genres Section */}
 			<div className="mt-8">
-				<h3 className="text-xl font-bold text-blue-800 mb-2">Genrer</h3>
+				<h3 className="text-xl font-bold text-blue-800 mb-2">Genre</h3>
 				<div className="flex gap-2">
 					{/* Display genres as tags */}
 					<span className="bg-gray-200 text-blue-800 text-sm font-bold px-3 py-1 rounded-md shadow-sm">{postData.instrument.genre}</span>
@@ -122,9 +122,10 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 
 									// Render user details when data is available
 									return (
-										<li key={index} className="flex justify-between items-center">
+										<li key={index} className="flex justify-between items-center py-4 border-b-solid border-t-2">
 											<div>
 												<a
+													target="_blank"
 													className="font-body font-normal text-blue-800 underline cursor-pointer capitalize hover:font-semibold"
 													onClick={() => navigateProfile(userId)}
 												>
@@ -132,10 +133,16 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 												</a>
 											</div>
 											<div className="flex space-x-6">
-												<button className="text-green" onClick={() => handleJoinRequest(JoinRequestAction.ACCEPT, userId, null, postData.ensemble._id)}>
+												<button
+													className="text-white bg-green p-1 px-4 rounded-full hover:opacity-50"
+													onClick={() => handleJoinRequest(JoinRequestAction.ACCEPT, userId, null, postData.ensemble._id)}
+												>
 													Accept
 												</button>
-												<button className="text-red" onClick={() => handleJoinRequest(JoinRequestAction.REJECT, userId, null, postData.ensemble._id)}>
+												<button
+													className="text-white bg-red p-1 px-4 rounded-full hover:opacity-50"
+													onClick={() => handleJoinRequest(JoinRequestAction.REJECT, userId, null, postData.ensemble._id)}
+												>
 													Reject
 												</button>
 											</div>
