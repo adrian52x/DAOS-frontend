@@ -25,12 +25,10 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 		return <p>Loading...</p>;
 	}
 
-	console.log('postData', postData);
-
 	const formattedDate = formatDate(postData.createdAt);
 
 	return (
-		<div className="grid grid-cols-1 sm:grid-cols-[1fr_2fr_1fr] sm:bg-gray-200 py-6 sm:px-6 px-4">
+		<div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] sm:bg-gray-200 py-6 md:px-6 px-4">
 			<div className="col-start-2 col-end-3 p-6 px-10 border border-gray-200 shadow-lg bg-white">
 				<SmallButton>Back</SmallButton>
 				{/* Title Section */}
@@ -60,7 +58,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 								</>
 							)}
 						</div>
-						<img src={EnsembleIcon} alt="ensemble icon" className="self-end opacity-20 sm:hidden lg:block" />
+						<img src={EnsembleIcon} alt="ensemble icon" className="self-end opacity-20 hidden sm:block" />
 					</div>
 				) : (
 					// User info
@@ -155,13 +153,13 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 													<div className="flex space-x-6">
 														<button
 															className="text-white bg-green p-1 px-4 rounded-full hover:opacity-50"
-															onClick={() => handleJoinRequest(JoinRequestAction.ACCEPT, userId, null, postData.ensemble._id)}
+															onClick={() => handleJoinRequest(JoinRequestAction.ACCEPT, userId, token, postData.ensemble._id)}
 														>
 															Accept
 														</button>
 														<button
 															className="text-white bg-red p-1 px-4 rounded-full hover:opacity-50"
-															onClick={() => handleJoinRequest(JoinRequestAction.REJECT, userId, null, postData.ensemble._id)}
+															onClick={() => handleJoinRequest(JoinRequestAction.REJECT, userId, token, postData.ensemble._id)}
 														>
 															Reject
 														</button>

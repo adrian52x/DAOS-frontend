@@ -148,7 +148,7 @@ export async function handleJoin(token: string, ensembleId: string) {
 }
 
 // Accept or reject join request
-export async function handleJoinRequest(action: JoinRequestAction, userId: string, token: string | null, ensembleId: string) {
+export async function handleJoinRequest(action: JoinRequestAction, userId: string, token: string, ensembleId: string) {
 	try {
 		const response = await fetch(`http://localhost:3000/api/ensembles/${ensembleId}/handle-request/${userId}`, {
 			method: 'PUT',
@@ -164,6 +164,7 @@ export async function handleJoinRequest(action: JoinRequestAction, userId: strin
 		if (response.ok) {
 			alert('Request handled successfully');
 			console.log(data);
+			window.location.reload();
 		} else {
 			alert(`Error: ${data.message}`);
 		}
