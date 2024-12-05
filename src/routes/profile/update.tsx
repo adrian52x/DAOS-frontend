@@ -1,14 +1,20 @@
 import { createFileRoute, Navigate } from '@tanstack/react-router';
 import { useAuth } from '../../auth/AuthContext';
 import { useEffect, useState } from 'react';
-import { fetchUserData } from '../../auth/utils';
+import { UserDataUpdate } from '../../types/types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updateUser } from '../../utils/api';
+
 
 export const Route = createFileRoute('/profile/update')({
 	component: ProfileUpdate,
 });
 
 function ProfileUpdate() {
-	const { user, setUser, loading, token } = useAuth();
+	const queryClient = useQueryClient();
+	const navigate = Route.useNavigate()
+	
+	const { user, loading, token } = useAuth();
 
 	const [name, setName] = useState('');
 	const [dateOfBirth, setDateOfBirth] = useState('');
@@ -16,7 +22,6 @@ function ProfileUpdate() {
 	const [address, setAddress] = useState('');
 	const [zipCode, setZipcode] = useState('');
 	const [profileText, setProfileText] = useState('');
-
 
 	useEffect(() => {
 		if (user) {
@@ -29,6 +34,16 @@ function ProfileUpdate() {
 		}
 	}, [user]);
 
+
+	const updateUserData = useMutation({
+		mutationFn: (userData: UserDataUpdate) => updateUser(token, userData),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['current-user'] });
+			navigate({ to: '/profile' })
+		},
+	})
+
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		const userData = {
@@ -40,31 +55,8 @@ function ProfileUpdate() {
 			profileText,
 		};
 
-		console.log('userData', userData);
-		
-		try {
-			const response = await fetch('http://localhost:3000/api/users', {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify(userData),
-				credentials: 'include',
-			});
-			const data = await response.json();
-			if (response.ok) {
-				alert('User updated successfully');
-				if (token) {
-					setUser(await fetchUserData(token));
-				}
-			} else {
-				alert(`Error: ${data.message}`);
-			}
-		} catch (error) {
-			console.error('Error updating user:', error);
-			alert('Error updating user');
-		}
+		// Update user data
+		updateUserData.mutateAsync(userData);
 	};
 
 	if (loading) {

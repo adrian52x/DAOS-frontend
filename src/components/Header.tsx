@@ -1,15 +1,19 @@
 import { Link } from '@tanstack/react-router';
-import { useAuth } from '../auth/AuthContext';
-import { singOut } from '../auth/utils';
+import { useAuth, singOut } from '../auth/AuthContext';
 import { Button } from './elements/Button';
 import { MdMenu } from 'react-icons/md';
 import { useState } from 'react';
+import { LoadingHeader } from './loading-components/LoadingHeader';
+
+
 
 const Header = () => {
-	const { user, setUser, setToken } = useAuth();
+	const { user, setUser, setToken, loading } = useAuth();
 	const [menuOpen, setMenuOpen] = useState(false);
 
-	const links = user ? (
+	const links = loading ? (
+		<LoadingHeader />
+	) : user ? (
 		<>
 			<Link to="/" className="font-bold text-blue-800" onClick={() => setMenuOpen(false)}>
 				Home
