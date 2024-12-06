@@ -32,7 +32,7 @@ export async function fetchCurrentUserData(token: string) {
 	}
 }
 
-// Update user data
+// Update user data ---------------- Good example of how to handle errors
 export async function updateUser(token: string, userData: UserDataUpdate) {
 	try {
 		const response = await fetch('http://localhost:3000/api/users', {
@@ -45,14 +45,15 @@ export async function updateUser(token: string, userData: UserDataUpdate) {
 			credentials: 'include',
 		});
 		const data = await response.json();
-		if (response.ok) {
-			alert('User updated successfully');
-		} else {
-			alert(`Error: ${data.message}`);
+
+		if (!response.ok) {
+			throw new Error(data.message);
 		}
-	} catch (error) {
-		alert('Error updating user');
-		return null;
+
+		return data;
+
+	} catch (error: any) {
+		throw new Error(error.message);
 	}
 }
 

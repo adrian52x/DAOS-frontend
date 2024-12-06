@@ -20,13 +20,7 @@ function RouteComponent() {
     const queryClient = useQueryClient();
 	const navigate = Route.useNavigate()
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-    
-    if (!user) {
-        return <Navigate to="/login" />;
-    }
+   
 
     const updateUserData = useMutation({
         mutationFn: (data: UserDataUpdate) => updateUser(token, data),
@@ -34,6 +28,9 @@ function RouteComponent() {
             queryClient.invalidateQueries({ queryKey: ['current-user'] });
             navigate({ to: '/profile' })
         },
+        onError: (error) => {
+            alert(error)
+        }
     })
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -49,8 +46,16 @@ function RouteComponent() {
         };
 
         // Update user data
-		updateUserData.mutateAsync(userData);
+		updateUserData.mutateAsync(userData); 
     };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    
+    if (!user) {
+        return <Navigate to="/login" />;
+    }
  
     return (
         <div>
