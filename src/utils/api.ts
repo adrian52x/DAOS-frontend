@@ -184,3 +184,23 @@ export async function handleJoinRequest(action: JoinRequestAction, userId: strin
 		console.error('Error handling join request:', error);
 	}
 }
+
+//fetch the posts for a particular ensemble
+export async function fetchPostsByEnsembleId(token: string, ensembleId: string) {
+	try {
+		const response = await fetch(`http://localhost:3000/api/posts/ensemble/${ensembleId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			credentials: 'include',
+		});
+		if (!response.ok) {
+			throw new Error('Failed to fetch posts');
+		}
+		return response.json();
+	} catch (error) {
+		console.error('Error fetching posts:', error);
+		throw error;
+	}
+}

@@ -73,3 +73,10 @@ export interface UserDataUpdate {
 	profileText?: string;
 	instruments?: Instrument[];
 }
+
+export interface EnsembleDataUpdate {
+	name?: string;
+	address?: string;
+	zipCode?: string;
+	activeMembers?: string;
+}

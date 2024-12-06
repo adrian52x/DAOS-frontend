@@ -8,11 +8,12 @@ export const Route = createFileRoute('/ensembles/$ensembleId')({
 });
 
 function EnsembleDetailsRoute() {
+	console.log('Rendering EnsembleDetailsRouteeeee');
 	const { ensembleId } = Route.useParams<{ ensembleId: string }>();
-	const { user, token } = useAuth();
+	const { token } = useAuth();
 
 	const ensemble = useQuery({
-		queryKey: ['ensemble', user?._id], // Include userId in the query key
+		queryKey: ['current-ensemble'], // Static query key
 		queryFn: async () => {
 			const response = await fetch(`http://localhost:3000/api/ensembles/one/${ensembleId}`, {
 				credentials: 'include',
@@ -23,6 +24,7 @@ function EnsembleDetailsRoute() {
 			});
 			const data = await response.json();
 
+			console.log('Fetched Ensemble Data:', data); // Log fetched data
 			return data;
 		},
 		enabled: !!ensembleId, // Only run the query if ensembleId is available

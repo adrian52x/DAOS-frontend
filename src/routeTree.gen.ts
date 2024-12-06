@@ -19,6 +19,7 @@ import { Route as ProfileUpdateImport } from './routes/profile/update'
 import { Route as ProfileAddInstrumentImport } from './routes/profile/add-instrument'
 import { Route as PostsCreateImport } from './routes/posts/create'
 import { Route as PostsPostIdImport } from './routes/posts/$postId'
+import { Route as EnsemblesEditImport } from './routes/ensembles/edit'
 import { Route as EnsemblesCreateImport } from './routes/ensembles/create'
 import { Route as EnsemblesEnsembleIdImport } from './routes/ensembles/$ensembleId'
 import { Route as authRegisterImport } from './routes/(auth)/register'
@@ -71,6 +72,12 @@ const PostsCreateRoute = PostsCreateImport.update({
 const PostsPostIdRoute = PostsPostIdImport.update({
   id: '/posts/$postId',
   path: '/posts/$postId',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const EnsemblesEditRoute = EnsemblesEditImport.update({
+  id: '/ensembles/edit',
+  path: '/ensembles/edit',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -137,6 +144,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnsemblesCreateImport
       parentRoute: typeof rootRoute
     }
+    '/ensembles/edit': {
+      id: '/ensembles/edit'
+      path: '/ensembles/edit'
+      fullPath: '/ensembles/edit'
+      preLoaderRoute: typeof EnsemblesEditImport
+      parentRoute: typeof rootRoute
+    }
     '/posts/$postId': {
       id: '/posts/$postId'
       path: '/posts/$postId'
@@ -197,6 +211,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof authRegisterRoute
   '/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute
   '/ensembles/create': typeof EnsemblesCreateRoute
+  '/ensembles/edit': typeof EnsemblesEditRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/posts/create': typeof PostsCreateRoute
   '/profile/add-instrument': typeof ProfileAddInstrumentRoute
@@ -212,6 +227,7 @@ export interface FileRoutesByTo {
   '/register': typeof authRegisterRoute
   '/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute
   '/ensembles/create': typeof EnsemblesCreateRoute
+  '/ensembles/edit': typeof EnsemblesEditRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/posts/create': typeof PostsCreateRoute
   '/profile/add-instrument': typeof ProfileAddInstrumentRoute
@@ -228,6 +244,7 @@ export interface FileRoutesById {
   '/(auth)/register': typeof authRegisterRoute
   '/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute
   '/ensembles/create': typeof EnsemblesCreateRoute
+  '/ensembles/edit': typeof EnsemblesEditRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/posts/create': typeof PostsCreateRoute
   '/profile/add-instrument': typeof ProfileAddInstrumentRoute
@@ -245,6 +262,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/ensembles/$ensembleId'
     | '/ensembles/create'
+    | '/ensembles/edit'
     | '/posts/$postId'
     | '/posts/create'
     | '/profile/add-instrument'
@@ -259,6 +277,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/ensembles/$ensembleId'
     | '/ensembles/create'
+    | '/ensembles/edit'
     | '/posts/$postId'
     | '/posts/create'
     | '/profile/add-instrument'
@@ -273,6 +292,7 @@ export interface FileRouteTypes {
     | '/(auth)/register'
     | '/ensembles/$ensembleId'
     | '/ensembles/create'
+    | '/ensembles/edit'
     | '/posts/$postId'
     | '/posts/create'
     | '/profile/add-instrument'
@@ -289,6 +309,7 @@ export interface RootRouteChildren {
   authRegisterRoute: typeof authRegisterRoute
   EnsemblesEnsembleIdRoute: typeof EnsemblesEnsembleIdRoute
   EnsemblesCreateRoute: typeof EnsemblesCreateRoute
+  EnsemblesEditRoute: typeof EnsemblesEditRoute
   PostsPostIdRoute: typeof PostsPostIdRoute
   PostsCreateRoute: typeof PostsCreateRoute
   ProfileAddInstrumentRoute: typeof ProfileAddInstrumentRoute
@@ -304,6 +325,7 @@ const rootRouteChildren: RootRouteChildren = {
   authRegisterRoute: authRegisterRoute,
   EnsemblesEnsembleIdRoute: EnsemblesEnsembleIdRoute,
   EnsemblesCreateRoute: EnsemblesCreateRoute,
+  EnsemblesEditRoute: EnsemblesEditRoute,
   PostsPostIdRoute: PostsPostIdRoute,
   PostsCreateRoute: PostsCreateRoute,
   ProfileAddInstrumentRoute: ProfileAddInstrumentRoute,
@@ -328,6 +350,7 @@ export const routeTree = rootRoute
         "/(auth)/register",
         "/ensembles/$ensembleId",
         "/ensembles/create",
+        "/ensembles/edit",
         "/posts/$postId",
         "/posts/create",
         "/profile/add-instrument",
@@ -351,6 +374,9 @@ export const routeTree = rootRoute
     },
     "/ensembles/create": {
       "filePath": "ensembles/create.tsx"
+    },
+    "/ensembles/edit": {
+      "filePath": "ensembles/edit.tsx"
     },
     "/posts/$postId": {
       "filePath": "posts/$postId.tsx"
