@@ -4,7 +4,7 @@ import EnsemblePortrait from '../assets/ensemble-portrait.jpeg';
 import { useAuth } from '../auth/AuthContext';
 import { handleJoin, handleJoinRequest } from '../utils/api';
 import { formatDate } from '../utils/dateAndTimeUtils';
-import { useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { SmallButton } from './elements/SmallButton';
 import EnsembleIcon from '../assets/ensemble-icon.png';
@@ -54,13 +54,14 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 
 						<div className="grow">
 							{postData.ensemble ? (
-								<>
+								<Link to={`/ensembles/${postData.ensemble._id}`}>
 									<h3 className="font-body font-bold text-red">{postData.ensemble.name}</h3>
 									<p className="text-gray-800 whitespace-nowrap">
 										<span className="font-body text-sm font-bold pr-2">{postData.ensemble.address}</span>•{' '}
 										<span className="font-body text-sm pl-2">{postData.ensemble.activeMembers} musikere</span>
 									</p>
-								</>
+								</Link>
+
 							) : (
 								<>
 									<h3 className="font-body font-bold text-red">{postData.author.name}</h3>

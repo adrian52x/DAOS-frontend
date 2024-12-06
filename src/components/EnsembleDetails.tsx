@@ -3,12 +3,9 @@ import { EnsembleById, Post } from '../types/types';
 import { Button } from './elements/Button';
 import { fetchPostsByEnsembleId } from '../utils/api';
 import { useQuery } from '@tanstack/react-query';
-import { useAuth } from '../auth/AuthContext';
 import { PostCard } from './PostCardMine';
 
 const EnsembleDetails = ({ ensemble }: { ensemble: EnsembleById }) => {
-	const { token } = useAuth();
-
 	// Fetching the posts associated with this ensemble
 	const {
 		data: posts,
@@ -16,7 +13,7 @@ const EnsembleDetails = ({ ensemble }: { ensemble: EnsembleById }) => {
 		error,
 	} = useQuery({
 		queryKey: ['ensemble-posts', ensemble._id],
-		queryFn: () => fetchPostsByEnsembleId(token, ensemble._id), // Fetch posts by ensemble ID
+		queryFn: () => fetchPostsByEnsembleId(ensemble._id), // Fetch posts by ensemble ID
 		enabled: !!ensemble._id, // Ensure the query only runs if the ensemble ID exists
 	});
 
@@ -35,7 +32,7 @@ const EnsembleDetails = ({ ensemble }: { ensemble: EnsembleById }) => {
 			{/* Owner Info */}
 			<div className="flex items-center bg-white border border-gray-600 rounded-lg p-4 shadow-sm mt-6">
 				<div>
-					<h2 className="font-header text-lg text-black">Owner: {ensemble.owner.name}</h2>
+					<h2 className="font-header text-lg text-black">Owner: {ensemble.owner?.name}</h2>
 				</div>
 			</div>
 			{/* Address Section */}

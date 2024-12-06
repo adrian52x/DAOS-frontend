@@ -98,6 +98,18 @@ export async function fetchAllEnsemblesUserOwns(token: string) {
 	}
 }
 
+// Fetch ensemble by ID
+export async function fetchEnsembleById(ensembleId: string) {
+	try {
+		const response = await fetch(`http://localhost:3000/api/ensembles/one/${ensembleId}`);
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}
+
 // Create new post
 export async function createNewPost(token: string, post: any) {
 	try {
@@ -186,15 +198,9 @@ export async function handleJoinRequest(action: JoinRequestAction, userId: strin
 }
 
 //fetch the posts for a particular ensemble
-export async function fetchPostsByEnsembleId(token: string, ensembleId: string) {
+export async function fetchPostsByEnsembleId(ensembleId: string) {
 	try {
-		const response = await fetch(`http://localhost:3000/api/posts/ensemble/${ensembleId}`, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
-			},
-			credentials: 'include',
-		});
+		const response = await fetch(`http://localhost:3000/api/posts/ensemble/${ensembleId}`);
 		if (!response.ok) {
 			throw new Error('Failed to fetch posts');
 		}

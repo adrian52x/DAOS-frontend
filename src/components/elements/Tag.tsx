@@ -2,7 +2,7 @@ import { ReactNode } from '@tanstack/react-router';
 
 type TagProps = {
 	children: ReactNode;
-	onClick?: () => void;
+	onClick?: React.MouseEventHandler<HTMLButtonElement>;
 	variant?: 'active' | 'passive'; //ithe variant is optional cause the active is gonna be the default one
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 

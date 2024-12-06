@@ -18,7 +18,7 @@ export function EditEnsemblePage() {
 	// console.log('Rendering EnsembleUpdatePage for ensembleId:', ensembleId);
 
 	// Get cached data directly from React Query
-	const cachedEnsemble = queryClient.getQueryData<Ensemble>(['current-ensemble']);
+	const cachedEnsemble = queryClient.getQueryData<Ensemble>(['ensemble']);
 	console.log('Cached Ensemble Data in Edit Pageeeee:', cachedEnsemble);
 
 	if (!cachedEnsemble) {
@@ -62,13 +62,8 @@ export function EditEnsemblePage() {
 			return response.json();
 		},
 		onSuccess: () => {
-			if (cachedEnsemble) {
-				console.log('Update successful!!!!! Redirecting to ensemble details...');
-				queryClient.invalidateQueries({ queryKey: ['current-ensemble'] });
-				navigate({ to: `/ensembles/${cachedEnsemble._id}` });
-			} else {
-				console.error('Cached ensemble data is missing, cannot navigate.');
-			}
+			queryClient.invalidateQueries({ queryKey: ['ensemble'] });
+			navigate({ to: `/ensembles/${cachedEnsemble._id}` });
 		},
 	});
 
