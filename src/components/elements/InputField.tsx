@@ -7,19 +7,20 @@ type InputFieldProps = {
 	name: string; // Field name
 	required?: boolean;
 	options?: string[]; // Optional dropdown options for select
+	children?: React.ReactNode; // For custom components like Level Selector
 };
 
-export function InputField({ label, placeholder = '', value, onChange, type = 'text', name, required = false, options }: InputFieldProps) {
+export function InputField({ label, placeholder = '', value, onChange, type = 'text', name, required = false, options, children }: InputFieldProps) {
 	return (
-		<div className="input-field">
+		<div className="input-field space-y-2">
 			{/* Label */}
 			{label && (
-				<label htmlFor={name} className="block text-sm font-medium text-gray-800 mb-1">
+				<label htmlFor={name} className="block text-sm font-medium text-gray-800">
 					{label}
 				</label>
 			)}
 
-			{/* Dropdown or Input */}
+			{/* Dropdown, Input, or Custom Content */}
 			{options ? (
 				<select
 					id={name}
@@ -27,7 +28,7 @@ export function InputField({ label, placeholder = '', value, onChange, type = 't
 					value={value}
 					onChange={onChange}
 					required={required}
-					className="w-full flex items-center justify-between border rounded-lg px-4 py-2 font-body text-black placeholder-gray-800 focus:outline-none shadow-sm bg-white"
+					className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
 				>
 					{/* Placeholder as the first option */}
 					<option value="" disabled>
@@ -40,6 +41,8 @@ export function InputField({ label, placeholder = '', value, onChange, type = 't
 						</option>
 					))}
 				</select>
+			) : children ? (
+				<div className="w-full border rounded-lg px-4 py-3 bg-gray-100 shadow-sm">{children}</div>
 			) : (
 				<input
 					id={name}
@@ -49,7 +52,7 @@ export function InputField({ label, placeholder = '', value, onChange, type = 't
 					value={value}
 					onChange={onChange}
 					required={required}
-					className="w-full flex items-center justify-between border rounded-lg px-4 py-2 font-body text-black placeholder-gray-800 focus:outline-none shadow-sm"
+					className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
 				/>
 			)}
 		</div>

@@ -5,20 +5,33 @@ import { useState } from 'react';
 import { updateUser } from '../../utils/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UserDataUpdate } from '../../types/types';
+import { InputField } from '../../components/elements/InputField';
+import { Button } from '../../components/elements/Button';
+import { SmallButton } from '../../components/elements/SmallButton';
 
 export const Route = createFileRoute('/profile/add-instrument')({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
+	// Hooks must be at the top
 	const { user, loading, token } = useAuth();
 	const [instrumentName, setInstrumentName] = useState('');
-	const [level, setLevel] = useState(0);
+	const [level, setLevel] = useState(1); // Default level set to 1
 	const [genre, setGenre] = useState('');
-
 	const queryClient = useQueryClient();
 	const navigate = Route.useNavigate();
 
+	// Mutation hook
+	const updateUserData = useMutation({
+		mutationFn: (data: UserDataUpdate) => updateUser(token, data),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['current-user'] });
+			navigate({ to: '/profile' });
+		},
+	});
+
+	// Redirect logic after hooks are defined
 	if (loading) {
 		return <div>Loading...</div>;
 	}
@@ -27,13 +40,29 @@ function RouteComponent() {
 		return <Navigate to="/login" />;
 	}
 
-	const updateUserData = useMutation({
-		mutationFn: (data: UserDataUpdate) => updateUser(token, data),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['current-user'] });
-			navigate({ to: '/profile' });
+	// Levels data
+	const levels = [
+		{
+			value: 1,
+			description: 'Suitable for a musician with less than 1 year of experience, able to play simple or simplified scores.',
 		},
-	});
+		{
+			value: 2,
+			description: 'Suitable for a musician with 1-2 years of experience, able to play simple or simplified scores.',
+		},
+		{
+			value: 3,
+			description: 'Suitable for a musician with 2-4 years of experience, able to play moderately complex scores.',
+		},
+		{
+			value: 4,
+			description: 'Suitable for a musician with 4-6 years of experience, able to play moderately complex scores.',
+		},
+		{
+			value: 5,
+			description: 'Suitable for a musician with 6-10 years of experience, able to play complex scores.',
+		},
+	];
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -51,48 +80,82 @@ function RouteComponent() {
 		updateUserData.mutateAsync(userData);
 	};
 
+	// Render UI
 	return (
-		<div>
-			<h1>Add Instrument</h1>
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label>
-						Instrument Name:
-						<select value={instrumentName} onChange={(e) => setInstrumentName(e.target.value)} required>
-							<option value="" disabled>
-								Select an instrument
-							</option>
-							{instrumentsList.map((instrument) => (
-								<option key={instrument} value={instrument}>
-									{instrument}
-								</option>
-							))}
-						</select>
-					</label>
-				</div>
-				<div>
-					<label>
-						Level:
-						<input type="number" min={1} max={5} value={level} onChange={(e) => setLevel(Number(e.target.value))} required />
-					</label>
-				</div>
-				<div>
-					<label>
-						Genre:
-						<select name="genre" value={genre} onChange={(e) => setGenre(e.target.value)} required>
-							<option value="" disabled>
-								Select a genre
-							</option>
-							{genresList.map((genre) => (
-								<option key={genre} value={genre}>
-									{genre}
-								</option>
-							))}
-						</select>{' '}
-					</label>
-				</div>
-				<button type="submit">Add Instrument</button>
-			</form>
+		<div className="p-6">
+			{/* Go Back Button */}
+			<div className="mb-4">
+				<SmallButton onClick={() => navigate({ to: '/profile' })}>Go Back</SmallButton>
+			</div>
+
+			{/* Card */}
+			<div className="bg-white shadow rounded-lg max-w-md mx-auto p-6">
+				<h1 className="text-2xl font-bold text-blue-800 mb-6 text-center">Add Instrument</h1>
+				<form onSubmit={handleSubmit} className="space-y-6">
+					{/* Instrument Name Field */}
+					<InputField
+						label="Instrument Name"
+						placeholder="Select an instrument"
+						value={instrumentName}
+						onChange={(e) => setInstrumentName(e.target.value)}
+						name="instrumentName"
+						required
+						options={instrumentsList} // Dropdown options
+					/>
+
+					{/* Level Selector */}
+					<div className="space-y-2">
+						<label className="block text-sm font-medium text-gray-800">Skill Level</label>
+						<div
+							className="w-full border rounded-lg px-4 py-3 bg-white shadow-sm"
+							style={{ minHeight: '120px' }} // Ensures consistent height
+						>
+							<div className="flex justify-between items-center h-full">
+								<div className="flex-1">
+									<p className="text-sm font-semibold text-gray-800">Level {level}</p>
+									<p className="text-sm text-gray-700">{levels.find((lvl) => lvl.value === level)?.description}</p>
+								</div>
+								<div className="flex items-center space-x-2">
+									<button
+										type="button"
+										onClick={() => setLevel(Math.max(1, level - 1))}
+										disabled={level === 1}
+										className="bg-gray-200 text-gray-800 font-medium py-1 px-3 rounded hover:bg-gray-300 disabled:opacity-50"
+									>
+										-
+									</button>
+									<button
+										type="button"
+										onClick={() => setLevel(Math.min(5, level + 1))}
+										disabled={level === 5}
+										className="bg-gray-200 text-gray-800 font-medium py-1 px-3 rounded hover:bg-gray-300 disabled:opacity-50"
+									>
+										+
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Genre Field */}
+					<InputField
+						label="Genre"
+						placeholder="Select a genre"
+						value={genre}
+						onChange={(e) => setGenre(e.target.value)}
+						name="genre"
+						required
+						options={genresList} // Dropdown options
+					/>
+
+					{/* Submit Button */}
+					<div className="text-center">
+						<Button type="submit" variant="primary">
+							Add Instrument
+						</Button>
+					</div>
+				</form>
+			</div>
 		</div>
 	);
 }
