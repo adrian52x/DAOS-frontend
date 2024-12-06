@@ -7,7 +7,7 @@ type Instrument = {
 export function Instruments({ instruments, user }: { instruments: Instrument[]; user: any }) {
 	return (
 		<div className="bg-white shadow rounded-lg p-6">
-			<h2 className="text-xl font-bold mb-4">{user.name}'s Instruments</h2>
+			<h2 className="font-header text-2xl text-blue-800 font-bold mb-4 ">{user.name}'s Instruments</h2>
 			{!instruments || instruments.length === 0 ? (
 				<div className="text-center">
 					<p className="mb-4">This user hasn't added any instruments yet.</p>

@@ -25,6 +25,7 @@ export function Dropdown({ options, label, placeholder, value, onChange }: Dropd
 			{label && <label className="block font-body text-gray-800 mb-1">{label}</label>}
 			{/* Dropdown Button */}
 			<button
+				type="button"
 				onClick={toggleDropdown}
 				className="w-full flex items-center justify-between border rounded-lg px-4 py-2 font-body text-gray-800 focus:outline-none shadow-sm  bg-white"
 			>

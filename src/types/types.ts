@@ -1,4 +1,3 @@
-// types/Ensemble.ts
 export interface Ensemble {
 	_id: string;
 	name: string;
@@ -21,13 +20,24 @@ export interface EnsembleById {
 	pendingRequests: string[];
 }
 
+export interface EnsembleInPost {
+	_id: string;
+	name: string;
+	address: string;
+	zipCode: string;
+	activeMembers: string;
+	owner: string;
+	members: User[];
+	pendingRequests: User[];
+}
+
 export interface Post {
 	_id: string;
 	title: string;
 	description: string;
 	author: User;
 	instrument: Instrument;
-	ensemble: Ensemble;
+	ensemble: EnsembleInPost;
 	createdAt: string;
 }
 
@@ -62,4 +72,4 @@ export interface UserDataUpdate {
 	zipCode?: string;
 	profileText?: string;
 	instruments?: Instrument[];
-  }
+}

@@ -10,7 +10,12 @@ type Instrument = {
 export function Instruments({ instruments }: { instruments: Instrument[] }) {
 	return (
 		<div className="bg-white shadow rounded-lg p-6">
-			<h2 className="text-xl font-bold mb-4">My Instruments</h2>
+			<div className="flex flex-row justify-between items-center mb-4">
+				<h2 className="font-header text-2xl text-blue-800 font-bold ">My Instruments</h2>
+				<Link to="/ensembles/create">
+					<Button variant="secondary">Add an instrument</Button>
+				</Link>
+			</div>
 			{!instruments || instruments.length === 0 ? (
 				<div className="text-center">
 					<p className="mb-4">You haven't added any instruments yet.</p>
@@ -29,9 +34,6 @@ export function Instruments({ instruments }: { instruments: Instrument[] }) {
 							<p>Genre: {instrument.genre}</p>
 						</div>
 					))}
-					<Link to="/profile/add-instrument">
-						<Button variant="primary">Add an instrument</Button>
-					</Link>
 				</div>
 			)}
 		</div>

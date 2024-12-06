@@ -9,12 +9,14 @@ export function Ensembles({ ensembles }: { ensembles: Ensemble[] }) {
 	if (!ensembles || ensembles.length === 0) {
 		return (
 			<div className="bg-white shadow rounded-lg p-6">
-				<h2 className="text-xl font-bold mb-4">My Ensembles</h2>
+				<div className="flex flex-row justify-between items-center mb-4">
+					<h2 className="font-header text-2xl text-blue-800 font-bold ">My Ensembles</h2>
+					<Link to="/ensembles/create">
+						<Button variant="secondary">Create an Ensemble</Button>
+					</Link>
+				</div>
 				<div className="text-center">
 					<p className="mb-4">You don't have any Ensembles yet.</p>
-					<Link to="/ensembles/create">
-						<Button variant="primary">Create an Ensemble</Button>
-					</Link>
 				</div>
 			</div>
 		);
@@ -22,7 +24,12 @@ export function Ensembles({ ensembles }: { ensembles: Ensemble[] }) {
 
 	return (
 		<div className="bg-white shadow rounded-lg p-6">
-			<h2 className="text-xl font-bold mb-4">My Ensembles</h2>
+			<div className="flex flex-row justify-between items-center mb-4">
+				<h2 className="font-header text-2xl text-blue-800 font-bold ">My Ensembles</h2>
+				<Link to="/ensembles/create">
+					<Button variant="secondary">Create an Ensemble</Button>
+				</Link>
+			</div>
 			<ul>
 				{ensembles.map((ensemble) => (
 					<li key={ensemble._id}>
@@ -36,9 +43,6 @@ export function Ensembles({ ensembles }: { ensembles: Ensemble[] }) {
 					</li>
 				))}
 			</ul>
-			<Link to="/ensembles/create">
-				<Button variant="primary">Create an Ensemble</Button>
-			</Link>
 		</div>
 	);
 }
