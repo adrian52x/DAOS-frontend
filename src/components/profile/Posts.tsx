@@ -41,7 +41,7 @@ export function Posts({ posts }: { posts: Post[] }) {
 
 							{/* Animated Incoming Requests Badge */}
 							{post.ensemble && post.ensemble.pendingRequests?.length > 0 && (
-								<span className="absolute top-[-8px] right-[-8px] bg-red text-white text-xs font-bold rounded-full h-10 flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out group-hover:w-auto group-hover:px-4 w-10 h-10">
+								<span className="absolute top-[-8px] right-[-8px] bg-red text-white text-xs font-bold rounded-full h-10 flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out group-hover:w-auto group-hover:px-4 w-10">
 									<span className="whitespace-nowrap overflow-hidden group-hover:overflow-visible">
 										+{post.ensemble.pendingRequests.length}{' '}
 										<span className="hidden group-hover:inline">incoming request{post.ensemble.pendingRequests.length > 1 ? 's' : ''}</span>

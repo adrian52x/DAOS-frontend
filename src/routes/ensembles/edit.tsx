@@ -46,6 +46,7 @@ export function EditEnsemblePage() {
 			if (!cachedEnsemble) {
 				throw new Error('No cached ensemble data available!');
 			}
+			//I wasn't sure how to add this request to the apis page, cause of the cashed ensemble - i get it from here
 			const response = await fetch(`http://localhost:3000/api/ensembles/edit/${cachedEnsemble._id}`, {
 				method: 'PUT',
 				headers: {
