@@ -34,8 +34,6 @@ export function Posts({ posts }: { posts: Post[] }) {
 			<ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
 				{posts.map((post) => (
 					<li key={post._id} className="relative">
-						{/* Make entire card a link */}
-						<Link to={`/posts/${post._id}`} className="block relative group">
 							{/* Post Card */}
 							<PostCard key={post._id} post={post} />
 
@@ -48,7 +46,6 @@ export function Posts({ posts }: { posts: Post[] }) {
 									</span>
 								</span>
 							)}
-						</Link>
 						<hr />
 					</li>
 				))}

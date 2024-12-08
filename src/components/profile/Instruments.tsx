@@ -12,7 +12,7 @@ export function Instruments({ instruments }: { instruments: Instrument[] }) {
 		<div className="bg-white shadow rounded-lg p-6">
 			<div className="flex flex-row justify-between items-center mb-4">
 				<h2 className="font-header text-2xl text-blue-800 font-bold ">My Instruments</h2>
-				<Link to="/ensembles/create">
+				<Link to="/profile/add-instrument">
 					<Button variant="secondary">Add an instrument</Button>
 				</Link>
 			</div>

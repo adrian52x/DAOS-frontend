@@ -32,7 +32,7 @@ export async function fetchCurrentUserData(token: string) {
 	}
 }
 
-// Update user data
+// Update user data ---------------- Good example of how to handle errors
 export async function updateUser(token: string, userData: UserDataUpdate) {
 	try {
 		const response = await fetch('http://localhost:3000/api/users', {
@@ -45,14 +45,15 @@ export async function updateUser(token: string, userData: UserDataUpdate) {
 			credentials: 'include',
 		});
 		const data = await response.json();
-		if (response.ok) {
-			alert('User updated successfully');
-		} else {
-			alert(`Error: ${data.message}`);
+
+		if (!response.ok) {
+			throw new Error(data.message);
 		}
-	} catch (error) {
-		alert('Error updating user');
-		return null;
+
+		return data;
+
+	} catch (error: any) {
+		throw new Error(error.message);
 	}
 }
 
@@ -90,6 +91,18 @@ export async function fetchAllEnsemblesUserOwns(token: string) {
 			},
 			credentials: 'include',
 		});
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}
+
+// Fetch ensemble by ID
+export async function fetchEnsembleById(ensembleId: string) {
+	try {
+		const response = await fetch(`http://localhost:3000/api/ensembles/one/${ensembleId}`);
 		const data = await response.json();
 		return data;
 	} catch (error) {
@@ -186,15 +199,9 @@ export async function handleJoinRequest(action: JoinRequestAction, userId: strin
 }
 
 //fetch the posts for a particular ensemble
-export async function fetchPostsByEnsembleId(token: string, ensembleId: string) {
+export async function fetchPostsByEnsembleId(ensembleId: string) {
 	try {
-		const response = await fetch(`http://localhost:3000/api/posts/ensemble/${ensembleId}`, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
-			},
-			credentials: 'include',
-		});
+		const response = await fetch(`http://localhost:3000/api/posts/ensemble/${ensembleId}`);
 		if (!response.ok) {
 			throw new Error('Failed to fetch posts');
 		}
