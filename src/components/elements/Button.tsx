@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 type ButtonProps = {
 	children: ReactNode;
-	onClick?: () => void;
+	onClick?: React.MouseEventHandler<HTMLButtonElement>;
 	variant?: 'primary' | 'secondary' | 'tertiary'; // Variant is optional because primary is the default one
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
