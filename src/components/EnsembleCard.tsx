@@ -2,10 +2,8 @@ import { useNavigate } from '@tanstack/react-router';
 import EnsembleIcon from '../assets/ensemble-icon.png';
 import EnsemblePortrait from '../assets/ensemble-portrait.jpeg';
 import { Ensemble } from '../types/types';
-import { useAuth } from '../auth/AuthContext';
 
-export function EnsembleCard({ ensemble }: { ensemble: Ensemble }) {
-	const { user } = useAuth();
+export function EnsembleCard({ ensemble, user }: { ensemble: Ensemble; user: any }) {
 	const navigate = useNavigate(); //how does this hook work
 
 	const handleNavigate = () => {

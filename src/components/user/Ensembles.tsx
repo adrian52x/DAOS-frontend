@@ -21,7 +21,7 @@ export function Ensembles({ ensembles, user }: { ensembles: Ensemble[]; user: an
 				{ensembles.map((ensemble) => (
 					<Link to={`/ensembles/${ensemble._id}`} className="block relative group">
 						<li key={ensemble._id} className="relative">
-							<EnsembleCard key={ensemble._id} ensemble={ensemble} />
+							<EnsembleCard key={ensemble._id} ensemble={ensemble} user={user} />
 						</li>
 					</Link>
 				))}

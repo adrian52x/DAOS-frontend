@@ -42,14 +42,14 @@ function Profile() {
 
 	// Query to get all user's posts by user ID
 	const userPosts = useQuery({
-		queryKey: ['user-posts', userData?._id], 
+		queryKey: ['user-posts', userData?._id],
 		queryFn: () => fetchAllPostsByUser(userData._id),
-		enabled: !!userData, 
+		enabled: !!userData,
 	});
 
 	// Query to get all user's ensembles by user ID (member of)
 	const userEnsembles = useQuery({
-		queryKey: ['user-ensembles', userData?._id], 
+		queryKey: ['user-ensembles', userData?._id],
 		queryFn: () => fetchAllEnsemblesByUser(userData._id),
 		enabled: !!userData, // Only run the query if user is available
 	});
