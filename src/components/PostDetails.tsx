@@ -21,13 +21,12 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 		navigate({ to: `/user/${userId}` });
 	};
 
-	const acceptRequest =  useMutation({
+	const acceptRequest = useMutation({
 		mutationFn: (userId: string) => handleJoinRequest(JoinRequestAction.ACCEPT, userId, token, postData.ensemble._id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['post'] });
 		},
 	});
-	
 
 	const rejectRequest = useMutation({
 		mutationFn: (userId: string) => handleJoinRequest(JoinRequestAction.REJECT, userId, token, postData.ensemble._id),
@@ -35,7 +34,6 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 			queryClient.invalidateQueries({ queryKey: ['post'] });
 		},
 	});
-	
 
 	const formattedDate = formatDate(postData.createdAt);
 
@@ -61,7 +59,6 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 										<span className="font-body text-sm pl-2">{postData.ensemble.activeMembers} musikere</span>
 									</p>
 								</Link>
-
 							) : (
 								<>
 									<h3 className="font-body font-bold text-red">{postData.author.name}</h3>

@@ -21,7 +21,7 @@ function RouteComponent() {
 	const [ensembleId, setEnsembleId] = useState('');
 
 	//const queryClient = useQueryClient();
-	const navigate = Route.useNavigate()
+	const navigate = Route.useNavigate();
 
 	// Reset form fields when post type changes
 	const handlePostTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -36,7 +36,7 @@ function RouteComponent() {
 
 	// Query to get ensembles that the user owns
 	const ensemblesUserOwn = useQuery({
-		queryKey: ['user-ensembles-own', user?._id], 
+		queryKey: ['user-ensembles-own', user?._id],
 		queryFn: () => fetchAllEnsemblesUserOwns(token),
 		enabled: !!user, // Only run the query if user is available
 	});
@@ -50,11 +50,11 @@ function RouteComponent() {
 	}
 
 	const createPost = useMutation({
-        mutationFn: (post: any) => createNewPost(token, post),
-        onSuccess: () => {
-            navigate({ to: '/posts' })
-        },
-    })
+		mutationFn: (post: any) => createNewPost(token, post),
+		onSuccess: () => {
+			navigate({ to: '/posts' });
+		},
+	});
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -72,9 +72,9 @@ function RouteComponent() {
 				title,
 				description,
 				instrument: {
-				name: instrumentName,
-				level: instrumentLevel,
-				genre: instrumentGenre,
+					name: instrumentName,
+					level: instrumentLevel,
+					genre: instrumentGenre,
 				},
 				ensemble: ensembleId,
 			};
@@ -102,7 +102,6 @@ function RouteComponent() {
 				</label>
 			</div>{' '}
 			<br />
-
 			{postType && (
 				<form onSubmit={handleSubmit}>
 					<div>
@@ -122,19 +121,19 @@ function RouteComponent() {
 							<label>
 								Instrument:
 								<select value={instrumentName} onChange={(e) => setInstrumentName(e.target.value)} required>
-								<option value="" disabled>
-									Select an instrument
-								</option>
-								{user.instruments.map((instrument: any, index: number) => (
-									<option key={index} value={instrument.name}>
-									{instrument.name} - Level {instrument.level} - {instrument.genre}
+									<option value="" disabled>
+										Select an instrument
 									</option>
-								))}
+									{user.instruments.map((instrument: any, index: number) => (
+										<option key={index} value={instrument.name}>
+											{instrument.name} - Level {instrument.level} - {instrument.genre}
+										</option>
+									))}
 								</select>
 							</label>
 						</div>
 					)}
-					
+
 					{postType === 'looking' && (
 						<>
 							<div>
@@ -155,7 +154,15 @@ function RouteComponent() {
 							<div>
 								<label>
 									Level:
-									<input type="number" name="level" value={instrumentLevel} min="1" max="5" onChange={(e) => setInstrumentLevel(Number(e.target.value))} required />
+									<input
+										type="number"
+										name="level"
+										value={instrumentLevel}
+										min="1"
+										max="5"
+										onChange={(e) => setInstrumentLevel(Number(e.target.value))}
+										required
+									/>
 								</label>
 							</div>
 							<div>
@@ -173,7 +180,7 @@ function RouteComponent() {
 									</select>{' '}
 								</label>
 							</div>
-							
+
 							<div>
 								<label>
 									Ensemble:
