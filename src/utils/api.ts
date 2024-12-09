@@ -149,9 +149,9 @@ export async function fetchPostById(postId: string) {
 }
 
 // Join ensemble
-export async function handleJoin(token: string, ensembleId: string) {
+export async function handleJoin(token: string, ensembleId: string, postId: string) {
 	try {
-		const response = await fetch(`http://localhost:3000/api/ensembles/join/${ensembleId}`, {
+		const response = await fetch(`http://localhost:3000/api/ensembles/join/${ensembleId}/${postId}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
@@ -173,9 +173,9 @@ export async function handleJoin(token: string, ensembleId: string) {
 }
 
 // Accept or reject join request
-export async function handleJoinRequest(action: JoinRequestAction, userId: string, token: string, ensembleId: string) {
+export async function handleJoinRequest(action: JoinRequestAction, userId: string, token: string, ensembleId: string, postId: string) {
 	try {
-		const response = await fetch(`http://localhost:3000/api/ensembles/${ensembleId}/handle-request/${userId}`, {
+		const response = await fetch(`http://localhost:3000/api/ensembles/${ensembleId}/${postId}/handle-request/${userId}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',

@@ -22,7 +22,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 	};
 
 	const acceptRequest =  useMutation({
-		mutationFn: (userId: string) => handleJoinRequest(JoinRequestAction.ACCEPT, userId, token, postData.ensemble._id),
+		mutationFn: (userId: string) => handleJoinRequest(JoinRequestAction.ACCEPT, userId, token, postData.ensemble._id, postData._id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['post'] });
 		},
@@ -30,7 +30,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 	
 
 	const rejectRequest = useMutation({
-		mutationFn: (userId: string) => handleJoinRequest(JoinRequestAction.REJECT, userId, token, postData.ensemble._id),
+		mutationFn: (userId: string) => handleJoinRequest(JoinRequestAction.REJECT, userId, token, postData.ensemble._id, postData._id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['post'] });
 		},
@@ -119,9 +119,9 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 							// {/* Pending Requests */}
 							<div className="bg-white border border-gray-600 rounded-lg p-4 shadow-sm mt-8">
 								<h3 className="text-xl font-header text-blue-800 mb-2">Pending Requests</h3>
-								{postData.ensemble.pendingRequests?.length > 0 ? (
+								{postData.pendingRequests?.length > 0 ? (
 									<ul>
-										{postData.ensemble.pendingRequests.map((user, index) => (
+										{postData.pendingRequests.map((user, index) => (
 											<li key={index} className="flex justify-between items-center py-4 border-b-solid border-t-2">
 												<div>
 													<a
@@ -158,7 +158,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 						) : (
 							<div className="flex justify-center mt-8">
 								<button
-									onClick={() => handleJoin(token, postData.ensemble._id)}
+									onClick={() => handleJoin(token, postData.ensemble._id, postData._id)}
 									className="bg-blue-900 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-blue-700"
 									disabled={postData.ensemble?.members.includes(user?._id)}
 								>

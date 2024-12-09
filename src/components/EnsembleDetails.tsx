@@ -54,7 +54,7 @@ const EnsembleDetails = ({ ensemble }: { ensemble: EnsembleById }) => {
 					<ul>
 						{ensemble.members.map((member, index) => (
 							<li key={index} className="text-base text-gray-800 font-body leading-relaxed">
-								{member}
+								{member.name}
 							</li>
 						))}
 					</ul>
