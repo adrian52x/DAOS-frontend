@@ -14,7 +14,6 @@ export const Route = createFileRoute('/profile/add-instrument')({
 });
 
 function RouteComponent() {
-	// Hooks must be at the top
 	const { user, loading, token } = useAuth();
 	const [instrumentName, setInstrumentName] = useState('');
 	const [level, setLevel] = useState(1); // Default level set to 1
@@ -22,7 +21,6 @@ function RouteComponent() {
 	const queryClient = useQueryClient();
 	const navigate = Route.useNavigate();
 
-	// Mutation hook
 	const updateUserData = useMutation({
 		mutationFn: (data: UserDataUpdate) => updateUser(token, data),
 		onSuccess: () => {
@@ -31,7 +29,6 @@ function RouteComponent() {
 		},
 	});
 
-	// Redirect logic after hooks are defined
 	if (loading) {
 		return <div>Loading...</div>;
 	}
@@ -40,7 +37,6 @@ function RouteComponent() {
 		return <Navigate to="/login" />;
 	}
 
-	// Levels data
 	const levels = [
 		{
 			value: 1,
@@ -63,36 +59,23 @@ function RouteComponent() {
 			description: 'Suitable for a musician with 6-10 years of experience, able to play complex scores.',
 		},
 	];
-
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		const newInstrument = {
-			name: instrumentName,
-			level,
-			genre,
-		};
 
-		const userData = {
+		const newInstrument = { name: instrumentName, level, genre };
+		updateUserData.mutateAsync({
 			instruments: [...(user.instruments || []), newInstrument],
-		};
-
-		// Update user data
-		updateUserData.mutateAsync(userData);
+		});
 	};
 
-	// Render UI
 	return (
 		<div className="p-6">
-			{/* Go Back Button */}
 			<div className="mb-4">
 				<SmallButton onClick={() => navigate({ to: '/profile' })}>Go Back</SmallButton>
 			</div>
-
-			{/* Card */}
 			<div className="bg-white shadow rounded-lg max-w-md mx-auto p-6">
 				<h1 className="text-2xl font-bold text-blue-800 mb-6 text-center">Add Instrument</h1>
 				<form onSubmit={handleSubmit} className="space-y-6">
-					{/* Instrument Name Field */}
 					<InputField
 						label="Instrument Name"
 						placeholder="Select an instrument"
@@ -100,17 +83,12 @@ function RouteComponent() {
 						onChange={(e) => setInstrumentName(e.target.value)}
 						name="instrumentName"
 						required
-						options={instrumentsList} // Dropdown options
+						options={instrumentsList}
 					/>
-
-					{/* Level Selector */}
 					<div className="space-y-2">
 						<label className="block text-sm font-medium text-gray-800">Skill Level</label>
-						<div
-							className="w-full border rounded-lg px-4 py-3 bg-white shadow-sm"
-							style={{ minHeight: '120px' }} // Ensures consistent height
-						>
-							<div className="flex justify-between items-center h-full">
+						<div className="w-full border rounded-lg px-4 py-3 bg-white shadow-sm">
+							<div className="flex justify-between items-center">
 								<div className="flex-1">
 									<p className="text-sm font-semibold text-gray-800">Level {level}</p>
 									<p className="text-sm text-gray-700">{levels.find((lvl) => lvl.value === level)?.description}</p>
@@ -136,19 +114,7 @@ function RouteComponent() {
 							</div>
 						</div>
 					</div>
-
-					{/* Genre Field */}
-					<InputField
-						label="Genre"
-						placeholder="Select a genre"
-						value={genre}
-						onChange={(e) => setGenre(e.target.value)}
-						name="genre"
-						required
-						options={genresList} // Dropdown options
-					/>
-
-					{/* Submit Button */}
+					<InputField label="Genre" placeholder="Select a genre" value={genre} onChange={(e) => setGenre(e.target.value)} name="genre" required options={genresList} />
 					<div className="text-center">
 						<Button type="submit" variant="primary">
 							Add Instrument

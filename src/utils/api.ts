@@ -184,3 +184,33 @@ export async function handleJoinRequest(action: JoinRequestAction, userId: strin
 		console.error('Error handling join request:', error);
 	}
 }
+
+// Update or delete an instrument
+export async function updateOrDeleteInstrument(token: string, action: 'update' | 'delete', instrumentData: any) {
+	try {
+		const response = await fetch('http://localhost:3000/api/users', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				action, // "update" or "delete"
+				instrumentData,
+			}),
+		});
+
+		const data = await response.json();
+
+		if (response.ok) {
+			// alert(`Instrument ${action}d successfully.`);
+			return data;
+		} else {
+			alert(`Error: ${data.message}`);
+			throw new Error(data.message);
+		}
+	} catch (error) {
+		console.error(`Error ${action}ing instrument:`, error);
+		throw error;
+	}
+}
