@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { Ensemble } from '../../types/types';
+import { EnsembleCard } from '../EnsembleCard';
 
 export function Ensembles({ ensembles, user }: { ensembles: Ensemble[]; user: any }) {
 	if (!ensembles || ensembles.length === 0) {
@@ -16,17 +17,13 @@ export function Ensembles({ ensembles, user }: { ensembles: Ensemble[]; user: an
 	return (
 		<div className="bg-white shadow rounded-lg p-6">
 			<h2 className="font-header text-2xl text-blue-800 font-bold mb-4">{user.name}'s Ensembles</h2>
-			<ul>
+			<ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
 				{ensembles.map((ensemble) => (
-					<li key={ensemble._id}>
-						{ensemble.name} | {ensemble.activeMembers} | {ensemble.address} | {ensemble.zipCode}{' '}
-						{ensemble.owner === user._id && <span className="text-yellow-500">⭐ Owner</span>}
-						<div className="px-4 pb-4">
-							<Link to={`/ensembles/${ensemble._id}`} className="text-blue-600 hover:underline font-body">
-								View Details
-							</Link>
-						</div>
-					</li>
+					<Link to={`/ensembles/${ensemble._id}`} className="block relative group">
+						<li key={ensemble._id} className="relative">
+							<EnsembleCard key={ensemble._id} ensemble={ensemble} user={user} />
+						</li>
+					</Link>
 				))}
 			</ul>
 		</div>

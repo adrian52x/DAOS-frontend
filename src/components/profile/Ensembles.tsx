@@ -2,8 +2,11 @@ import { Link } from '@tanstack/react-router';
 import { Ensemble } from '../../types/types';
 import { Button } from '../elements/Button';
 import { EnsembleCard } from '../EnsembleCard';
+import { useAuth } from '../../auth/AuthContext';
 
 export function Ensembles({ ensembles }: { ensembles: Ensemble[] }) {
+	const { user } = useAuth();
+
 	if (!ensembles || ensembles.length === 0) {
 		return (
 			<div className="bg-white shadow rounded-lg p-6">
@@ -32,7 +35,7 @@ export function Ensembles({ ensembles }: { ensembles: Ensemble[] }) {
 				{ensembles.map((ensemble) => (
 					<Link to={`/ensembles/${ensemble._id}`} className="block relative group">
 						<li key={ensemble._id} className="relative">
-							<EnsembleCard key={ensemble._id} ensemble={ensemble} />
+							<EnsembleCard key={ensemble._id} ensemble={ensemble} user={user} />
 						</li>
 					</Link>
 				))}

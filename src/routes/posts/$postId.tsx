@@ -11,7 +11,7 @@ export const Route = createFileRoute('/posts/$postId')({
 function PostDetailsRoute() {
 	const { postId } = Route.useParams<{ postId: string }>(); // TypeScript type added
 
-	const {data: postData, isLoading  } = useQuery({
+	const { data: postData, isLoading } = useQuery({
 		queryKey: ['post', postId],
 		queryFn: () => fetchPostById(postId),
 		enabled: !!postId, // Only fetch when postId is truthy
@@ -24,6 +24,8 @@ function PostDetailsRoute() {
 	if (postData.error) {
 		return <p>Error: {postData.message}</p>;
 	}
+
+	console.log('postData', postData);
 
 	return <PostDetails postData={postData} />;
 }
