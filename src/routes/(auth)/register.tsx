@@ -45,21 +45,20 @@ function Register() {
 			<div className={styles.grayBackground}>
 				<form onSubmit={handleSubmit} className={styles.sectionWrapper}>
 					<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl">Register</h2>
-					<div className={styles.gaps}>
-						<InputField label="Name" name="name" placeholder="Enter your username" value={name} onChange={(e) => setName(e.target.value)} required />
 
-						<InputField label="Email" name="email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+					<InputField label="Name" name="name" placeholder="Enter your username" value={name} onChange={(e) => setName(e.target.value)} required />
 
-						<InputField
-							label="Password"
-							name="password"
-							type="password"
-							placeholder="Enter your password"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							required
-						/>
-					</div>
+					<InputField label="Email" name="email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+
+					<InputField
+						label="Password"
+						name="password"
+						type="password"
+						placeholder="Enter your password"
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+						required
+					/>
 
 					<Button type="submit">Register</Button>
 				</form>

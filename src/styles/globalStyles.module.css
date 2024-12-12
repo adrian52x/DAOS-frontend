@@ -20,13 +20,13 @@
 	background-color: #353a5d;
 }
 
-.gaps {
+/* .gaps {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
-}
-@media (max-width: 640px) {
+} */
+/* @media (max-width: 640px) {
 	.gaps {
 		gap: 1rem;
 	}
-}
+} */

@@ -46,19 +46,17 @@ function Login() {
 				<form onSubmit={handleSubmit} className={styles.sectionWrapper}>
 					<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">Login</h2>
 
-					<div className={styles.gaps}>
-						<InputField label="Email" name="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+					<InputField label="Email" name="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
-						<InputField
-							label="Password"
-							name="password"
-							type="password"
-							placeholder="Enter your password"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							required
-						/>
-					</div>
+					<InputField
+						label="Password"
+						name="password"
+						type="password"
+						placeholder="Enter your password"
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+						required
+					/>
 
 					<Button type="submit">Login</Button>
 				</form>

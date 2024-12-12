@@ -5,6 +5,7 @@ import { Ensemble, EnsembleDataUpdate } from '../../types/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InputField } from '../../components/elements/InputField';
 import { Button } from '../../components/elements/Button';
+import styles from '/src/styles/globalStyles.module.css';
 
 export const Route = createFileRoute('/ensembles/edit')({
 	component: EditEnsemblePage,
@@ -77,11 +78,10 @@ export function EditEnsemblePage() {
 	};
 
 	return (
-		<div className="container mx-auto p-4">
-			<h1 className="text-2xl font-bold mb-6">Edit Ensemble</h1>
+		<div className={styles.grayBackground}>
+			<form onSubmit={handleSubmit} className={styles.sectionWrapper}>
+				<h1 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">Edit Ensemble</h1>
 
-			<form className="space-y-6" onSubmit={handleSubmit}>
-				{/* Input for Ensemble Name */}
 				<InputField
 					label="Ensemble Name"
 					placeholder="Enter ensemble name"
@@ -91,7 +91,6 @@ export function EditEnsemblePage() {
 					required={true}
 				/>
 
-				{/* Input for Address */}
 				<InputField
 					label="Address"
 					placeholder="Enter address"
@@ -101,7 +100,6 @@ export function EditEnsemblePage() {
 					required={true}
 				/>
 
-				{/* Input for Zip Code */}
 				<InputField
 					label="Zip Code"
 					placeholder="Enter zip code"
@@ -111,7 +109,6 @@ export function EditEnsemblePage() {
 					required={true}
 				/>
 
-				{/* Input for Active Members */}
 				<InputField
 					label="Active Members"
 					placeholder="Number of active members"
@@ -121,7 +118,6 @@ export function EditEnsemblePage() {
 					required={true}
 				/>
 
-				{/* Submit Button */}
 				<Button type="submit" variant="primary">
 					Save Changes
 				</Button>
