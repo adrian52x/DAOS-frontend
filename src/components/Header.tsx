@@ -5,8 +5,6 @@ import { MdMenu } from 'react-icons/md';
 import { useState } from 'react';
 import { LoadingHeader } from './loading-components/LoadingHeader';
 
-
-
 const Header = () => {
 	const { user, setUser, setToken, loading } = useAuth();
 	const [menuOpen, setMenuOpen] = useState(false);

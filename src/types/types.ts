@@ -78,4 +78,5 @@ export interface EnsembleDataUpdate {
 	address?: string;
 	zipCode?: string;
 	activeMembers?: string;
+	members?: string[];
 }

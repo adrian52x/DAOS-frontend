@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../auth/AuthContext';
-import { Ensemble, EnsembleDataUpdate } from '../../types/types';
+import { Ensemble, EnsembleById, EnsembleDataUpdate, User } from '../../types/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InputField } from '../../components/elements/InputField';
 import { Button } from '../../components/elements/Button';
@@ -14,31 +14,30 @@ export const Route = createFileRoute('/ensembles/edit')({
 export function EditEnsemblePage() {
 	const { token } = useAuth();
 	const navigate = Route.useNavigate();
-	// const { ensembleId } = Route.useParams<{ ensembleId: string }>(); // Extract ensembleId from route params
-	const queryClient = useQueryClient(); // Initialize Query Client
-	// console.log('Rendering EnsembleUpdatePage for ensembleId:', ensembleId);
+	const queryClient = useQueryClient(); // So i can use the cached data
 
-	// Get cached data directly from React Query
-	const cachedEnsemble = queryClient.getQueryData<Ensemble>(['ensemble']);
-	console.log('Cached Ensemble Data in Edit Pageeeee:', cachedEnsemble);
-
+	//getting the cached data
+	const cachedEnsemble = queryClient.getQueryData<EnsembleById>(['ensemble']);
 	if (!cachedEnsemble) {
 		console.error('No cached ensemble data found!');
 		return null;
 	}
 
+	//get the data from the input fields
 	const [name, setName] = useState('');
 	const [address, setAddress] = useState('');
 	const [zipCode, setZipCode] = useState('');
 	const [activeMembers, setActiveMembers] = useState('');
+	const [members, setMembers] = useState<User[]>([]);
 
-	// Use cached data to populate the form
+	// populate the fields
 	useEffect(() => {
 		if (cachedEnsemble) {
-			setName(cachedEnsemble.name || '');
-			setAddress(cachedEnsemble.address || '');
-			setZipCode(cachedEnsemble.zipCode || '');
-			setActiveMembers(cachedEnsemble.activeMembers || '');
+			setName(cachedEnsemble.name);
+			setAddress(cachedEnsemble.address);
+			setZipCode(cachedEnsemble.zipCode);
+			setActiveMembers(cachedEnsemble.activeMembers);
+			setMembers(cachedEnsemble.members);
 		}
 	}, [cachedEnsemble]);
 
@@ -69,10 +68,21 @@ export function EditEnsemblePage() {
 		},
 	});
 
+	const handleDeleteMember = (memberId: string) => {
+		setMembers((members) => members.filter((member) => member._id !== memberId));
+	};
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		const updatedData: EnsembleDataUpdate = { name, address, zipCode, activeMembers };
-		console.log('Submitting Updated Data:', updatedData);
+		const updatedData: EnsembleDataUpdate = {
+			name,
+			address,
+			zipCode,
+			activeMembers,
+			members: members.map((member) => member._id), // Send only IDs to the backend
+		};
+
+		console.log('Submitting Updated Dataaa:', updatedData);
 
 		updateEnsemble.mutate(updatedData);
 	};
@@ -117,6 +127,21 @@ export function EditEnsemblePage() {
 					name="activeMembers"
 					required={true}
 				/>
+
+				<section>
+					<h3 className="text-xl font-header text-blue-800 mb-2">Members</h3>
+					<ul>
+						{members.map((member, index) => (
+							<li key={index} className=" flex flex-row gap-2 text-base text-gray-800 font-body leading-relaxed py-2">
+								{member.name}
+								{/* if (member === member.owner){' '} {} */}
+								<Button variant="tertiary" onClick={() => handleDeleteMember(member._id)}>
+									x
+								</Button>
+							</li>
+						))}
+					</ul>
+				</section>
 
 				<Button type="submit" variant="primary">
 					Save Changes
