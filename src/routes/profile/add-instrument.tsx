@@ -26,6 +26,9 @@ function RouteComponent() {
 			queryClient.invalidateQueries({ queryKey: ['current-user'] });
 			navigate({ to: '/profile' });
 		},
+		onError: (error) => {
+			alert(error.message);
+		},
 	});
 
 	if (loading) {
@@ -72,16 +75,15 @@ function RouteComponent() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		if (!instrumentName || selectedGenres.length === 0) {
-			alert('Please fill all required fields.');
-			return;
-		}
+		if (!instrumentName || selectedGenres.length === 0) return;
 
 		const newInstrument = { name: instrumentName, level, genre: selectedGenres };
 		updateUserData.mutateAsync({
 			instruments: [...(user.instruments || []), newInstrument],
 		});
 	};
+
+	const isAddInstrumentBtnDisabled = !instrumentName || selectedGenres.length === 0;
 
 	return (
 		<div className="p-6">
@@ -176,7 +178,7 @@ function RouteComponent() {
 						</div>
 					</div>
 					<div className="text-center">
-						<Button type="submit" variant="primary">
+						<Button type="submit" variant="primary" disabled={isAddInstrumentBtnDisabled}>
 							Add Instrument
 						</Button>
 					</div>

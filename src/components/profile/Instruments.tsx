@@ -12,7 +12,7 @@ export function Instruments({ instruments }: { instruments: Instrument[] }) {
 	const handleDelete = async (instrument: Instrument) => {
 		if (confirm(`Are you sure you want to delete "${instrument.name}"?`)) {
 			try {
-				await deleteInstrument(token, { name: instrument.name, level: instrument.level });
+				await deleteInstrument(token, instrument.name);
 				alert(`Instrument "${instrument.name}" deleted successfully.`);
 				queryClient.invalidateQueries({ queryKey: ['current-user'] });
 			} catch (error: any) {

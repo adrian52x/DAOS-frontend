@@ -197,7 +197,7 @@ export async function handleJoinRequest(action: JoinRequestAction, userId: strin
 }
 
 // Delete an instrument
-export async function deleteInstrument(token: string, instrumentData: { name: string; level: number }) {
+export async function deleteInstrument(token: string, instrumentName: string) {
 	try {
 		const response = await fetch('http://localhost:3000/api/users', {
 			method: 'PATCH',
@@ -207,7 +207,7 @@ export async function deleteInstrument(token: string, instrumentData: { name: st
 			},
 			body: JSON.stringify({
 				action: 'delete',
-				instrumentData, // Contains the name and level of the instrument to delete
+				instrumentName,
 			}),
 		});
 
