@@ -43,9 +43,9 @@ export function Instruments({ instruments }: { instruments: Instrument[] }) {
 								<span className="bg-blue-100 text-blue-800 font-bold rounded-full px-3 py-1 text-xs mr-6">{instrument.level}</span>
 							</div>
 							<div className="mt-1 flex flex-wrap gap-2">
-								{instrument.genre.split(', ').map((tag) => (
-									<span key={tag} className="bg-gray-200 text-gray-800 font-medium px-3 py-1 rounded-full text-xs">
-										{tag}
+								{instrument.genre.map((genre) => (
+									<span key={genre} className="bg-gray-200 text-gray-800 font-medium px-3 py-1 rounded-full text-xs">
+										{genre}
 									</span>
 								))}
 							</div>

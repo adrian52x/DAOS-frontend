@@ -17,7 +17,7 @@ function RouteComponent() {
 	const { user, loading, token } = useAuth();
 	const [instrumentName, setInstrumentName] = useState('');
 	const [level, setLevel] = useState(1); // Default level set to 1
-	const [genre, setGenre] = useState('');
+	const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 	const queryClient = useQueryClient();
 	const navigate = Route.useNavigate();
 
@@ -59,10 +59,21 @@ function RouteComponent() {
 			description: 'Suitable for a musician with 6-10 years of experience, able to play complex scores.',
 		},
 	];
+
+	const handleAddGenre = (genre: string) => {
+		if (!selectedGenres.includes(genre)) {
+			setSelectedGenres([...selectedGenres, genre]);
+		}
+	};
+
+	const handleRemoveGenre = (genre: string) => {
+		setSelectedGenres(selectedGenres.filter((g) => g !== genre));
+	};
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		const newInstrument = { name: instrumentName, level, genre };
+		const newInstrument = { name: instrumentName, level, genre: selectedGenres };
 		updateUserData.mutateAsync({
 			instruments: [...(user.instruments || []), newInstrument],
 		});
@@ -114,7 +125,19 @@ function RouteComponent() {
 							</div>
 						</div>
 					</div>
-					<InputField label="Genre" placeholder="Select a genre" value={genre} onChange={(e) => setGenre(e.target.value)} name="genre" required options={genresList} />
+					<InputField label="Genre" placeholder="Select a genre" value="" onChange={(e) => handleAddGenre(e.target.value)} name="genre" required options={genresList} />
+					<div className="mt-4">
+						<div className="mt-2 flex flex-wrap gap-2">
+							{selectedGenres.map((genre, index) => (
+								<span key={index} className="bg-blue-800 text-white px-3 py-1 rounded-full text-xs flex items-center gap-1">
+									{genre}
+									<button onClick={() => handleRemoveGenre(genre)} className="text-white ml-2">
+										&times;
+									</button>
+								</span>
+							))}
+						</div>
+					</div>
 					<div className="text-center">
 						<Button type="submit" variant="primary">
 							Add Instrument
