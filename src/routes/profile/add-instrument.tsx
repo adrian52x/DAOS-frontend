@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { updateUser } from '../../utils/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UserDataUpdate } from '../../types/types';
-import { InputField } from '../../components/elements/InputField';
 import { Button } from '../../components/elements/Button';
 import { SmallButton } from '../../components/elements/SmallButton';
 
@@ -61,17 +60,22 @@ function RouteComponent() {
 	];
 
 	const handleAddGenre = (genre: string) => {
-		if (!selectedGenres.includes(genre)) {
-			setSelectedGenres([...selectedGenres, genre]);
+		if (genre && !selectedGenres.includes(genre)) {
+			setSelectedGenres((prev) => [...prev, genre]);
 		}
 	};
 
 	const handleRemoveGenre = (genre: string) => {
-		setSelectedGenres(selectedGenres.filter((g) => g !== genre));
+		setSelectedGenres((prev) => prev.filter((g) => g !== genre));
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+
+		if (!instrumentName || selectedGenres.length === 0) {
+			alert('Please fill all required fields.');
+			return;
+		}
 
 		const newInstrument = { name: instrumentName, level, genre: selectedGenres };
 		updateUserData.mutateAsync({
@@ -87,15 +91,28 @@ function RouteComponent() {
 			<div className="bg-white shadow rounded-lg max-w-md mx-auto p-6">
 				<h1 className="text-2xl font-bold text-blue-800 mb-6 text-center">Add Instrument</h1>
 				<form onSubmit={handleSubmit} className="space-y-6">
-					<InputField
-						label="Instrument Name"
-						placeholder="Select an instrument"
-						value={instrumentName}
-						onChange={(e) => setInstrumentName(e.target.value)}
-						name="instrumentName"
-						required
-						options={instrumentsList}
-					/>
+					<div className="space-y-2">
+						<label htmlFor="instrumentName" className="block text-sm font-medium text-gray-800">
+							Instrument Name
+						</label>
+						<select
+							id="instrumentName"
+							name="instrumentName"
+							value={instrumentName}
+							onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setInstrumentName(e.target.value)}
+							required
+							className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
+						>
+							<option value="" disabled>
+								Select an instrument
+							</option>
+							{instrumentsList.map((instrument) => (
+								<option key={instrument} value={instrument}>
+									{instrument}
+								</option>
+							))}
+						</select>
+					</div>
 					<div className="space-y-2">
 						<label className="block text-sm font-medium text-gray-800">Skill Level</label>
 						<div className="w-full border rounded-lg px-4 py-3 bg-white shadow-sm">
@@ -125,7 +142,27 @@ function RouteComponent() {
 							</div>
 						</div>
 					</div>
-					<InputField label="Genre" placeholder="Select a genre" value="" onChange={(e) => handleAddGenre(e.target.value)} name="genre" required options={genresList} />
+					<div className="space-y-2">
+						<label htmlFor="genre" className="block text-sm font-medium text-gray-800">
+							Genre
+						</label>
+						<select
+							id="genre"
+							name="genre"
+							value=""
+							onChange={(e) => handleAddGenre(e.target.value)}
+							className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
+						>
+							<option value="" disabled>
+								Select a genre
+							</option>
+							{genresList.map((genre) => (
+								<option key={genre} value={genre}>
+									{genre}
+								</option>
+							))}
+						</select>
+					</div>
 					<div className="mt-4">
 						<div className="mt-2 flex flex-wrap gap-2">
 							{selectedGenres.map((genre, index) => (
