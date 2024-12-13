@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { Button } from '../elements/Button';
-import { updateOrDeleteInstrument } from '../../utils/api';
+import { deleteInstrument } from '../../utils/api';
 import { useAuth } from '../../auth/AuthContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { Instrument } from '../../types/types';
@@ -10,10 +10,10 @@ export function Instruments({ instruments }: { instruments: Instrument[] }) {
 	const queryClient = useQueryClient();
 
 	const handleDelete = async (instrument: Instrument) => {
-		if (confirm(`Are you sure you want to delete \"${instrument.name}\"?`)) {
+		if (confirm(`Are you sure you want to delete "${instrument.name}"?`)) {
 			try {
-				await updateOrDeleteInstrument(token, 'delete', instrument);
-				alert(`Instrument \"${instrument.name}\" deleted successfully.`);
+				await deleteInstrument(token, { name: instrument.name, level: instrument.level });
+				alert(`Instrument "${instrument.name}" deleted successfully.`);
 				queryClient.invalidateQueries({ queryKey: ['current-user'] });
 			} catch (error: any) {
 				alert(`Error: ${error.response?.data?.message || error.message}`);

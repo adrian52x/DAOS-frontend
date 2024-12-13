@@ -196,8 +196,8 @@ export async function handleJoinRequest(action: JoinRequestAction, userId: strin
 	}
 }
 
-// Update or delete an instrument
-export async function updateOrDeleteInstrument(token: string, action: 'update' | 'delete', instrumentData: any) {
+// Delete an instrument
+export async function deleteInstrument(token: string, instrumentData: { name: string; level: number }) {
 	try {
 		const response = await fetch('http://localhost:3000/api/users', {
 			method: 'PATCH',
@@ -206,25 +206,25 @@ export async function updateOrDeleteInstrument(token: string, action: 'update' |
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
-				action, // "update" or "delete"
-				instrumentData,
+				action: 'delete',
+				instrumentData, // Contains the name and level of the instrument to delete
 			}),
 		});
 
 		const data = await response.json();
 
 		if (response.ok) {
-			// alert(`Instrument ${action}d successfully.`);
-			return data;
+			return data; // Return the response data (updated user)
 		} else {
 			alert(`Error: ${data.message}`);
 			throw new Error(data.message);
 		}
 	} catch (error) {
-		console.error(`Error ${action}ing instrument:`, error);
+		console.error('Error deleting instrument:', error);
 		throw error;
 	}
 }
+
 //fetch the posts for a particular ensemble
 export async function fetchPostsByEnsembleId(ensembleId: string) {
 	try {
