@@ -1,7 +1,7 @@
 type Instrument = {
 	name: string;
 	level: number;
-	genre: string;
+	genre: string[];
 };
 
 export function Instruments({ instruments, user }: { instruments: Instrument[]; user: any }) {
@@ -20,7 +20,13 @@ export function Instruments({ instruments, user }: { instruments: Instrument[]; 
 								<h3 className="font-bold">{instrument.name}</h3>
 								<span className="text-gray-600">Level: {instrument.level}</span>
 							</div>
-							<p>Genre: {instrument.genre}</p>
+							<div className="flex flex-wrap gap-2">
+								{instrument.genre.map((genre, genreIndex) => (
+									<span key={genreIndex} className="bg-gray-400 text-blue-800 text-sm font-bold px-3 py-1 rounded-md shadow-sm">
+										{genre}
+									</span>
+								))}
+							</div>
 						</div>
 					))}
 				</div>

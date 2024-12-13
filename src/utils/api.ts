@@ -51,7 +51,6 @@ export async function updateUser(token: string, userData: UserDataUpdate) {
 		}
 
 		return data;
-
 	} catch (error: any) {
 		throw new Error(error.message);
 	}
@@ -147,7 +146,6 @@ export async function fetchPostById(postId: string) {
 		return null;
 	}
 }
-
 // Join ensemble
 export async function handleJoin(token: string, ensembleId: string, postId: string) {
 	try {
@@ -195,6 +193,35 @@ export async function handleJoinRequest(action: JoinRequestAction, userId: strin
 		}
 	} catch (error) {
 		console.error('Error handling join request:', error);
+	}
+}
+
+// Delete an instrument
+export async function deleteInstrument(token: string, instrumentName: string) {
+	try {
+		const response = await fetch('http://localhost:3000/api/users', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				action: 'delete',
+				instrumentName,
+			}),
+		});
+
+		const data = await response.json();
+
+		if (response.ok) {
+			return data; // Return the response data (updated user)
+		} else {
+			alert(`Error: ${data.message}`);
+			throw new Error(data.message);
+		}
+	} catch (error) {
+		console.error('Error deleting instrument:', error);
+		throw error;
 	}
 }
 

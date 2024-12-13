@@ -43,7 +43,7 @@ export interface Post {
 export interface Instrument {
 	name: string;
 	level: number;
-	genre: string;
+	genre: string[];
 }
 
 export interface User {

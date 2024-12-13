@@ -15,22 +15,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<any>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [token, setToken] = useState<string>('');
-	
+
 	const cookieToken = getCookie('access_token');
 	const { data, isLoading, isSuccess } = useCurrentUserData(cookieToken || '');
 
 	useEffect(() => {
-		if(isLoading) {
+		if (isLoading) {
 			setLoading(true);
-		}
-        else if (cookieToken && data && isSuccess) {
-            setUser(data);
-            setToken(cookieToken);
+		} else if (cookieToken && data && isSuccess) {
+			setUser(data);
+			setToken(cookieToken);
 			setLoading(false);
-        } else if (!isSuccess) {
+		} else if (!isSuccess) {
 			setLoading(false);
 		}
-    }, [cookieToken, data]);
+	}, [cookieToken, data]);
 
 	return <AuthContext.Provider value={{ user, setUser, loading, setToken, token }}>{children}</AuthContext.Provider>;
 };
@@ -43,7 +42,6 @@ export const useAuth = (): AuthContextType => {
 	}
 	return context;
 };
-
 
 export function getCookie(name: string) {
 	const value = `; ${document.cookie}`;
@@ -60,7 +58,6 @@ export async function singOut(setUser: React.Dispatch<React.SetStateAction<any>>
 			method: 'POST',
 			credentials: 'include',
 		});
-
 	} catch (error) {
 		console.error('Error during sign out:', error);
 	}
