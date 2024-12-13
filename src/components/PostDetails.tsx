@@ -103,9 +103,13 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 				{/* Genres Section */}
 				<div className="mb-8">
 					<h3 className="text-xl font-bold text-blue-800 mb-4">Genre</h3>
-					<div className="flex gap-2">
+					<div className="flex gap-2 flex-wrap">
 						{/* Display genres as tags */}
-						<span className="bg-gray-400 text-blue-800 text-sm font-bold px-3 py-1 rounded-md shadow-sm">{postData.instrument.genre}</span>
+						{postData.instrument.genre.map((genre, index) => (
+							<span key={index} className="bg-gray-400 text-blue-800 text-sm font-bold px-3 py-1 rounded-md shadow-sm">
+								{genre}
+							</span>
+						))}
 					</div>
 				</div>
 				{/* Contact Button - is not doing anything */}

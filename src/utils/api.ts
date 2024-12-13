@@ -146,7 +146,6 @@ export async function fetchPostById(postId: string) {
 		return null;
 	}
 }
-
 // Join ensemble
 export async function handleJoin(token: string, ensembleId: string, postId: string) {
 	try {
@@ -223,6 +222,19 @@ export async function updateOrDeleteInstrument(token: string, action: 'update' |
 		}
 	} catch (error) {
 		console.error(`Error ${action}ing instrument:`, error);
+		throw error;
+	}
+}
+//fetch the posts for a particular ensemble
+export async function fetchPostsByEnsembleId(ensembleId: string) {
+	try {
+		const response = await fetch(`http://localhost:3000/api/posts/ensemble/${ensembleId}`);
+		if (!response.ok) {
+			throw new Error('Failed to fetch posts');
+		}
+		return response.json();
+	} catch (error) {
+		console.error('Error fetching posts:', error);
 		throw error;
 	}
 }

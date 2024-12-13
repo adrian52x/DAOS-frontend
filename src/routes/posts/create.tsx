@@ -17,10 +17,9 @@ function RouteComponent() {
 	const [description, setDescription] = useState('');
 	const [instrumentName, setInstrumentName] = useState('');
 	const [instrumentLevel, setInstrumentLevel] = useState(0);
-	const [instrumentGenre, setInstrumentGenre] = useState('');
+	const [instrumentGenres, setInstrumentGenres] = useState<string[]>([]); // Updated to handle multiple genres
 	const [ensembleId, setEnsembleId] = useState('');
 
-	//const queryClient = useQueryClient();
 	const navigate = Route.useNavigate();
 
 	// Reset form fields when post type changes
@@ -30,7 +29,7 @@ function RouteComponent() {
 		setDescription('');
 		setInstrumentName('');
 		setInstrumentLevel(0);
-		setInstrumentGenre('');
+		setInstrumentGenres([]);
 		setEnsembleId('');
 	};
 
@@ -74,7 +73,7 @@ function RouteComponent() {
 				instrument: {
 					name: instrumentName,
 					level: instrumentLevel,
-					genre: instrumentGenre,
+					genre: instrumentGenres, // Updated to handle multiple genres
 				},
 				ensemble: ensembleId,
 			};
@@ -82,6 +81,17 @@ function RouteComponent() {
 
 		// Create post
 		createPost.mutateAsync(post);
+	};
+
+	const addGenre = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const genre = e.target.value;
+		if (!instrumentGenres.includes(genre)) {
+			setInstrumentGenres([...instrumentGenres, genre]);
+		}
+	};
+
+	const removeGenre = (genreToRemove: string) => {
+		setInstrumentGenres(instrumentGenres.filter((genre) => genre !== genreToRemove));
 	};
 
 	return (
@@ -126,7 +136,7 @@ function RouteComponent() {
 									</option>
 									{user.instruments.map((instrument: any, index: number) => (
 										<option key={index} value={instrument.name}>
-											{instrument.name} - Level {instrument.level} - {instrument.genre}
+											{instrument.name} - Level {instrument.level} - {instrument.genre.join(', ')}
 										</option>
 									))}
 								</select>
@@ -167,8 +177,8 @@ function RouteComponent() {
 							</div>
 							<div>
 								<label>
-									Genre:
-									<select name="genre" value={instrumentGenre} onChange={(e) => setInstrumentGenre(e.target.value)} required>
+									Genres:
+									<select name="genre" value="" onChange={addGenre}>
 										<option value="" disabled>
 											Select a genre
 										</option>
@@ -177,10 +187,20 @@ function RouteComponent() {
 												{genre}
 											</option>
 										))}
-									</select>{' '}
+									</select>
 								</label>
+								<div className="flex flex-wrap gap-2 mt-2">
+									{instrumentGenres.map((genre, index) => (
+										<span
+											key={index}
+											className="bg-gray-400 text-blue-800 text-sm font-bold px-3 py-1 rounded-md shadow-sm cursor-pointer"
+											onClick={() => removeGenre(genre)}
+										>
+											{genre} ×
+										</span>
+									))}
+								</div>
 							</div>
-
 							<div>
 								<label>
 									Ensemble:
