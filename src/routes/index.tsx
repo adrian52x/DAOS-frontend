@@ -5,9 +5,9 @@ import HeroImage from '../assets/hero-illustration.svg';
 import { SecondaryCTA } from '../components/SecondaryCTA';
 import { PrimaryCTA } from '../components/PrimaryCTA';
 import { ReviewCard } from '../components/ReviewCard';
-import { PostCardEnsemble } from '../components/PostCard';
 import { Post } from '../types/types';
 import styles from '/src/styles/globalStyles.module.css';
+import { PostCard } from '../components/PostCardMine';
 export const Route = createFileRoute('/')({
 	component: Index,
 });
@@ -62,7 +62,7 @@ function Index() {
 				) : (
 					<div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 						{posts.map((post) => (
-							<PostCardEnsemble key={post._id} post={post} />
+							<PostCard key={post._id} post={post} />
 						))}
 					</div>
 				)}

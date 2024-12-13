@@ -16,8 +16,7 @@ export interface EnsembleById {
 	zipCode: string;
 	activeMembers: string;
 	owner: User;
-	members: string[];
-	pendingRequests: string[];
+	members: User[];
 }
 
 export interface EnsembleInPost {
@@ -28,7 +27,6 @@ export interface EnsembleInPost {
 	activeMembers: string;
 	owner: string;
 	members: User[];
-	pendingRequests: User[];
 }
 
 export interface Post {
@@ -39,6 +37,7 @@ export interface Post {
 	instrument: Instrument;
 	ensemble: EnsembleInPost;
 	createdAt: string;
+	pendingRequests: User[];
 }
 
 export interface Instrument {
@@ -72,4 +71,11 @@ export interface UserDataUpdate {
 	zipCode?: string;
 	profileText?: string;
 	instruments?: Instrument[];
+}
+
+export interface EnsembleDataUpdate {
+	name?: string;
+	address?: string;
+	zipCode?: string;
+	activeMembers?: string;
 }

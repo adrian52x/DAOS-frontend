@@ -1,4 +1,3 @@
-import { Link } from '@tanstack/react-router';
 import { Button } from '../elements/Button';
 
 export function UserHeader({ user }: { user: any }) {
@@ -23,11 +22,9 @@ export function UserHeader({ user }: { user: any }) {
 			</div>
 
 			<div className="flex items-center space-x-5">
-				<Link to="/profile/update">
 					<div className="block">
 						<Button variant="primary">Contact me</Button>
 					</div>
-				</Link>
 			</div>
 		</div>
 	);

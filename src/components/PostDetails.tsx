@@ -4,7 +4,7 @@ import EnsemblePortrait from '../assets/ensemble-portrait.jpeg';
 import { useAuth } from '../auth/AuthContext';
 import { handleJoin, handleJoinRequest } from '../utils/api';
 import { formatDate } from '../utils/dateAndTimeUtils';
-import { useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { SmallButton } from './elements/SmallButton';
 import EnsembleIcon from '../assets/ensemble-icon.png';
@@ -21,21 +21,19 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 		navigate({ to: `/user/${userId}` });
 	};
 
-	const acceptRequest =  useMutation({
-		mutationFn: (userId: string) => handleJoinRequest(JoinRequestAction.ACCEPT, userId, token, postData.ensemble._id),
+	const acceptRequest = useMutation({
+		mutationFn: (userId: string) => handleJoinRequest(JoinRequestAction.ACCEPT, userId, token, postData.ensemble._id, postData._id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['post'] });
 		},
 	});
-	
 
 	const rejectRequest = useMutation({
-		mutationFn: (userId: string) => handleJoinRequest(JoinRequestAction.REJECT, userId, token, postData.ensemble._id),
+		mutationFn: (userId: string) => handleJoinRequest(JoinRequestAction.REJECT, userId, token, postData.ensemble._id, postData._id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['post'] });
 		},
 	});
-	
 
 	const formattedDate = formatDate(postData.createdAt);
 
@@ -54,13 +52,13 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 
 						<div className="grow">
 							{postData.ensemble ? (
-								<>
+								<Link to={`/ensembles/${postData.ensemble._id}`}>
 									<h3 className="font-body font-bold text-red">{postData.ensemble.name}</h3>
 									<p className="text-gray-800 whitespace-nowrap">
 										<span className="font-body text-sm font-bold pr-2">{postData.ensemble.address}</span>•{' '}
 										<span className="font-body text-sm pl-2">{postData.ensemble.activeMembers} musikere</span>
 									</p>
-								</>
+								</Link>
 							) : (
 								<>
 									<h3 className="font-body font-bold text-red">{postData.author.name}</h3>
@@ -118,9 +116,9 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 							// {/* Pending Requests */}
 							<div className="bg-white border border-gray-600 rounded-lg p-4 shadow-sm mt-8">
 								<h3 className="text-xl font-header text-blue-800 mb-2">Pending Requests</h3>
-								{postData.ensemble.pendingRequests?.length > 0 ? (
+								{postData.pendingRequests?.length > 0 ? (
 									<ul>
-										{postData.ensemble.pendingRequests.map((user, index) => (
+										{postData.pendingRequests.map((user, index) => (
 											<li key={index} className="flex justify-between items-center py-4 border-b-solid border-t-2">
 												<div>
 													<a
@@ -157,7 +155,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 						) : (
 							<div className="flex justify-center mt-8">
 								<button
-									onClick={() => handleJoin(token, postData.ensemble._id)}
+									onClick={() => handleJoin(token, postData.ensemble._id, postData._id)}
 									className="bg-blue-900 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-blue-700"
 									disabled={postData.ensemble?.members.includes(user?._id)}
 								>
