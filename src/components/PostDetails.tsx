@@ -40,7 +40,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] sm:bg-gray-200 py-6 md:px-6 px-4">
 			<div className="col-start-2 col-end-3 p-6 px-10 border border-gray-200 shadow-lg bg-white">
-				<SmallButton>Back</SmallButton>
+				<SmallButton></SmallButton>
 				{/* Title Section */}
 				<h1 className="font-header text-3xl text-center font-medium text-blue-800 mb-2">{postData.title}</h1>
 				<p className="text-sm text-center text-gray-800">{`Post created on ${formattedDate}`}</p>
@@ -83,7 +83,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 				{/* Edit Button - we need to have that only when you are the owner of the post */}
 				{user && user._id === postData.author._id && (
 					<div className="flex justify-center mt-6">
-						<SmallButton>Edit post</SmallButton>
+						<SmallButton></SmallButton>
 					</div>
 				)}
 

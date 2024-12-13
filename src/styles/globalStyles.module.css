@@ -12,6 +12,20 @@
 	}
 }
 
+/* Section styling */
+.formSectionWrapper {
+	padding: 3rem 24rem 3rem 24rem;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+@media (max-width: 640px) {
+	.formSectionWrapper {
+		padding: 1.5rem 2rem 1.5rem 2rem;
+		gap: 1rem;
+	}
+}
+
 .grayBackground {
 	background-color: #f9f9f9;
 }
@@ -19,14 +33,3 @@
 .blueBackground {
 	background-color: #353a5d;
 }
-
-/* .gaps {
-	display: flex;
-	flex-direction: column;
-	gap: 2rem;
-} */
-/* @media (max-width: 640px) {
-	.gaps {
-		gap: 1rem;
-	}
-} */

@@ -88,7 +88,7 @@ function RouteComponent() {
 	return (
 		<div className="p-6">
 			<div className="mb-4">
-				<SmallButton onClick={() => navigate({ to: '/profile' })}>Go Back</SmallButton>
+				<SmallButton></SmallButton>
 			</div>
 			<div className="bg-white shadow rounded-lg max-w-md mx-auto p-6">
 				<h1 className="text-2xl font-bold text-blue-800 mb-6 text-center">Add Instrument</h1>
