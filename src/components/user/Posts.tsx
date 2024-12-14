@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { Post } from '../../types/types';
 import { Button } from '../elements/Button';
-import { PostCard } from '../PostCardMine';
+import { PostCard } from '../PostCard';
 
 export function Posts({ posts, user }: { posts: Post[]; user: any }) {
 	console.log('posts', posts);
@@ -27,8 +27,8 @@ export function Posts({ posts, user }: { posts: Post[]; user: any }) {
 			<ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
 				{posts.map((post) => (
 					<li key={post._id} className="relative">
-							{/* Post Card */}
-							<PostCard key={post._id} post={post} />
+						{/* Post Card */}
+						<PostCard key={post._id} post={post} />
 						<hr />
 					</li>
 				))}

@@ -7,7 +7,7 @@ import { PrimaryCTA } from '../components/PrimaryCTA';
 import { ReviewCard } from '../components/ReviewCard';
 import { Post } from '../types/types';
 import styles from '/src/styles/globalStyles.module.css';
-import { PostCard } from '../components/PostCardMine';
+import { PostCard } from '../components/PostCard';
 export const Route = createFileRoute('/')({
 	component: Index,
 });

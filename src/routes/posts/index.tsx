@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createFileRoute, Link, Outlet } from '@tanstack/react-router';
-import { PostCard } from '../../components/PostCardMine';
+import { PostCard } from '../../components/PostCard';
 import { Post } from '../../types/types';
 import { Button } from '../../components/elements/Button';
 import styles from '/src/styles/globalStyles.module.css';

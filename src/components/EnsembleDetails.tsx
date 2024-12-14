@@ -3,7 +3,7 @@ import { EnsembleById, Post } from '../types/types';
 import { Button } from './elements/Button';
 import { fetchPostsByEnsembleId } from '../utils/api';
 import { useQuery } from '@tanstack/react-query';
-import { PostCard } from './PostCardMine';
+import { PostCard } from './PostCard';
 import { useAuth } from '../auth/AuthContext';
 
 const EnsembleDetails = ({ ensemble }: { ensemble: EnsembleById }) => {
