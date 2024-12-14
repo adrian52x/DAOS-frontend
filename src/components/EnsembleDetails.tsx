@@ -4,8 +4,12 @@ import { Button } from './elements/Button';
 import { fetchPostsByEnsembleId } from '../utils/api';
 import { useQuery } from '@tanstack/react-query';
 import { PostCard } from './PostCardMine';
+import { useAuth } from '../auth/AuthContext';
 
 const EnsembleDetails = ({ ensemble }: { ensemble: EnsembleById }) => {
+	const { user } = useAuth();
+	console.log('Logged-in user:', user);
+
 	// Fetching the posts associated with this ensemble
 	const {
 		data: posts,
@@ -21,14 +25,16 @@ const EnsembleDetails = ({ ensemble }: { ensemble: EnsembleById }) => {
 		<div className="p-6 max-w-4xl mx-auto bg-gray-200 border border-gray-600 rounded-lg shadow-md">
 			{/* Title Section */}
 			<h1 className="text-3xl font-header text-blue-800 mb-2">{ensemble.name}</h1>
-			<Link to="/ensembles/edit">
-				<div className="block sm:hidden">
-					<Button variant="tertiary">Edit ensemble details</Button>
-				</div>
-				<div className="hidden sm:block">
-					<Button variant="secondary">Edit ensemble details</Button>
-				</div>
-			</Link>
+			{user && ensemble.owner._id === user._id && (
+				<Link to="/ensembles/edit">
+					<div className="block sm:hidden">
+						<Button variant="tertiary">Edit ensemble details</Button>
+					</div>
+					<div className="hidden sm:block">
+						<Button variant="secondary">Edit ensemble details</Button>
+					</div>
+				</Link>
+			)}
 			{/* Owner Info */}
 			<div className="flex items-center bg-white border border-gray-600 rounded-lg p-4 shadow-sm mt-6">
 				<div>
