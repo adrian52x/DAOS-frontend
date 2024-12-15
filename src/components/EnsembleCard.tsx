@@ -15,7 +15,7 @@ export function EnsembleCard({ ensemble, user }: { ensemble: Ensemble; user: any
 			onClick={handleNavigate}
 			className="border-2 border-gray-400 bg-gray-200 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer h-[106px] relative flex items-center p-4 gap-4"
 		>
-			{/* Left - photo */}
+			{/* Left*/}
 			<img src={EnsemblePortrait} alt="propic" className="w-[50px] h-[50px] object-cover rounded-lg flex-shrink-0" />
 
 			{/* Middle */}
@@ -30,7 +30,7 @@ export function EnsembleCard({ ensemble, user }: { ensemble: Ensemble; user: any
 				</p>
 			</div>
 
-			{/* Right - ens icon */}
+			{/* Right*/}
 			<img src={EnsembleIcon} alt="ensemble icon" className="opacity-20 w-[50px] h-[50px] flex-shrink-0" />
 		</article>
 	);
