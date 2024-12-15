@@ -7,7 +7,7 @@ import { InputField } from '../../components/elements/InputField';
 import { Button } from '../../components/elements/Button';
 import styles from '/src/styles/globalStyles.module.css';
 
-export const Route = createFileRoute('/ensembles/edit')({
+export const Route = createFileRoute('/ensembles/update')({
 	component: EditEnsemblePage,
 });
 
@@ -33,7 +33,7 @@ export function EditEnsemblePage() {
 	// populate the fields
 	useEffect(() => {
 		if (cachedEnsemble) {
-			setName(cachedEnsemble.name);
+			setName(cachedEnsemble.name); // no need for the or operator - we have initial state in the useState
 			setAddress(cachedEnsemble.address);
 			setZipCode(cachedEnsemble.zipCode);
 			setActiveMembers(cachedEnsemble.activeMembers);

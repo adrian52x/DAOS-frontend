@@ -10,334 +10,332 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as ProfileIndexImport } from './routes/profile/index'
-import { Route as PostsIndexImport } from './routes/posts/index'
-import { Route as UserUserIdImport } from './routes/user/$userId'
-import { Route as ProfileUpdateImport } from './routes/profile/update'
-import { Route as ProfileAddInstrumentImport } from './routes/profile/add-instrument'
-import { Route as PostsCreateImport } from './routes/posts/create'
-import { Route as PostsPostIdImport } from './routes/posts/$postId'
-import { Route as EnsemblesEditImport } from './routes/ensembles/edit'
-import { Route as EnsemblesCreateImport } from './routes/ensembles/create'
-import { Route as EnsemblesEnsembleIdImport } from './routes/ensembles/$ensembleId'
-import { Route as authRegisterImport } from './routes/(auth)/register'
-import { Route as authLoginImport } from './routes/(auth)/login'
+import { Route as rootRoute } from './routes/__root';
+import { Route as IndexImport } from './routes/index';
+import { Route as ProfileIndexImport } from './routes/profile/index';
+import { Route as PostsIndexImport } from './routes/posts/index';
+import { Route as UserUserIdImport } from './routes/user/$userId';
+import { Route as ProfileUpdateImport } from './routes/profile/update';
+import { Route as ProfileAddInstrumentImport } from './routes/profile/add-instrument';
+import { Route as PostsCreateImport } from './routes/posts/create';
+import { Route as PostsPostIdImport } from './routes/posts/$postId';
+import { Route as EnsemblesUpdateImport } from './routes/ensembles/update';
+import { Route as EnsemblesCreateImport } from './routes/ensembles/create';
+import { Route as EnsemblesEnsembleIdImport } from './routes/ensembles/$ensembleId';
+import { Route as authRegisterImport } from './routes/(auth)/register';
+import { Route as authLoginImport } from './routes/(auth)/login';
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
+	id: '/',
+	path: '/',
+	getParentRoute: () => rootRoute,
+} as any);
 
 const ProfileIndexRoute = ProfileIndexImport.update({
-  id: '/profile/',
-  path: '/profile/',
-  getParentRoute: () => rootRoute,
-} as any)
+	id: '/profile/',
+	path: '/profile/',
+	getParentRoute: () => rootRoute,
+} as any);
 
 const PostsIndexRoute = PostsIndexImport.update({
-  id: '/posts/',
-  path: '/posts/',
-  getParentRoute: () => rootRoute,
-} as any)
+	id: '/posts/',
+	path: '/posts/',
+	getParentRoute: () => rootRoute,
+} as any);
 
 const UserUserIdRoute = UserUserIdImport.update({
-  id: '/user/$userId',
-  path: '/user/$userId',
-  getParentRoute: () => rootRoute,
-} as any)
+	id: '/user/$userId',
+	path: '/user/$userId',
+	getParentRoute: () => rootRoute,
+} as any);
 
 const ProfileUpdateRoute = ProfileUpdateImport.update({
-  id: '/profile/update',
-  path: '/profile/update',
-  getParentRoute: () => rootRoute,
-} as any)
+	id: '/profile/update',
+	path: '/profile/update',
+	getParentRoute: () => rootRoute,
+} as any);
 
 const ProfileAddInstrumentRoute = ProfileAddInstrumentImport.update({
-  id: '/profile/add-instrument',
-  path: '/profile/add-instrument',
-  getParentRoute: () => rootRoute,
-} as any)
+	id: '/profile/add-instrument',
+	path: '/profile/add-instrument',
+	getParentRoute: () => rootRoute,
+} as any);
 
 const PostsCreateRoute = PostsCreateImport.update({
-  id: '/posts/create',
-  path: '/posts/create',
-  getParentRoute: () => rootRoute,
-} as any)
+	id: '/posts/create',
+	path: '/posts/create',
+	getParentRoute: () => rootRoute,
+} as any);
 
 const PostsPostIdRoute = PostsPostIdImport.update({
-  id: '/posts/$postId',
-  path: '/posts/$postId',
-  getParentRoute: () => rootRoute,
-} as any)
+	id: '/posts/$postId',
+	path: '/posts/$postId',
+	getParentRoute: () => rootRoute,
+} as any);
 
-const EnsemblesEditRoute = EnsemblesEditImport.update({
-  id: '/ensembles/edit',
-  path: '/ensembles/edit',
-  getParentRoute: () => rootRoute,
-} as any)
+const EnsemblesUpdateRoute = EnsemblesUpdateImport.update({
+	id: '/ensembles/update',
+	path: '/ensembles/update',
+	getParentRoute: () => rootRoute,
+} as any);
 
 const EnsemblesCreateRoute = EnsemblesCreateImport.update({
-  id: '/ensembles/create',
-  path: '/ensembles/create',
-  getParentRoute: () => rootRoute,
-} as any)
+	id: '/ensembles/create',
+	path: '/ensembles/create',
+	getParentRoute: () => rootRoute,
+} as any);
 
 const EnsemblesEnsembleIdRoute = EnsemblesEnsembleIdImport.update({
-  id: '/ensembles/$ensembleId',
-  path: '/ensembles/$ensembleId',
-  getParentRoute: () => rootRoute,
-} as any)
+	id: '/ensembles/$ensembleId',
+	path: '/ensembles/$ensembleId',
+	getParentRoute: () => rootRoute,
+} as any);
 
 const authRegisterRoute = authRegisterImport.update({
-  id: '/(auth)/register',
-  path: '/register',
-  getParentRoute: () => rootRoute,
-} as any)
+	id: '/(auth)/register',
+	path: '/register',
+	getParentRoute: () => rootRoute,
+} as any);
 
 const authLoginRoute = authLoginImport.update({
-  id: '/(auth)/login',
-  path: '/login',
-  getParentRoute: () => rootRoute,
-} as any)
+	id: '/(auth)/login',
+	path: '/login',
+	getParentRoute: () => rootRoute,
+} as any);
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/(auth)/login': {
-      id: '/(auth)/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof authLoginImport
-      parentRoute: typeof rootRoute
-    }
-    '/(auth)/register': {
-      id: '/(auth)/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof authRegisterImport
-      parentRoute: typeof rootRoute
-    }
-    '/ensembles/$ensembleId': {
-      id: '/ensembles/$ensembleId'
-      path: '/ensembles/$ensembleId'
-      fullPath: '/ensembles/$ensembleId'
-      preLoaderRoute: typeof EnsemblesEnsembleIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/ensembles/create': {
-      id: '/ensembles/create'
-      path: '/ensembles/create'
-      fullPath: '/ensembles/create'
-      preLoaderRoute: typeof EnsemblesCreateImport
-      parentRoute: typeof rootRoute
-    }
-    '/ensembles/edit': {
-      id: '/ensembles/edit'
-      path: '/ensembles/edit'
-      fullPath: '/ensembles/edit'
-      preLoaderRoute: typeof EnsemblesEditImport
-      parentRoute: typeof rootRoute
-    }
-    '/posts/$postId': {
-      id: '/posts/$postId'
-      path: '/posts/$postId'
-      fullPath: '/posts/$postId'
-      preLoaderRoute: typeof PostsPostIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/posts/create': {
-      id: '/posts/create'
-      path: '/posts/create'
-      fullPath: '/posts/create'
-      preLoaderRoute: typeof PostsCreateImport
-      parentRoute: typeof rootRoute
-    }
-    '/profile/add-instrument': {
-      id: '/profile/add-instrument'
-      path: '/profile/add-instrument'
-      fullPath: '/profile/add-instrument'
-      preLoaderRoute: typeof ProfileAddInstrumentImport
-      parentRoute: typeof rootRoute
-    }
-    '/profile/update': {
-      id: '/profile/update'
-      path: '/profile/update'
-      fullPath: '/profile/update'
-      preLoaderRoute: typeof ProfileUpdateImport
-      parentRoute: typeof rootRoute
-    }
-    '/user/$userId': {
-      id: '/user/$userId'
-      path: '/user/$userId'
-      fullPath: '/user/$userId'
-      preLoaderRoute: typeof UserUserIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/posts/': {
-      id: '/posts/'
-      path: '/posts'
-      fullPath: '/posts'
-      preLoaderRoute: typeof PostsIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/profile/': {
-      id: '/profile/'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileIndexImport
-      parentRoute: typeof rootRoute
-    }
-  }
+	interface FileRoutesByPath {
+		'/': {
+			id: '/';
+			path: '/';
+			fullPath: '/';
+			preLoaderRoute: typeof IndexImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/(auth)/login': {
+			id: '/(auth)/login';
+			path: '/login';
+			fullPath: '/login';
+			preLoaderRoute: typeof authLoginImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/(auth)/register': {
+			id: '/(auth)/register';
+			path: '/register';
+			fullPath: '/register';
+			preLoaderRoute: typeof authRegisterImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/ensembles/$ensembleId': {
+			id: '/ensembles/$ensembleId';
+			path: '/ensembles/$ensembleId';
+			fullPath: '/ensembles/$ensembleId';
+			preLoaderRoute: typeof EnsemblesEnsembleIdImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/ensembles/create': {
+			id: '/ensembles/create';
+			path: '/ensembles/create';
+			fullPath: '/ensembles/create';
+			preLoaderRoute: typeof EnsemblesCreateImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/ensembles/update': {
+			id: '/ensembles/update';
+			path: '/ensembles/update';
+			fullPath: '/ensembles/update';
+			preLoaderRoute: typeof EnsemblesUpdateImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/posts/$postId': {
+			id: '/posts/$postId';
+			path: '/posts/$postId';
+			fullPath: '/posts/$postId';
+			preLoaderRoute: typeof PostsPostIdImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/posts/create': {
+			id: '/posts/create';
+			path: '/posts/create';
+			fullPath: '/posts/create';
+			preLoaderRoute: typeof PostsCreateImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/profile/add-instrument': {
+			id: '/profile/add-instrument';
+			path: '/profile/add-instrument';
+			fullPath: '/profile/add-instrument';
+			preLoaderRoute: typeof ProfileAddInstrumentImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/profile/update': {
+			id: '/profile/update';
+			path: '/profile/update';
+			fullPath: '/profile/update';
+			preLoaderRoute: typeof ProfileUpdateImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/user/$userId': {
+			id: '/user/$userId';
+			path: '/user/$userId';
+			fullPath: '/user/$userId';
+			preLoaderRoute: typeof UserUserIdImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/posts/': {
+			id: '/posts/';
+			path: '/posts';
+			fullPath: '/posts';
+			preLoaderRoute: typeof PostsIndexImport;
+			parentRoute: typeof rootRoute;
+		};
+		'/profile/': {
+			id: '/profile/';
+			path: '/profile';
+			fullPath: '/profile';
+			preLoaderRoute: typeof ProfileIndexImport;
+			parentRoute: typeof rootRoute;
+		};
+	}
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/login': typeof authLoginRoute
-  '/register': typeof authRegisterRoute
-  '/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute
-  '/ensembles/create': typeof EnsemblesCreateRoute
-  '/ensembles/edit': typeof EnsemblesEditRoute
-  '/posts/$postId': typeof PostsPostIdRoute
-  '/posts/create': typeof PostsCreateRoute
-  '/profile/add-instrument': typeof ProfileAddInstrumentRoute
-  '/profile/update': typeof ProfileUpdateRoute
-  '/user/$userId': typeof UserUserIdRoute
-  '/posts': typeof PostsIndexRoute
-  '/profile': typeof ProfileIndexRoute
+	'/': typeof IndexRoute;
+	'/login': typeof authLoginRoute;
+	'/register': typeof authRegisterRoute;
+	'/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute;
+	'/ensembles/create': typeof EnsemblesCreateRoute;
+	'/ensembles/update': typeof EnsemblesUpdateRoute;
+	'/posts/$postId': typeof PostsPostIdRoute;
+	'/posts/create': typeof PostsCreateRoute;
+	'/profile/add-instrument': typeof ProfileAddInstrumentRoute;
+	'/profile/update': typeof ProfileUpdateRoute;
+	'/user/$userId': typeof UserUserIdRoute;
+	'/posts': typeof PostsIndexRoute;
+	'/profile': typeof ProfileIndexRoute;
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/login': typeof authLoginRoute
-  '/register': typeof authRegisterRoute
-  '/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute
-  '/ensembles/create': typeof EnsemblesCreateRoute
-  '/ensembles/edit': typeof EnsemblesEditRoute
-  '/posts/$postId': typeof PostsPostIdRoute
-  '/posts/create': typeof PostsCreateRoute
-  '/profile/add-instrument': typeof ProfileAddInstrumentRoute
-  '/profile/update': typeof ProfileUpdateRoute
-  '/user/$userId': typeof UserUserIdRoute
-  '/posts': typeof PostsIndexRoute
-  '/profile': typeof ProfileIndexRoute
+	'/': typeof IndexRoute;
+	'/login': typeof authLoginRoute;
+	'/register': typeof authRegisterRoute;
+	'/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute;
+	'/ensembles/create': typeof EnsemblesCreateRoute;
+	'/ensembles/update': typeof EnsemblesUpdateRoute;
+	'/posts/$postId': typeof PostsPostIdRoute;
+	'/posts/create': typeof PostsCreateRoute;
+	'/profile/add-instrument': typeof ProfileAddInstrumentRoute;
+	'/profile/update': typeof ProfileUpdateRoute;
+	'/user/$userId': typeof UserUserIdRoute;
+	'/posts': typeof PostsIndexRoute;
+	'/profile': typeof ProfileIndexRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/(auth)/login': typeof authLoginRoute
-  '/(auth)/register': typeof authRegisterRoute
-  '/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute
-  '/ensembles/create': typeof EnsemblesCreateRoute
-  '/ensembles/edit': typeof EnsemblesEditRoute
-  '/posts/$postId': typeof PostsPostIdRoute
-  '/posts/create': typeof PostsCreateRoute
-  '/profile/add-instrument': typeof ProfileAddInstrumentRoute
-  '/profile/update': typeof ProfileUpdateRoute
-  '/user/$userId': typeof UserUserIdRoute
-  '/posts/': typeof PostsIndexRoute
-  '/profile/': typeof ProfileIndexRoute
+	__root__: typeof rootRoute;
+	'/': typeof IndexRoute;
+	'/(auth)/login': typeof authLoginRoute;
+	'/(auth)/register': typeof authRegisterRoute;
+	'/ensembles/$ensembleId': typeof EnsemblesEnsembleIdRoute;
+	'/ensembles/create': typeof EnsemblesCreateRoute;
+	'/ensembles/update': typeof EnsemblesUpdateRoute;
+	'/posts/$postId': typeof PostsPostIdRoute;
+	'/posts/create': typeof PostsCreateRoute;
+	'/profile/add-instrument': typeof ProfileAddInstrumentRoute;
+	'/profile/update': typeof ProfileUpdateRoute;
+	'/user/$userId': typeof UserUserIdRoute;
+	'/posts/': typeof PostsIndexRoute;
+	'/profile/': typeof ProfileIndexRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/login'
-    | '/register'
-    | '/ensembles/$ensembleId'
-    | '/ensembles/create'
-    | '/ensembles/edit'
-    | '/posts/$postId'
-    | '/posts/create'
-    | '/profile/add-instrument'
-    | '/profile/update'
-    | '/user/$userId'
-    | '/posts'
-    | '/profile'
-  fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/login'
-    | '/register'
-    | '/ensembles/$ensembleId'
-    | '/ensembles/create'
-    | '/ensembles/edit'
-    | '/posts/$postId'
-    | '/posts/create'
-    | '/profile/add-instrument'
-    | '/profile/update'
-    | '/user/$userId'
-    | '/posts'
-    | '/profile'
-  id:
-    | '__root__'
-    | '/'
-    | '/(auth)/login'
-    | '/(auth)/register'
-    | '/ensembles/$ensembleId'
-    | '/ensembles/create'
-    | '/ensembles/edit'
-    | '/posts/$postId'
-    | '/posts/create'
-    | '/profile/add-instrument'
-    | '/profile/update'
-    | '/user/$userId'
-    | '/posts/'
-    | '/profile/'
-  fileRoutesById: FileRoutesById
+	fileRoutesByFullPath: FileRoutesByFullPath;
+	fullPaths:
+		| '/'
+		| '/login'
+		| '/register'
+		| '/ensembles/$ensembleId'
+		| '/ensembles/create'
+		| '/ensembles/update'
+		| '/posts/$postId'
+		| '/posts/create'
+		| '/profile/add-instrument'
+		| '/profile/update'
+		| '/user/$userId'
+		| '/posts'
+		| '/profile';
+	fileRoutesByTo: FileRoutesByTo;
+	to:
+		| '/'
+		| '/login'
+		| '/register'
+		| '/ensembles/$ensembleId'
+		| '/ensembles/create'
+		| '/ensembles/update'
+		| '/posts/$postId'
+		| '/posts/create'
+		| '/profile/add-instrument'
+		| '/profile/update'
+		| '/user/$userId'
+		| '/posts'
+		| '/profile';
+	id:
+		| '__root__'
+		| '/'
+		| '/(auth)/login'
+		| '/(auth)/register'
+		| '/ensembles/$ensembleId'
+		| '/ensembles/create'
+		| '/ensembles/update'
+		| '/posts/$postId'
+		| '/posts/create'
+		| '/profile/add-instrument'
+		| '/profile/update'
+		| '/user/$userId'
+		| '/posts/'
+		| '/profile/';
+	fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  authLoginRoute: typeof authLoginRoute
-  authRegisterRoute: typeof authRegisterRoute
-  EnsemblesEnsembleIdRoute: typeof EnsemblesEnsembleIdRoute
-  EnsemblesCreateRoute: typeof EnsemblesCreateRoute
-  EnsemblesEditRoute: typeof EnsemblesEditRoute
-  PostsPostIdRoute: typeof PostsPostIdRoute
-  PostsCreateRoute: typeof PostsCreateRoute
-  ProfileAddInstrumentRoute: typeof ProfileAddInstrumentRoute
-  ProfileUpdateRoute: typeof ProfileUpdateRoute
-  UserUserIdRoute: typeof UserUserIdRoute
-  PostsIndexRoute: typeof PostsIndexRoute
-  ProfileIndexRoute: typeof ProfileIndexRoute
+	IndexRoute: typeof IndexRoute;
+	authLoginRoute: typeof authLoginRoute;
+	authRegisterRoute: typeof authRegisterRoute;
+	EnsemblesEnsembleIdRoute: typeof EnsemblesEnsembleIdRoute;
+	EnsemblesCreateRoute: typeof EnsemblesCreateRoute;
+	EnsemblesUpdateRoute: typeof EnsemblesUpdateRoute;
+	PostsPostIdRoute: typeof PostsPostIdRoute;
+	PostsCreateRoute: typeof PostsCreateRoute;
+	ProfileAddInstrumentRoute: typeof ProfileAddInstrumentRoute;
+	ProfileUpdateRoute: typeof ProfileUpdateRoute;
+	UserUserIdRoute: typeof UserUserIdRoute;
+	PostsIndexRoute: typeof PostsIndexRoute;
+	ProfileIndexRoute: typeof ProfileIndexRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  authLoginRoute: authLoginRoute,
-  authRegisterRoute: authRegisterRoute,
-  EnsemblesEnsembleIdRoute: EnsemblesEnsembleIdRoute,
-  EnsemblesCreateRoute: EnsemblesCreateRoute,
-  EnsemblesEditRoute: EnsemblesEditRoute,
-  PostsPostIdRoute: PostsPostIdRoute,
-  PostsCreateRoute: PostsCreateRoute,
-  ProfileAddInstrumentRoute: ProfileAddInstrumentRoute,
-  ProfileUpdateRoute: ProfileUpdateRoute,
-  UserUserIdRoute: UserUserIdRoute,
-  PostsIndexRoute: PostsIndexRoute,
-  ProfileIndexRoute: ProfileIndexRoute,
-}
+	IndexRoute: IndexRoute,
+	authLoginRoute: authLoginRoute,
+	authRegisterRoute: authRegisterRoute,
+	EnsemblesEnsembleIdRoute: EnsemblesEnsembleIdRoute,
+	EnsemblesCreateRoute: EnsemblesCreateRoute,
+	EnsemblesUpdateRoute: EnsemblesUpdateRoute,
+	PostsPostIdRoute: PostsPostIdRoute,
+	PostsCreateRoute: PostsCreateRoute,
+	ProfileAddInstrumentRoute: ProfileAddInstrumentRoute,
+	ProfileUpdateRoute: ProfileUpdateRoute,
+	UserUserIdRoute: UserUserIdRoute,
+	PostsIndexRoute: PostsIndexRoute,
+	ProfileIndexRoute: ProfileIndexRoute,
+};
 
-export const routeTree = rootRoute
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>();
 
 /* ROUTE_MANIFEST_START
 {
@@ -350,7 +348,7 @@ export const routeTree = rootRoute
         "/(auth)/register",
         "/ensembles/$ensembleId",
         "/ensembles/create",
-        "/ensembles/edit",
+        "/ensembles/update",
         "/posts/$postId",
         "/posts/create",
         "/profile/add-instrument",
@@ -375,8 +373,8 @@ export const routeTree = rootRoute
     "/ensembles/create": {
       "filePath": "ensembles/create.tsx"
     },
-    "/ensembles/edit": {
-      "filePath": "ensembles/edit.tsx"
+    "/ensembles/update": {
+      "filePath": "ensembles/update.tsx"
     },
     "/posts/$postId": {
       "filePath": "posts/$postId.tsx"

@@ -8,6 +8,7 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { SmallButton } from './elements/SmallButton';
 import EnsembleIcon from '../assets/ensemble-icon.png';
+import { Button } from './elements/Button';
 
 interface PostDetailsProps {
 	postData: Post;
@@ -83,7 +84,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 				{/* Edit Button - we need to have that only when you are the owner of the post */}
 				{user && user._id === postData.author._id && (
 					<div className="flex justify-center mt-6">
-						<SmallButton></SmallButton>
+						<Button variant="secondary">Edit post</Button>
 					</div>
 				)}
 
