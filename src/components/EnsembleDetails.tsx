@@ -28,7 +28,7 @@ const EnsembleDetails = ({ ensemble }: { ensemble: EnsembleById }) => {
 			{/* header section */}
 			<div>
 				<div className="flex items-center space-x-6 pb-4">
-					<img src={user.img ? user.img : EnsemblePortrait} alt={user.img} className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl border-4 border-white shadow-lg" />
+					<img src={user.img ? user.img : EnsemblePortrait} alt={user.img} className="w-24 h-24 max-sm:w-20 max-sm:h-20 rounded-3xl border-4 border-white shadow-lg" />
 					<div>
 						<h1 className="text-3xl font-header text-blue-800 mb-2">{ensemble.name}</h1>
 						<h2 className="text-gray-800 font-body">Owner: {ensemble.owner.name}</h2>
@@ -38,10 +38,10 @@ const EnsembleDetails = ({ ensemble }: { ensemble: EnsembleById }) => {
 				{user && ensemble.owner._id === user._id && (
 					<Link to="/ensembles/update">
 						<div className="block sm:hidden">
-							<Button variant="tertiary">Edit ensemble details</Button>
+							<Button variant="tertiary">Edit ensemble</Button>
 						</div>
 						<div className="hidden sm:block">
-							<Button variant="secondary">Edit ensemble details</Button>
+							<Button variant="secondary">Edit ensemble</Button>
 						</div>
 					</Link>
 				)}
@@ -87,7 +87,13 @@ const EnsembleDetails = ({ ensemble }: { ensemble: EnsembleById }) => {
 				) : error ? (
 					<p>Error loading posts: {error.message}</p>
 				) : posts?.length > 0 ? (
-					posts.map((post: Post) => <PostCard key={post._id} post={post} />)
+					<ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-2">
+						{posts.map((post: Post) => (
+							<li key={post._id} className="relative group">
+								<PostCard key={post._id} post={post} />
+							</li>
+						))}
+					</ul>
 				) : (
 					<p>No posts found for this ensemble.</p>
 				)}
