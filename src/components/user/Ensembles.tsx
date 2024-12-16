@@ -18,9 +18,9 @@ export function Ensembles({ ensembles, user }: { ensembles: Ensemble[]; user: an
 		<div className="bg-white shadow rounded-lg p-6">
 			<h2 className="font-header text-2xl text-blue-800 font-bold mb-4">{user.name}'s Ensembles</h2>
 			<ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
-				{ensembles.map((ensemble) => (
-					<Link to={`/ensembles/${ensemble._id}`} className="block relative group">
-						<li key={ensemble._id} className="relative">
+				{ensembles.map((ensemble, index) => (
+					<Link key={index} to={`/ensembles/${ensemble._id}`} className="block relative group">
+						<li className="relative">
 							<EnsembleCard key={ensemble._id} ensemble={ensemble} user={user} />
 						</li>
 					</Link>

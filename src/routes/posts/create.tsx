@@ -40,14 +40,6 @@ function RouteComponent() {
 		enabled: !!user, // Only run the query if user is available
 	});
 
-	if (loading) {
-		return <div>Loading...</div>;
-	}
-
-	if (!user) {
-		return <Navigate to="/login" />;
-	}
-
 	const createPost = useMutation({
 		mutationFn: (post: any) => createNewPost(token, post),
 		onSuccess: () => {
@@ -93,6 +85,14 @@ function RouteComponent() {
 	const removeGenre = (genreToRemove: string) => {
 		setInstrumentGenres(instrumentGenres.filter((genre) => genre !== genreToRemove));
 	};
+
+	if (loading) {
+		return <div>Loading...</div>;
+	}
+
+	if (!user) {
+		return <Navigate to="/login" />;
+	}
 
 	return (
 		<div>
