@@ -18,7 +18,13 @@ function Index() {
 
 	useEffect(() => {
 		// Fetch the latest 5 posts from the backend
-		fetch('http://localhost:3000/api/posts?limit=6') // Ensure this matches your backend URL
+		fetch('http://localhost:3000/api/posts/filter?limit=6', {
+			method: 'POST', // Use POST method
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({}), // Add any necessary body content here
+		})
 			.then((response) => response.json()) // Parse the response as JSON
 			.then((data) => {
 				setPosts(data); // Set the posts in state
