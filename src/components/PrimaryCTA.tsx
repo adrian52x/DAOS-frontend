@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Dropdown } from './Dropdown';
 import { Button } from './elements/Button';
+import { instrumentsList } from '../types/data';
+import { Link } from '@tanstack/react-router';
 
 export function PrimaryCTA() {
-	const instruments = ['Guitar', 'Piano', 'Drums', 'Violin', 'Flute'];
 
 	// Local state to track the selected instrument
 	const [selectedInstrument, setSelectedInstrument] = useState<string | null>(null);
@@ -17,8 +18,10 @@ export function PrimaryCTA() {
 
 	return (
 		<div className=" hidden sm:flex flex-row gap-4">
-			<Dropdown options={instruments} placeholder="Vælg instrument" value={selectedInstrument} onChange={handleDropdownChange} />
-			<Button>Se opslag</Button>
+			<Dropdown options={instrumentsList} placeholder="Vælg instrument" value={selectedInstrument} onChange={handleDropdownChange} />
+			<Link to={selectedInstrument ? "/posts" : ""} search={selectedInstrument ? { instrument: selectedInstrument } : {}}>
+				<Button>Se opslag</Button>
+			</Link>
 		</div>
 	);
 }

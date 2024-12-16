@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { createFileRoute, Link, Outlet } from '@tanstack/react-router';
+import { createFileRoute, Link, Outlet, useNavigate } from '@tanstack/react-router';
 import { PostCard } from '../../components/PostCardMine';
 import { Post } from '../../types/types';
 import { Button } from '../../components/elements/Button';
@@ -10,18 +10,38 @@ import { TagFilter } from '../../components/elements/Tag-Filter';
 
 import { instrumentsList, genresList, postsTypeList } from '../../types/data';
 
+type PostFilters = {
+	title?: string;
+	instrument?: string;
+	genre?: string;
+	//type?: string;
+};
+
 export const Route = createFileRoute('/posts/')({
 	component: RouteComponent,
+	validateSearch: (search: Record<string, unknown>): PostFilters => {
+		return {
+			title: search.title as string,
+			instrument: search.instrument as string,
+			genre: search.genre as string,
+			//type: search.type as string,
+		};
+	},
 });
 
 function RouteComponent() {
 
+	// Query Parameters docs
+	// https://leonardomontini.dev/tanstack-router-query-params/
+	const { title, instrument, genre } = Route.useSearch();
+	const navigate = useNavigate({ from: Route.fullPath });
+
 	const [posts, setPosts] = useState<Post[]>([]);
 	const [loading, setLoading] = useState(true);
 
-	const [searchTitle, setSearchTitle] = useState<string>(''); // State for the search input
-	const [selectedInstrument, setSelectedInstrument] = useState<string | null>(null);
-	const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+	const [searchText, setSearchText] = useState<string>(title || ''); // State for the search input
+	const [selectedInstrument, setSelectedInstrument] = useState<string | null>(instrument || null);
+	const [selectedGenre, setSelectedGenre] = useState<string | null>(genre || null);
 	const [activePostType, setActivePostType] = useState<string>(postsTypeList[0]); 
 
 	const [fetchTrigger, setFetchTrigger] = useState<boolean>(false); // State to trigger fetch
@@ -36,7 +56,7 @@ function RouteComponent() {
 			},
 			body: JSON.stringify({
 			  type: activePostType,
-			  title: searchTitle, // Use the searchTitle state
+			  title: searchText, 
 			  instrument: selectedInstrument,
 			  genre: selectedGenre,
 			}),
@@ -52,25 +72,55 @@ function RouteComponent() {
 		}
 	};
 
+	const updateFiltersURL = (name: keyof PostFilters, value: unknown) => {
+		navigate({ search: (prev) => ({ ...prev, [name]: value }) });
+	};
+	const deleteFiltersURL = (name: keyof PostFilters) => {
+		navigate({ search: (prev) => {
+			const newSearch = { ...prev };
+			delete newSearch[name];
+			return newSearch;
+		}});
+	};
+
 
 	
 	useEffect(() => {
 		fetchPosts();
 	}, [fetchTrigger, selectedInstrument, selectedGenre, activePostType]); // Re-fetch posts when fetchTrigger changes
 
+	// Search input
 	const handleSearch = () => {
-		//if (searchTitle) {
-		  setFetchTrigger((prev) => !prev); // Toggle fetchTrigger to re-fetch posts
-		//}
+		updateFiltersURL('title', searchText); // Update the URL with the searchTitle
+		setFetchTrigger((prev) => !prev); // Toggle fetchTrigger to re-fetch posts
+	};
+	const handleSearchClear = () => {
+		if (title) {
+			deleteFiltersURL('title');
+			setFetchTrigger((prev) => !prev)
+		}
+		setSearchText('');
 	};
 
-	const handleInstrumentChange = (value: string) => {
+	// Instrument query parameter
+	const instrumentChange = (value: string) => {
+		updateFiltersURL('instrument', value);
 		setSelectedInstrument(value);
 	};
+	const instrumentClear = () => {
+		deleteFiltersURL('instrument');
+		setSelectedInstrument(null);
+	}	
 
-	const handleGenreChange = (value: string) => {
+	// Genre query parameter
+	const genreChange = (value: string) => {
+		updateFiltersURL('genre', value);
 		setSelectedGenre(value);
 	};
+	const genreClear = () => {
+		deleteFiltersURL('genre');
+		setSelectedGenre(null);
+	}	
 
 	
 	if (loading) {
@@ -79,7 +129,8 @@ function RouteComponent() {
 
 	return (
 		<div className={styles.sectionWrapper}>
-
+			{/* {JSON.stringify({ title, instrument, genre })} */}
+			
 			{/* Posts data */}
 			<div>
 				<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">All posts</h2>
@@ -88,19 +139,22 @@ function RouteComponent() {
 
 			{/* Search input */}
 			<div className="flex justify-between">
-				<div className='flex'>
-					<InputField placeholder='Search by keywords' name="search" onChange={(e) => setSearchTitle(e.target.value)} value={searchTitle}></InputField>
+				<div className='flex items-center space-x-2'>
+					<InputField placeholder='Search by keywords' name="search" onChange={(e) => setSearchText(e.target.value)} value={searchText}></InputField>
 					<button
 						onClick={handleSearch} // Toggle fetchTrigger to re-fetch posts
-						className="ml-2 px-4 py-2 bg-blue-600 text-white rounded-md flex items-center justify-center"
+						className="px-2 py-1 bg-blue-600 text-white rounded-md flex items-center justify-center"
 					>
 						<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
 							<path fillRule="evenodd" d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM8 14a6 6 0 100-12 6 6 0 000 12z" clipRule="evenodd" />
 						</svg>
 					</button>
+					{searchText && (
+						<Button variant="tertiary" onClick={handleSearchClear}>Clear</Button>
+					)}
 				</div>
 				
-
+				{/* Post Type filter */}
 				<TagFilter filters={postsTypeList} activePostType={activePostType} setActivePostType={setActivePostType} />
 			</div>
 
@@ -110,18 +164,22 @@ function RouteComponent() {
 				<div className='space-y-6'>
 					<div className="flex space-x-[110px] items-center">
 						<h2 className="font-header text-blue-800 font-medium text-xl">Instrument</h2>
-						<Button variant="tertiary" onClick={() => setSelectedInstrument(null)}>Clear</Button>
+						{selectedInstrument && (
+							<Button variant="tertiary" onClick={instrumentClear}>Clear</Button>
+						)}
 					</div>
-					<Dropdown options={instrumentsList} placeholder="Select instrument" value={selectedInstrument} onChange={handleInstrumentChange} />
+					<Dropdown options={instrumentsList} placeholder="Select instrument" value={selectedInstrument} onChange={instrumentChange} />
 				</div>
 
 				{/* Genre dropdown */}
 				<div className='space-y-6'>
 					<div className="flex space-x-[150px] items-center">
 						<h2 className="font-header text-blue-800 font-medium text-xl">Genre</h2>
-						<Button variant="tertiary" onClick={() => setSelectedGenre(null)}>Clear</Button>
+						{selectedGenre && (
+							<Button variant="tertiary" onClick={genreClear}>Clear</Button>
+						)}
 					</div>
-					<Dropdown options={genresList} placeholder="Select genre" value={selectedGenre} onChange={handleGenreChange} />
+					<Dropdown options={genresList} placeholder="Select genre" value={selectedGenre} onChange={genreChange} />
 				</div>
 			</div>
 			
