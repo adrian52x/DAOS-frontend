@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UserDataUpdate } from '../../types/types';
 import { Button } from '../../components/elements/Button';
 import { SmallButton } from '../../components/elements/SmallButton';
+import { levels } from '../../types/data';
 
 export const Route = createFileRoute('/profile/add-instrument')({
 	component: RouteComponent,
@@ -38,29 +39,6 @@ function RouteComponent() {
 	if (!user) {
 		return <Navigate to="/login" />;
 	}
-
-	const levels = [
-		{
-			value: 1,
-			description: 'Suitable for a musician with less than 1 year of experience, able to play simple or simplified scores.',
-		},
-		{
-			value: 2,
-			description: 'Suitable for a musician with 1-2 years of experience, able to play simple or simplified scores.',
-		},
-		{
-			value: 3,
-			description: 'Suitable for a musician with 2-4 years of experience, able to play moderately complex scores.',
-		},
-		{
-			value: 4,
-			description: 'Suitable for a musician with 4-6 years of experience, able to play moderately complex scores.',
-		},
-		{
-			value: 5,
-			description: 'Suitable for a musician with 6-10 years of experience, able to play complex scores.',
-		},
-	];
 
 	const handleAddGenre = (genre: string) => {
 		if (genre && !selectedGenres.includes(genre)) {
