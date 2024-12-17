@@ -6,6 +6,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { createNewPost, fetchAllEnsemblesUserOwns } from '../../utils/api';
 import { InputField } from '../../components/elements/InputField';
 import { Button } from '../../components/elements/Button';
+import { SmallButton } from '../../components/elements/SmallButton';
 import { levels } from '../../types/data';
 
 export const Route = createFileRoute('/posts/create')({
@@ -99,6 +100,9 @@ function RouteComponent() {
 
 	return (
 		<div className="flex items-center justify-center min-h-screen bg-gray-100">
+			<div className="mb-4">
+				<SmallButton></SmallButton>
+			</div>
 			<div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
 				<h1 className="text-3xl test-blue font-bold mb-10 text-center">Create Post</h1>
 				<form onSubmit={handleSubmit} className="space-y-6">
