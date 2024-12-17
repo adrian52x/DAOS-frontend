@@ -7,6 +7,7 @@ import styles from '/src/styles/globalStyles.module.css';
 import { InputField } from '../../components/elements/InputField';
 import { Dropdown } from '../../components/Dropdown';
 import { TagFilter } from '../../components/elements/Tag-Filter'; 
+import { LoadingPosts } from '../../components/loading-components/LoadingPosts';
 
 import { instrumentsList, genresList, postsTypeList } from '../../types/data';
 
@@ -124,7 +125,7 @@ function RouteComponent() {
 
 	
 	if (loading) {
-		return <div className="text-center text-gray-600">Loading posts...</div>;
+		return <LoadingPosts />;
 	}
 
 	return (
