@@ -46,24 +46,15 @@ export function PostCard({ post }: { post: Post }) {
 								<span className="font-body text-sm font-bold pr-2">{post.author.address}</span>
 							</p>
 						</div>
-						{!user ? (
-							// if no logged in user
-							<div className="flex-shrink-0 flex items-center">
+						<div className="flex-shrink-0 flex items-center">
+							{user && post.author._id === user._id ? (
+								<img src={MusicianIcon} alt="musician icon" className="w-[60px] h-[50px] opacity-20 flex-shrink-0" />
+							) : (
 								<Button variant="tertiary" onClick={(e) => navigateProfile(e)}>
 									See profile
 								</Button>
-							</div>
-						) : post.author._id !== user._id ? (
-							// if logged in, but not author
-							<div className="flex-shrink-0 flex items-center">
-								<Button variant="tertiary" onClick={(e) => navigateProfile(e)}>
-									See profile
-								</Button>
-							</div>
-						) : (
-							// if logged in and author
-							<img src={MusicianIcon} alt="musician icon" className="w-[60px] h-[50px] opacity-20 flex-shrink-0" />
-						)}
+							)}
+						</div>
 					</>
 				)}
 			</div>

@@ -18,9 +18,9 @@ export function PrimaryCTA() {
 
 	return (
 		<div className=" hidden sm:flex flex-row gap-4">
-			<Dropdown options={instrumentsList} placeholder="Vælg instrument" value={selectedInstrument} onChange={handleDropdownChange} />
+			<Dropdown options={instrumentsList} placeholder="Select instrument" value={selectedInstrument} onChange={handleDropdownChange} />
 			<Link to={selectedInstrument ? "/posts" : ""} search={selectedInstrument ? { instrument: selectedInstrument } : {}}>
-				<Button>Se opslag</Button>
+				<Button>See post</Button>
 			</Link>
 		</div>
 	);
