@@ -8,6 +8,7 @@ import { UserDataUpdate } from '../../types/types';
 import { Button } from '../../components/elements/Button';
 import { SmallButton } from '../../components/elements/SmallButton';
 import { levels } from '../../types/data';
+import { Dropdown } from '../../components/Dropdown';
 
 export const Route = createFileRoute('/profile/add-instrument')({
 	component: RouteComponent,
@@ -62,7 +63,6 @@ function RouteComponent() {
 	};
 
 	const isAddInstrumentBtnDisabled = !instrumentName || selectedGenres.length === 0;
-
 	return (
 		<div className="p-6">
 			<div className="mb-4">
@@ -72,34 +72,21 @@ function RouteComponent() {
 				<h1 className="text-2xl font-bold text-blue-800 mb-6 text-center">Add Instrument</h1>
 				<form onSubmit={handleSubmit} className="space-y-6">
 					<div className="space-y-2">
-						<label htmlFor="instrumentName" className="block text-sm font-medium text-gray-800">
-							Instrument Name
-						</label>
-						<select
-							id="instrumentName"
-							name="instrumentName"
+						<Dropdown
+							label="Instrument Name"
 							value={instrumentName}
-							onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setInstrumentName(e.target.value)}
-							required
-							className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
-						>
-							<option value="" disabled>
-								Select an instrument
-							</option>
-							{instrumentsList.map((instrument) => (
-								<option key={instrument} value={instrument}>
-									{instrument}
-								</option>
-							))}
-						</select>
+							onChange={(value) => setInstrumentName(value)}
+							placeholder="Select an instrument"
+							options={instrumentsList}
+						/>
 					</div>
 					<div className="space-y-2">
-						<label className="block text-sm font-medium text-gray-800">Skill Level</label>
+						<label className="block font-body text-gray-800 mb-1">Skill Level</label>
 						<div className="w-full border rounded-lg px-4 py-3 bg-white shadow-sm">
 							<div className="flex justify-between items-center">
 								<div className="flex-1">
 									<p className="text-sm font-semibold text-gray-800">Level {level}</p>
-									<p className="text-sm text-gray-700">{levels.find((lvl) => lvl.value === level)?.description}</p>
+									<p className="text-sm font-body text-gray-800">{levels.find((lvl) => lvl.value === level)?.description}</p>
 								</div>
 								<div className="flex items-center space-x-2">
 									<button
@@ -123,25 +110,7 @@ function RouteComponent() {
 						</div>
 					</div>
 					<div className="space-y-2">
-						<label htmlFor="genre" className="block text-sm font-medium text-gray-800">
-							Genre
-						</label>
-						<select
-							id="genre"
-							name="genre"
-							value=""
-							onChange={(e) => handleAddGenre(e.target.value)}
-							className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
-						>
-							<option value="" disabled>
-								Select a genre
-							</option>
-							{genresList.map((genre) => (
-								<option key={genre} value={genre}>
-									{genre}
-								</option>
-							))}
-						</select>
+						<Dropdown label="Genre" placeholder="Select a genre" value="" onChange={handleAddGenre} options={genresList} />
 					</div>
 					<div className="mt-4">
 						<div className="mt-2 flex flex-wrap gap-2">
