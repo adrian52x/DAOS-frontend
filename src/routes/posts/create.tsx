@@ -99,121 +99,121 @@ function RouteComponent() {
 	}
 
 	return (
-		<div className="flex items-center justify-center min-h-screen bg-gray-100">
-			<div className="mb-4">
+		<div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] sm:bg-gray-200 py-6 md:px-6 px-4">
+			<div className="col-start-2 col-end-3 p-6 px-10 border border-gray-200 shadow-lg bg-white">
 				<SmallButton></SmallButton>
-			</div>
-			<div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
-				<h1 className="text-3xl test-blue font-bold mb-10 text-center">Create Post</h1>
-				<form onSubmit={handleSubmit} className="space-y-6">
-					<InputField
-						label="Choose Post Type"
-						name="postType"
-						value={postType || ''}
-						onChange={handlePostTypeChange}
-						placeholder="Select post type"
-						options={['I am playing an instrument', 'I am looking for a musician for my band']}
-					/>
+				<div className="max-w-3xl mx-auto p-10 min-h-[600px]">
+					<h1 className="text-3xl font-bold text-blue-800 mb-8 text-center">Create post</h1>
+					<form onSubmit={handleSubmit} className="space-y-8">
+						<InputField
+							label="Choose Post Type"
+							name="postType"
+							value={postType || ''}
+							onChange={handlePostTypeChange}
+							placeholder="Select post type"
+							options={['I am playing an instrument', 'I am looking for a musician for my band']}
+						/>
 
-					{postType && (
-						<>
-							<InputField label="Title" name="title" placeholder="Enter title" value={title} onChange={(e) => setTitle(e.target.value)} required />
-							<InputField
-								label="Description"
-								name="description"
-								placeholder="Enter description"
-								value={description}
-								onChange={(e) => setDescription(e.target.value)}
-								required
-							/>
-
-							{postType === 'I am playing an instrument' && (
+						{postType && (
+							<>
+								<InputField label="Title" name="title" placeholder="Enter title" value={title} onChange={(e) => setTitle(e.target.value)} required />
 								<InputField
-									label="Instrument"
-									name="instrumentName"
-									value={instrumentName}
-									onChange={(e) => setInstrumentName(e.target.value)}
-									placeholder="Select an instrument"
-									options={user.instruments.map((inst: any) => inst.name)}
+									label="Description"
+									name="description"
+									placeholder="Enter description"
+									value={description}
+									onChange={(e) => setDescription(e.target.value)}
 									required
 								/>
-							)}
 
-							{postType === 'I am looking for a musician for my band' && (
-								<>
+								{postType === 'I am playing an instrument' && (
 									<InputField
 										label="Instrument"
 										name="instrumentName"
 										value={instrumentName}
 										onChange={(e) => setInstrumentName(e.target.value)}
 										placeholder="Select an instrument"
-										options={instrumentsList}
+										options={user.instruments.map((inst: any) => inst.name)}
 										required
 									/>
-									<div className="input-field space-y-2">
-										<label htmlFor="instrumentLevel" className="block text-sm font-medium text-gray-800">
-											Level
-										</label>
-										<select
-											id="instrumentLevel"
-											name="instrumentLevel"
-											value={instrumentLevel}
-											onChange={(e) => setInstrumentLevel(Number(e.target.value))}
-											required
-											className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
-										>
-											<option value="" disabled>
-												Select level
-											</option>
-											{levels.map((level) => (
-												<option key={level.value} value={level.value}>
-													{level.value}
-												</option>
-											))}
-										</select>
-									</div>
-									<InputField label="Genres" name="genres" placeholder="Select a genre" value="" onChange={addGenre} options={genresList} />
-									<div className="flex flex-wrap gap-2 mt-2">
-										{instrumentGenres.map((genre, index) => (
-											<span
-												key={index}
-												className="bg-gray-400 text-blue-800 text-sm font-bold px-3 py-1 rounded-md shadow-sm cursor-pointer"
-												onClick={() => removeGenre(genre)}
-											>
-												{genre} ×
-											</span>
-										))}
-									</div>
-									<div>
-										<label className="block text-sm font-medium text-gray-800 mb-2">Ensemble</label>
-										<select
-											name="ensemble"
-											value={ensembleId}
-											onChange={(e) => setEnsembleId(e.target.value)}
-											required
-											className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
-										>
-											<option value="" disabled>
-												Select an ensemble
-											</option>
-											{ensemblesUserOwn.data?.map((ensemble: any) => (
-												<option key={ensemble._id} value={ensemble._id}>
-													{ensemble.name}
-												</option>
-											))}
-										</select>
-									</div>
-								</>
-							)}
-						</>
-					)}
+								)}
 
-					<div className="flex justify-center">
-						<Button type="submit" variant="primary">
-							Create Post
-						</Button>
-					</div>
-				</form>
+								{postType === 'I am looking for a musician for my band' && (
+									<>
+										<InputField
+											label="Instrument"
+											name="instrumentName"
+											value={instrumentName}
+											onChange={(e) => setInstrumentName(e.target.value)}
+											placeholder="Select an instrument"
+											options={instrumentsList}
+											required
+										/>
+										<div className="space-y-4">
+											<label htmlFor="instrumentLevel" className="block text-sm font-medium text-gray-800">
+												Level
+											</label>
+											<select
+												id="instrumentLevel"
+												name="instrumentLevel"
+												value={instrumentLevel}
+												onChange={(e) => setInstrumentLevel(Number(e.target.value))}
+												required
+												className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
+											>
+												<option value="" disabled>
+													Select level
+												</option>
+												{levels.map((level) => (
+													<option key={level.value} value={level.value}>
+														{level.value}
+													</option>
+												))}
+											</select>
+										</div>
+										<InputField label="Genres" name="genres" placeholder="Select a genre" value="" onChange={addGenre} options={genresList} />
+										<div className="flex flex-wrap gap-2 mt-2">
+											{instrumentGenres.map((genre, index) => (
+												<span
+													key={index}
+													className="bg-gray-400 text-blue-800 text-sm font-bold px-3 py-1 rounded-md shadow-sm cursor-pointer"
+													onClick={() => removeGenre(genre)}
+												>
+													{genre} ×
+												</span>
+											))}
+										</div>
+										<div>
+											<label className="block text-sm font-medium text-gray-800 mb-2">Ensemble</label>
+											<select
+												name="ensemble"
+												value={ensembleId}
+												onChange={(e) => setEnsembleId(e.target.value)}
+												required
+												className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
+											>
+												<option value="" disabled>
+													Select an ensemble
+												</option>
+												{ensemblesUserOwn.data?.map((ensemble: any) => (
+													<option key={ensemble._id} value={ensemble._id}>
+														{ensemble.name}
+													</option>
+												))}
+											</select>
+										</div>
+									</>
+								)}
+							</>
+						)}
+
+						<div className="flex justify-center">
+							<Button type="submit" variant="primary">
+								Create Post
+							</Button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	);
