@@ -8,6 +8,7 @@ import { InputField } from '../../components/elements/InputField';
 import { Button } from '../../components/elements/Button';
 import { SmallButton } from '../../components/elements/SmallButton';
 import { levels } from '../../types/data';
+import { Dropdown } from '../../components/Dropdown';
 
 export const Route = createFileRoute('/posts/create')({
 	component: RouteComponent,
@@ -27,8 +28,8 @@ function RouteComponent() {
 	const navigate = Route.useNavigate();
 
 	// Reset form fields when post type changes
-	const handlePostTypeChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-		setPostType(e.target.value);
+	const handlePostTypeChange = (value: string) => {
+		setPostType(value);
 		setTitle('');
 		setDescription('');
 		setInstrumentName('');
@@ -55,14 +56,15 @@ function RouteComponent() {
 		e.preventDefault();
 		let post;
 
-		if (postType === 'play') {
+		if (postType === 'I am playing an instrument') {
 			const selectedInstrumentFromUser = user.instruments.find((inst: any) => inst.name === instrumentName);
 			post = {
 				title,
 				description,
 				instrument: selectedInstrumentFromUser,
 			};
-		} else if (postType === 'looking') {
+			console.log(post);
+		} else if (postType === 'I am looking for a musician for my band') {
 			post = {
 				title,
 				description,
@@ -79,8 +81,8 @@ function RouteComponent() {
 		createPost.mutateAsync(post);
 	};
 
-	const addGenre = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-		const genre = e.target.value;
+	const addGenre = (value: string) => {
+		const genre = value;
 		if (!instrumentGenres.includes(genre)) {
 			setInstrumentGenres([...instrumentGenres, genre]);
 		}
@@ -105,9 +107,8 @@ function RouteComponent() {
 				<div className="max-w-3xl mx-auto p-10 min-h-[600px]">
 					<h1 className="text-3xl font-bold text-blue-800 mb-8 text-center">Create post</h1>
 					<form onSubmit={handleSubmit} className="space-y-8">
-						<InputField
+						<Dropdown
 							label="Choose Post Type"
-							name="postType"
 							value={postType || ''}
 							onChange={handlePostTypeChange}
 							placeholder="Select post type"
@@ -127,27 +128,25 @@ function RouteComponent() {
 								/>
 
 								{postType === 'I am playing an instrument' && (
-									<InputField
+									<Dropdown
 										label="Instrument"
-										name="instrumentName"
 										value={instrumentName}
-										onChange={(e) => setInstrumentName(e.target.value)}
+										onChange={(value) => setInstrumentName(value)}
 										placeholder="Select an instrument"
 										options={user.instruments.map((inst: any) => inst.name)}
-										required
+										//required TODO Add to Dropdown
 									/>
 								)}
 
 								{postType === 'I am looking for a musician for my band' && (
 									<>
-										<InputField
+										<Dropdown
 											label="Instrument"
-											name="instrumentName"
 											value={instrumentName}
-											onChange={(e) => setInstrumentName(e.target.value)}
+											onChange={(value) => setInstrumentName(value)}
 											placeholder="Select an instrument"
 											options={instrumentsList}
-											required
+											//required TODO add to dd
 										/>
 										<div className="space-y-4">
 											<label htmlFor="instrumentLevel" className="block text-sm font-medium text-gray-800">
@@ -171,7 +170,7 @@ function RouteComponent() {
 												))}
 											</select>
 										</div>
-										<InputField label="Genres" name="genres" placeholder="Select a genre" value="" onChange={addGenre} options={genresList} />
+										<Dropdown label="Genres" placeholder="Select a genre" value="" onChange={addGenre} options={genresList} />
 										<div className="flex flex-wrap gap-2 mt-2">
 											{instrumentGenres.map((genre, index) => (
 												<span
