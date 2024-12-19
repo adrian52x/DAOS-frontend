@@ -1,13 +1,13 @@
 import React from 'react';
-import { JoinRequestAction, Post } from '../types/types';
 import EnsemblePortrait from '../assets/ensemble-portrait.jpeg';
+import EnsembleIcon from '../assets/ensemble-icon.png';
 import { useAuth } from '../auth/AuthContext';
-import { handleJoin, handleJoinRequest } from '../utils/api';
-import { formatDate } from '../utils/dateAndTimeUtils';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { JoinRequestAction, Post } from '../types/types';
+import { handleJoin, handleJoinRequest, deletePost } from '../utils/api';
+import { formatDate } from '../utils/dateAndTimeUtils';
 import { SmallButton } from './elements/SmallButton';
-import EnsembleIcon from '../assets/ensemble-icon.png';
 import { Button } from './elements/Button';
 
 interface PostDetailsProps {
@@ -35,6 +35,19 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 			queryClient.invalidateQueries({ queryKey: ['post'] });
 		},
 	});
+	
+	const handleDeletePost = async (postId: string) => {
+		if (confirm(`Are you sure you want to delete this post?`)) {
+		  try {
+			await deletePost(token, postId); // Call deletePost utility function
+			alert('Post deleted successfully.');
+			queryClient.invalidateQueries({ queryKey: ['posts'] }); // Refresh the posts list
+		  } catch (error: any) {
+			alert(`Error: ${error.response?.data?.message || error.message}`);
+		  }
+		}
+	  };
+	  
 
 	const formattedDate = formatDate(postData.createdAt);
 
@@ -83,8 +96,9 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 
 				{/* Edit Button - we need to have that only when you are the owner of the post */}
 				{user && user._id === postData.author._id && (
-					<div className="flex justify-center mt-6">
-						<Button variant="secondary">Edit post</Button>
+					<div className="flex justify-center mt-6 gap-4">
+						<Button variant="tertiary">Edit post</Button>
+						<Button variant="important" onClick={() => handleDeletePost(postData._id)}>Delete post</Button>
 					</div>
 				)}
 

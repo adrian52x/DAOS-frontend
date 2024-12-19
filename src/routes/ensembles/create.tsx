@@ -63,8 +63,8 @@ function RouteComponent() {
 			<form onSubmit={handleSubmit} className={styles.sectionWrapper}>
 				<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">Create ensemble</h2>
 
-				<InputField label="Name" name="name" placeholder="Enter your username" value={name} onChange={(e) => setName(e.target.value)} required />
-				<InputField label="Address" name="address" placeholder="Eensemble address" value={address} onChange={(e) => setAddress(e.target.value)} required />
+				<InputField label="Name" name="name" placeholder="Enter your ensemble's name" value={name} onChange={(e) => setName(e.target.value)} required />
+				<InputField label="Address" name="address" placeholder="Enter your ensemble's address" value={address} onChange={(e) => setAddress(e.target.value)} required />
 				<InputField label="Zip Code" name="zipcode" placeholder="****" value={zipCode} onChange={(e) => setZipCode(e.target.value)} required />
 				<Dropdown
 					options={acitveMembersList}

@@ -17,7 +17,7 @@ export function PrimaryCTA() {
 	};
 
 	return (
-		<div className=" hidden sm:flex flex-row gap-4">
+		<div className=" hidden sm:flex justify-between flex-row gap-4 whitespace-nowrap">
 			<Dropdown options={instrumentsList} placeholder="Select instrument" value={selectedInstrument} onChange={handleDropdownChange} />
 			<Link to={selectedInstrument ? "/posts" : ""} search={selectedInstrument ? { instrument: selectedInstrument } : {}}>
 				<Button>See post</Button>

@@ -32,13 +32,13 @@ export function Dropdown({ options, label, placeholder, value, onChange }: Dropd
 	};
 
 	return (
-		<div ref={dropdownRef} className="relative w-full">
+		<div ref={dropdownRef} className="relative">
 			{label && <label className="block font-body text-gray-800 mb-1">{label}</label>}
 			{/* Dropdown Button */}
 			<button
 				type="button"
 				onClick={toggleDropdown}
-				className="w-full flex items-center justify-between border rounded-lg px-4 py-2 font-body text-gray-800 focus:outline-none shadow-sm bg-white"
+				className="w-full flex  gap-8 items-center justify-between border rounded-lg px-4 py-2 font-body text-gray-800 focus:outline-none shadow-sm bg-white whitespace-nowrap"
 			>
 				<span>{value || placeholder}</span>
 				<FaChevronDown className={`w-4 h-4 transform transition-transform ${isOpen ? 'rotate-180' : ''} text-red-500`} />
@@ -46,7 +46,7 @@ export function Dropdown({ options, label, placeholder, value, onChange }: Dropd
 
 			{/* Dropdown Options */}
 			{isOpen && (
-				<ul className="absolute mt-2 w-full border rounded-lg bg-white shadow-lg z-10">
+				<ul className="absolute mt-2 w-full border rounded-lg bg-white shadow-lg z-10 ">
 					{options.map((option) => (
 						<li key={option} onClick={() => handleSelect(option)} className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-body text-gray-800">
 							{option}

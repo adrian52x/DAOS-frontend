@@ -160,7 +160,7 @@ function RouteComponent() {
 			</div>
 
 			
-			<div className="flex space-x-[50px]">
+			<div className="flex gap-10">
 				{/* Instrument dropdown */}
 				<div className='space-y-6'>
 					<div className="flex space-x-[110px] items-center">

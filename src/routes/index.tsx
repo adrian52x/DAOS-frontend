@@ -44,7 +44,7 @@ function Index() {
 				<div className="flex flex-col lg:flex-row-reverse lg:gap-6 items-center">
 					<img src={HeroImage} alt="Hero illustration" className="lg:w-1/2 p-10" />
 					<div>
-						<h1 className="font-header text-red font-medium text-3xl lg:text-6xl pb-6">Stedet hvor musikere finder musikere og spiller musik sammen</h1>
+						<h1 className="font-header text-red font-medium text-3xl lg:text-6xl pb-14">The place where musicians find musicians and play music together</h1>
 						<PrimaryCTA /> {/* Visible on desktop */}
 					</div>
 				</div>
@@ -53,14 +53,14 @@ function Index() {
 
 			{/* section 2 */}
 			<section id="reviews" className={`${styles.blueBackground} ${styles.sectionWrapper}`}>
-				<h2 className="font-header text-white font-medium text-3xl lg:text-4xl ">Det siger vores brugere</h2>
+				<h2 className="font-header text-white font-medium text-3xl lg:text-4xl ">What our users say</h2>
 
 				<ReviewCard />
 			</section>
 
 			{/* section 3 */}
 			<section id="latest-posts" className={styles.sectionWrapper}>
-				<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">Seneste opslag</h2>
+				<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">Latest posts</h2>
 
 				{/* Display loading spinner or message */}
 				{loading ? (

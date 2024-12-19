@@ -11,6 +11,7 @@ export function PostCard({ post }: { post: Post }) {
 	const { user } = useAuth();
 	const navigate = useNavigate();
 
+		
 	const handleNavigate = () => {
 		navigate({ to: `/posts/${post._id}` });
 	};

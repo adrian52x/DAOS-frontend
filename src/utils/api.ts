@@ -225,6 +225,31 @@ export async function deleteInstrument(token: string, instrumentName: string) {
 	}
 }
 
+// Delete a post
+export async function deletePost(token: string, postId: string) {
+	try {
+	  const response = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+		method: 'DELETE', // Use DELETE for deleting a post
+		headers: {
+		  'Content-Type': 'application/json',
+		  Authorization: `Bearer ${token}`,
+		},
+	  });
+  
+	  if (response.ok) {
+		return; // Post successfully deleted
+	  } else {
+		const data = await response.json();
+		alert(`Error: ${data.message}`);
+		throw new Error(data.message);
+	  }
+	} catch (error) {
+	  console.error('Error deleting post:', error);
+	  throw error;
+	}
+  }
+  
+
 //fetch the posts for a particular ensemble
 export async function fetchPostsByEnsembleId(ensembleId: string) {
 	try {

@@ -11,12 +11,11 @@ export function ReviewCard() {
 			}}
 		>
 			{/* Card 1 */}
-			<article className="bg-white rounded-lg p-6 w-[250px] sm:w-[350px] flex-shrink-0">
+			<article className="bg-white rounded-lg p-6 w-[250px] sm:w-[350px] flex-shrink-0 flex flex-col justify-between">
 				<div className="flex flex-col">
 					<img src={OpenQuote} alt="quote icon" className="w-6 h-auto mb-4" />
 					<p className="font-body text-black text-center">
-						Musik Samspil hjalp os med at finde sammen. Først var det meningen, at vi bare skulle mødes en enkelt gang, men det var bare så fedt, at nu mødes vi hver
-						anden uge!
+						Musik Samspil brought us together in a way we never expected. We thought it would just be a one-time jam, but now we can’t wait to meet up again next month!
 					</p>
 					<img src={CloseQuote} alt="quote icon" className="w-6 h-auto mb-4 self-end pb-8" />
 				</div>
@@ -27,12 +26,11 @@ export function ReviewCard() {
 			</article>
 
 			{/* Card 2 */}
-			<article className="bg-white rounded-lg p-6 w-[250px] sm:w-[350px] flex-shrink-0">
+			<article className="bg-white rounded-lg p-6 w-[250px] sm:w-[350px] flex-shrink-0 flex flex-col justify-between">
 				<div className="flex flex-col">
 					<img src={OpenQuote} alt="quote icon" className="w-6 h-auto mb-4" />
 					<p className="font-body text-black text-center">
-						Musik Samspil hjalp os med at finde sammen. Først var det meningen, at vi bare skulle mødes en enkelt gang, men det var bare så fedt, at nu mødes vi hver
-						anden uge!
+					What started as a casual music session with Musik Samspil has turned into a regular hangout. We were amazed at how quickly we clicked, and now we’re planning to meet at least once a month!
 					</p>
 					<img src={CloseQuote} alt="quote icon" className="w-6 h-auto mb-4 self-end pb-8" />
 				</div>
@@ -43,12 +41,11 @@ export function ReviewCard() {
 			</article>
 
 			{/* Card 3 */}
-			<article className="bg-white rounded-lg p-6 w-[250px] sm:w-[350px] flex-shrink-0">
+			<article className="bg-white rounded-lg p-6 w-[250px] sm:w-[350px] flex-shrink-0 flex flex-col justify-between">
 				<div className="flex flex-col">
 					<img src={OpenQuote} alt="quote icon" className="w-6 h-auto mb-4" />
 					<p className="font-body text-black text-center">
-						Musik Samspil hjalp os med at finde sammen. Først var det meningen, at vi bare skulle mødes en enkelt gang, men det var bare så fedt, at nu mødes vi hver
-						anden uge!
+					Thanks to Musik Samspil, we’ve formed a solid group of musicians. Our first meet-up was only supposed to be a trial, but the chemistry was undeniable, and now we’re meeting every few weeks to practice!
 					</p>
 					<img src={CloseQuote} alt="quote icon" className="w-6 h-auto mb-4 self-end pb-8" />
 				</div>
@@ -59,12 +56,11 @@ export function ReviewCard() {
 			</article>
 
 			{/* Card 4 */}
-			<article className="bg-white rounded-lg p-6 w-[250px] sm:w-[350px] flex-shrink-0">
+			<article className="bg-white rounded-lg p-6 w-[250px] sm:w-[350px] flex-shrink-0 flex flex-col justify-between">
 				<div className="flex flex-col">
 					<img src={OpenQuote} alt="quote icon" className="w-6 h-auto mb-4" />
 					<p className="font-body text-black text-center">
-						Musik Samspil hjalp os med at finde sammen. Først var det meningen, at vi bare skulle mødes en enkelt gang, men det var bare så fedt, at nu mødes vi hver
-						anden uge!
+					Musik Samspil gave us the opportunity to connect over our shared passion for music. At first, we thought it was just a one-off gathering, but now we’re eagerly looking forward to getting together again soon!
 					</p>
 					<img src={CloseQuote} alt="quote icon" className="w-6 h-auto mb-4 self-end pb-8" />
 				</div>
