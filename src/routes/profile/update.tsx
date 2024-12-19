@@ -104,7 +104,7 @@ function ProfileUpdate() {
 					value={profileText}
 					onChange={(e) => setProfileText(e.target.value)}
 					name="profileText"
-				></TextArea>
+				/>
 
 				<div>
 					<Button type="submit" variant="primary">

@@ -127,6 +127,7 @@ export async function createNewPost(token: string, post: any) {
 			alert('Post created successfully');
 			console.log('Post created:', data);
 		} else {
+			console.error('Server Error:', data);
 			alert(`Error: ${data.message}`);
 		}
 	} catch (error) {

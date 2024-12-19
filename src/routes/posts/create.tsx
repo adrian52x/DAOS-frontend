@@ -76,6 +76,8 @@ function RouteComponent() {
 				ensemble: ensembleId,
 			};
 		}
+		console.log('Selected Ensemble ID:', ensembleId);
+		console.log('Post being sentt:', post);
 
 		// Create post
 		createPost.mutateAsync(post);
