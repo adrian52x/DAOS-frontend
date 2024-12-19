@@ -18,18 +18,19 @@ module.exports = {
 					600: '#4A4E6E',
 				}, //secondary color
 				yellow: '#FF9B19', //accent color
-				black: '#000000', //true black
-				white: '#FFFFFF', //true white
+				black: '#000000',
+				white: '#FFFFFF',
 				gray: {
 					800: '#777777', // dark gray
 					600: '#DDDDDD', // medium dark gray
 					400: '#F0F0F0', // medium gray
 					200: '#F9F9F9', // light gray
 				},
-				green: '#007737', //extra color used for labels
-				purple: '#4D1FE5', //extra color used for labels
+				green: '#007737', //for labels
+				purple: '#4D1FE5', //for labels
 			},
 		},
+
 		plugins: [],
 	},
 };

@@ -14,7 +14,7 @@
 
 /* Section styling */
 .formSectionWrapper {
-	padding: 3rem 24rem 3rem 24rem;
+	padding: 3rem 25%;
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;

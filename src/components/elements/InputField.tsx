@@ -3,12 +3,13 @@ type InputFieldProps = {
 	placeholder?: string;
 	value: string;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	type?: string; // Text, email, password, etc.
-	name: string; // Field name
+	type?: string; // text, email, password...
+	name: string;
 	required?: boolean;
+	disabled?: boolean;
 };
 
-export function InputField({ label, placeholder = '', value, onChange, type = 'text', name, required = false }: InputFieldProps) {
+export function InputField({ label, placeholder = '', value, onChange, type = 'text', name, required = false, disabled = false }: InputFieldProps) {
 	return (
 		<div className="relative w-full">
 			{/* Label */}
@@ -27,7 +28,10 @@ export function InputField({ label, placeholder = '', value, onChange, type = 't
 				value={value}
 				onChange={onChange}
 				required={required}
-				className="w-full flex items-center justify-between border rounded-lg px-4 py-2 font-body text-gray-800 focus:outline-none shadow-sm bg-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500"
+				disabled={disabled}
+				className={`w-full flex items-center justify-between border rounded-lg px-4 py-2 font-body  placeholder-gray-800 ${
+					disabled ? 'bg-gray-400 text-gray-800 cursor-not-allowed' : 'bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500'
+				}`}
 			/>
 		</div>
 	);
