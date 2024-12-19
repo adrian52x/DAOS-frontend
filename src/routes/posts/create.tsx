@@ -4,6 +4,11 @@ import { useState } from 'react';
 import { instrumentsList, genresList } from '../../types/data';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { createNewPost, fetchAllEnsemblesUserOwns } from '../../utils/api';
+import { InputField } from '../../components/elements/InputField';
+import { Button } from '../../components/elements/Button';
+import { SmallButton } from '../../components/elements/SmallButton';
+import { levels } from '../../types/data';
+import { Dropdown } from '../../components/Dropdown';
 
 export const Route = createFileRoute('/posts/create')({
 	component: RouteComponent,
@@ -23,8 +28,8 @@ function RouteComponent() {
 	const navigate = Route.useNavigate();
 
 	// Reset form fields when post type changes
-	const handlePostTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setPostType(e.target.value);
+	const handlePostTypeChange = (value: string) => {
+		setPostType(value);
 		setTitle('');
 		setDescription('');
 		setInstrumentName('');
@@ -51,21 +56,22 @@ function RouteComponent() {
 		e.preventDefault();
 		let post;
 
-		if (postType === 'play') {
+		if (postType === 'I am playing an instrument') {
 			const selectedInstrumentFromUser = user.instruments.find((inst: any) => inst.name === instrumentName);
 			post = {
 				title,
 				description,
 				instrument: selectedInstrumentFromUser,
 			};
-		} else if (postType === 'looking') {
+			console.log(post);
+		} else if (postType === 'I am looking for a musician for my band') {
 			post = {
 				title,
 				description,
 				instrument: {
 					name: instrumentName,
 					level: instrumentLevel,
-					genre: instrumentGenres, // Updated to handle multiple genres
+					genre: instrumentGenres,
 				},
 				ensemble: ensembleId,
 			};
@@ -75,8 +81,8 @@ function RouteComponent() {
 		createPost.mutateAsync(post);
 	};
 
-	const addGenre = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const genre = e.target.value;
+	const addGenre = (value: string) => {
+		const genre = value;
 		if (!instrumentGenres.includes(genre)) {
 			setInstrumentGenres([...instrumentGenres, genre]);
 		}
@@ -95,133 +101,93 @@ function RouteComponent() {
 	}
 
 	return (
-		<div>
-			<h1>Create Post</h1> <br />
-			<div>
-				<label>
-					Choose Post Type:
-					<select value={postType || ''} onChange={handlePostTypeChange}>
-						<option value="" disabled>
-							Select post type
-						</option>
-						<option value="play">I play on…</option>
-						<option value="looking" disabled={!ensemblesUserOwn.data || ensemblesUserOwn.data.length === 0}>
-							I am looking for someone who plays on…
-						</option>
-					</select>
-				</label>
-			</div>{' '}
-			<br />
-			{postType && (
-				<form onSubmit={handleSubmit}>
-					<div>
-						<label>
-							Title:
-							<input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
-						</label>
-					</div>
-					<div>
-						<label>
-							Description:
-							<input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} required />
-						</label>
-					</div>
-					{postType === 'play' && (
-						<div>
-							<label>
-								Instrument:
-								<select value={instrumentName} onChange={(e) => setInstrumentName(e.target.value)} required>
-									<option value="" disabled>
-										Select an instrument
-									</option>
-									{user.instruments.map((instrument: any, index: number) => (
-										<option key={index} value={instrument.name}>
-											{instrument.name} - Level {instrument.level} - {instrument.genre.join(', ')}
-										</option>
-									))}
-								</select>
-							</label>
-						</div>
-					)}
+		<div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] sm:bg-gray-200 py-6 md:px-6 px-4">
+			<div className="col-start-2 col-end-3 p-6 px-10 border border-gray-200 shadow-lg bg-white">
+				<SmallButton></SmallButton>
+				<div className="max-w-3xl mx-auto p-10 min-h-[600px]">
+					<h1 className="text-3xl font-bold text-blue-800 mb-8 text-center">Create post</h1>
+					<form onSubmit={handleSubmit} className="space-y-8">
+						<Dropdown
+							label="Choose Post Type"
+							value={postType || ''}
+							onChange={handlePostTypeChange}
+							placeholder="Select post type"
+							options={['I am playing an instrument', 'I am looking for a musician for my band']}
+						/>
 
-					{postType === 'looking' && (
-						<>
-							<div>
-								<label>
-									Instrument:
-									<select name="instrument" value={instrumentName} onChange={(e) => setInstrumentName(e.target.value)} required>
-										<option value="" disabled>
-											Select an instrument
-										</option>
-										{instrumentsList.map((instrument) => (
-											<option key={instrument} value={instrument}>
-												{instrument}
-											</option>
-										))}
-									</select>
-								</label>
-							</div>
-							<div>
-								<label>
-									Level:
-									<input
-										type="number"
-										name="level"
-										value={instrumentLevel}
-										min="1"
-										max="5"
-										onChange={(e) => setInstrumentLevel(Number(e.target.value))}
-										required
+						{postType && (
+							<>
+								<InputField label="Title" name="title" placeholder="Enter title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+								<InputField
+									label="Description"
+									name="description"
+									placeholder="Enter description"
+									value={description}
+									onChange={(e) => setDescription(e.target.value)}
+									required
+								/>
+
+								{postType === 'I am playing an instrument' && (
+									<Dropdown
+										label="Instrument"
+										value={instrumentName}
+										onChange={(value) => setInstrumentName(value)}
+										placeholder="Select an instrument"
+										options={user.instruments.map((inst: any) => inst.name)}
 									/>
-								</label>
-							</div>
-							<div>
-								<label>
-									Genres:
-									<select name="genre" value="" onChange={addGenre}>
-										<option value="" disabled>
-											Select a genre
-										</option>
-										{genresList.map((genre) => (
-											<option key={genre} value={genre}>
-												{genre}
-											</option>
-										))}
-									</select>
-								</label>
-								<div className="flex flex-wrap gap-2 mt-2">
-									{instrumentGenres.map((genre, index) => (
-										<span
-											key={index}
-											className="bg-gray-400 text-blue-800 text-sm font-bold px-3 py-1 rounded-md shadow-sm cursor-pointer"
-											onClick={() => removeGenre(genre)}
-										>
-											{genre} ×
-										</span>
-									))}
-								</div>
-							</div>
-							<div>
-								<label>
-									Ensemble:
-									<select name="ensemble" value={ensembleId} onChange={(e) => setEnsembleId(e.target.value)} required>
-										<option value="" disabled>
-											Select an ensemble
-										</option>
-										{ensemblesUserOwn.data?.map((ensemble: any) => (
-											<option key={ensemble._id} value={ensemble._id}>
-												{ensemble.name}
-											</option>
-										))}
-									</select>
-								</label>
-							</div>
-						</>
-					)}
-					<br />
-					<button type="submit">Submit</button>
-				</form>
-			)}
+								)}
+
+								{postType === 'I am looking for a musician for my band' && (
+									<>
+										<Dropdown
+											label="Instrument"
+											value={instrumentName}
+											onChange={(value) => setInstrumentName(value)}
+											placeholder="Select an instrument"
+											options={instrumentsList}
+										/>
+										<div className="space-y-4">
+											<Dropdown
+												label="Level"
+												value={instrumentLevel.toString()}
+												onChange={(value) => setInstrumentLevel(Number(value))}
+												placeholder="Select level"
+												options={levels.map((level) => level.value.toString())}
+											/>
+										</div>
+										<Dropdown label="Genres" placeholder="Select a genre" value="" onChange={addGenre} options={genresList} />
+										<div className="flex flex-wrap gap-2 mt-2">
+											{instrumentGenres.map((genre, index) => (
+												<span
+													key={index}
+													className="bg-gray-400 text-blue-800 text-sm font-bold px-3 py-1 rounded-md shadow-sm cursor-pointer"
+													onClick={() => removeGenre(genre)}
+												>
+													{genre} ×
+												</span>
+											))}
+										</div>
+
+										<Dropdown
+											label="Ensemble"
+											value={ensembleId}
+											onChange={(value) => setEnsembleId(value)}
+											placeholder="Select an ensemble"
+											options={ensemblesUserOwn.data?.map((ensemble: any) => ensemble.name) || []}
+										/>
+									</>
+								)}
+							</>
+						)}
+
+						<div className="flex justify-center">
+							<Button type="submit" variant="primary">
+								Create Post
+							</Button>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	);
 }

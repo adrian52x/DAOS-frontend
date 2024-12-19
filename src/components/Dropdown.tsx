@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 
 type DropdownProps = {
@@ -11,7 +11,18 @@ type DropdownProps = {
 
 export function Dropdown({ options, label, placeholder, value, onChange }: DropdownProps) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	// const [selected, setSelected] = useState<string | null>(null);
+	const dropdownRef = useRef<HTMLDivElement>(null);
+
+	// Close dropdown when clicking outside
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+				setIsOpen(false);
+			}
+		};
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => document.removeEventListener('mousedown', handleClickOutside);
+	}, []);
 
 	const toggleDropdown = () => setIsOpen((prev) => !prev);
 
@@ -21,13 +32,13 @@ export function Dropdown({ options, label, placeholder, value, onChange }: Dropd
 	};
 
 	return (
-		<div className="relative w-64">
+		<div ref={dropdownRef} className="relative w-full">
 			{label && <label className="block font-body text-gray-800 mb-1">{label}</label>}
 			{/* Dropdown Button */}
 			<button
 				type="button"
 				onClick={toggleDropdown}
-				className="w-full flex items-center justify-between border rounded-lg px-4 py-2 font-body text-gray-800 focus:outline-none shadow-sm  bg-white"
+				className="w-full flex items-center justify-between border rounded-lg px-4 py-2 font-body text-gray-800 focus:outline-none shadow-sm bg-white"
 			>
 				<span>{value || placeholder}</span>
 				<FaChevronDown className={`w-4 h-4 transform transition-transform ${isOpen ? 'rotate-180' : ''} text-red-500`} />
