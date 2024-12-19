@@ -134,7 +134,6 @@ function RouteComponent() {
 										onChange={(value) => setInstrumentName(value)}
 										placeholder="Select an instrument"
 										options={user.instruments.map((inst: any) => inst.name)}
-										//required TODO Add to Dropdown
 									/>
 								)}
 
@@ -146,29 +145,15 @@ function RouteComponent() {
 											onChange={(value) => setInstrumentName(value)}
 											placeholder="Select an instrument"
 											options={instrumentsList}
-											//required TODO add to dd
 										/>
 										<div className="space-y-4">
-											<label htmlFor="instrumentLevel" className="block text-sm font-medium text-gray-800">
-												Level
-											</label>
-											<select
-												id="instrumentLevel"
-												name="instrumentLevel"
-												value={instrumentLevel}
-												onChange={(e) => setInstrumentLevel(Number(e.target.value))}
-												required
-												className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
-											>
-												<option value="" disabled>
-													Select level
-												</option>
-												{levels.map((level) => (
-													<option key={level.value} value={level.value}>
-														{level.value}
-													</option>
-												))}
-											</select>
+											<Dropdown
+												label="Level"
+												value={instrumentLevel.toString()}
+												onChange={(value) => setInstrumentLevel(Number(value))}
+												placeholder="Select level"
+												options={levels.map((level) => level.value.toString())}
+											/>
 										</div>
 										<Dropdown label="Genres" placeholder="Select a genre" value="" onChange={addGenre} options={genresList} />
 										<div className="flex flex-wrap gap-2 mt-2">
@@ -182,25 +167,14 @@ function RouteComponent() {
 												</span>
 											))}
 										</div>
-										<div>
-											<label className="block text-sm font-medium text-gray-800 mb-2">Ensemble</label>
-											<select
-												name="ensemble"
-												value={ensembleId}
-												onChange={(e) => setEnsembleId(e.target.value)}
-												required
-												className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
-											>
-												<option value="" disabled>
-													Select an ensemble
-												</option>
-												{ensemblesUserOwn.data?.map((ensemble: any) => (
-													<option key={ensemble._id} value={ensemble._id}>
-														{ensemble.name}
-													</option>
-												))}
-											</select>
-										</div>
+
+										<Dropdown
+											label="Ensemble"
+											value={ensembleId}
+											onChange={(value) => setEnsembleId(value)}
+											placeholder="Select an ensemble"
+											options={ensemblesUserOwn.data?.map((ensemble: any) => ensemble.name) || []}
+										/>
 									</>
 								)}
 							</>

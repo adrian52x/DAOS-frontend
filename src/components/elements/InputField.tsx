@@ -10,10 +10,10 @@ type InputFieldProps = {
 
 export function InputField({ label, placeholder = '', value, onChange, type = 'text', name, required = false }: InputFieldProps) {
 	return (
-		<div className="input-field space-y-2">
+		<div className="relative w-full">
 			{/* Label */}
 			{label && (
-				<label htmlFor={name} className="block text-sm font-medium text-gray-800">
+				<label htmlFor={name} className="block font-body text-gray-800 mb-1">
 					{label}
 				</label>
 			)}
@@ -23,11 +23,11 @@ export function InputField({ label, placeholder = '', value, onChange, type = 't
 				id={name}
 				name={name}
 				type={type}
-				placeholder={placeholder}
+				placeholder={placeholder || 'Enter text...'}
 				value={value}
 				onChange={onChange}
 				required={required}
-				className="w-full border rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
+				className="w-full flex items-center justify-between border rounded-lg px-4 py-2 font-body text-gray-800 focus:outline-none shadow-sm bg-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500"
 			/>
 		</div>
 	);
