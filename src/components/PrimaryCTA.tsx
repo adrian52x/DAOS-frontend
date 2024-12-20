@@ -18,7 +18,7 @@ export function PrimaryCTA() {
 
 	return (
 		<div className=" hidden sm:flex flex-row gap-4">
-			<Dropdown options={instrumentsList} placeholder="Select instrument" value={selectedInstrument} onChange={handleDropdownChange} />
+			<Dropdown options={instrumentsList.map(instrument => ({ label: instrument, value: instrument }))} placeholder="Select instrument" value={selectedInstrument} onChange={handleDropdownChange} />
 			<Link to={selectedInstrument ? "/posts" : ""} search={selectedInstrument ? { instrument: selectedInstrument } : {}}>
 				<Button>See post</Button>
 			</Link>

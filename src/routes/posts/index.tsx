@@ -169,7 +169,7 @@ function RouteComponent() {
 							<Button variant="tertiary" onClick={instrumentClear}>Clear</Button>
 						)}
 					</div>
-					<Dropdown options={instrumentsList} placeholder="Select instrument" value={selectedInstrument} onChange={instrumentChange} />
+					<Dropdown options={instrumentsList.map(instrument => ({ label: instrument, value: instrument }))} placeholder="Select instrument" value={selectedInstrument} onChange={instrumentChange} />
 				</div>
 
 				{/* Genre dropdown */}
@@ -180,7 +180,7 @@ function RouteComponent() {
 							<Button variant="tertiary" onClick={genreClear}>Clear</Button>
 						)}
 					</div>
-					<Dropdown options={genresList} placeholder="Select genre" value={selectedGenre} onChange={genreChange} />
+					<Dropdown options={genresList.map(genre => ({ label: genre, value: genre }))} placeholder="Select genre" value={selectedGenre} onChange={genreChange} />
 				</div>
 			</div>
 			
