@@ -77,7 +77,7 @@ function RouteComponent() {
 							value={instrumentName}
 							onChange={(value) => setInstrumentName(value)}
 							placeholder="Select an instrument"
-							options={instrumentsList}
+							options={instrumentsList.map((instrument) => ({ label: instrument, value: instrument }))}
 						/>
 					</div>
 					<div className="space-y-2">
@@ -110,7 +110,7 @@ function RouteComponent() {
 						</div>
 					</div>
 					<div className="space-y-2">
-						<Dropdown label="Genre" placeholder="Select a genre" value="" onChange={handleAddGenre} options={genresList} />
+						<Dropdown label="Genre" placeholder="Select a genre" value="" onChange={handleAddGenre} options={genresList.map((genre) => ({ label: genre, value: genre }))} />
 					</div>
 					<div className="mt-4">
 						<div className="mt-2 flex flex-wrap gap-2">

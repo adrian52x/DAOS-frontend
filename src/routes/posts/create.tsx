@@ -112,7 +112,10 @@ function RouteComponent() {
 							value={postType || ''}
 							onChange={handlePostTypeChange}
 							placeholder="Select post type"
-							options={['I am playing an instrument', 'I am looking for a musician for my band']}
+							options={[
+								{ label: 'I am playing an instrument', value: 'I am playing an instrument' },
+								{ label: 'I am looking for a musician for my band', value: 'I am looking for a musician for my band' },
+							]}
 						/>
 
 						{postType && (
@@ -133,7 +136,7 @@ function RouteComponent() {
 										value={instrumentName}
 										onChange={(value) => setInstrumentName(value)}
 										placeholder="Select an instrument"
-										options={user.instruments.map((inst: any) => inst.name)}
+										options={user.instruments.map((inst: any) => ({ label: inst.name, value: inst.name }))}
 									/>
 								)}
 
@@ -144,7 +147,7 @@ function RouteComponent() {
 											value={instrumentName}
 											onChange={(value) => setInstrumentName(value)}
 											placeholder="Select an instrument"
-											options={instrumentsList}
+											options={instrumentsList.map((instrument) => ({ label: instrument, value: instrument }))}
 										/>
 										<div className="space-y-4">
 											<Dropdown
@@ -152,10 +155,10 @@ function RouteComponent() {
 												value={instrumentLevel.toString()}
 												onChange={(value) => setInstrumentLevel(Number(value))}
 												placeholder="Select level"
-												options={levels.map((level) => level.value.toString())}
+												options={levels.map((level) => ({ label: level.value.toString(), value: level.value.toString() }))}
 											/>
 										</div>
-										<Dropdown label="Genres" placeholder="Select a genre" value="" onChange={addGenre} options={genresList} />
+										<Dropdown label="Genres" placeholder="Select a genre" value="" onChange={addGenre} options={genresList.map((genre) => ({ label: genre, value: genre }))} />
 										<div className="flex flex-wrap gap-2 mt-2">
 											{instrumentGenres.map((genre, index) => (
 												<span
@@ -173,7 +176,7 @@ function RouteComponent() {
 											value={ensembleId}
 											onChange={(value) => setEnsembleId(value)}
 											placeholder="Select an ensemble"
-											options={ensemblesUserOwn.data?.map((ensemble: any) => ensemble.name) || []}
+											options={ensemblesUserOwn.data?.map((ensemble: any) => ({ label: ensemble.name, value: ensemble._id }))}
 										/>
 									</>
 								)}
