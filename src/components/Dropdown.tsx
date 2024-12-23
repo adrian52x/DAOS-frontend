@@ -37,7 +37,7 @@ export function Dropdown({ options, label, placeholder, value, onChange }: Dropd
 	};
 
 	// Find the label for the selected value
-	const selectedOption = options.find(option => option.value === value);
+	const selectedOption = options.find((option) => option.value === value);
 
 	return (
 		<div ref={dropdownRef} className="relative w-full">
@@ -55,11 +55,7 @@ export function Dropdown({ options, label, placeholder, value, onChange }: Dropd
 			{isOpen && (
 				<ul className="absolute mt-2 w-full border rounded-lg bg-white shadow-lg z-10">
 					{options.map((option) => (
-						<li
-							key={option.value}
-							onClick={() => handleSelect(option.value)}
-							className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-body text-gray-800"
-						>
+						<li key={option.value} onClick={() => handleSelect(option.value)} className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-body text-gray-800">
 							{option.label}
 						</li>
 					))}

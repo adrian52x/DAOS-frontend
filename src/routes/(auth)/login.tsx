@@ -43,7 +43,7 @@ function Login() {
 	if (!user) {
 		return (
 			<div className={styles.grayBackground}>
-				<form onSubmit={handleSubmit} className={styles.sectionWrapper}>
+				<form onSubmit={handleSubmit} className={styles.formSectionWrapper}>
 					<h2 className="font-header text-blue-800 font-medium text-3xl lg:text-4xl ">Login</h2>
 
 					<InputField label="Email" name="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />

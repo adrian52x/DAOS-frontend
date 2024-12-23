@@ -8,10 +8,10 @@ import { Button } from '../../components/elements/Button';
 import { Dropdown } from '../../components/Dropdown';
 
 export const Route = createFileRoute('/ensembles/create')({
-	component: RouteComponent,
+	component: CreateEnsemble,
 });
 
-function RouteComponent() {
+function CreateEnsemble() {
 	const { user, loading, token } = useAuth();
 
 	const [name, setName] = useState('');
@@ -67,7 +67,7 @@ function RouteComponent() {
 				<InputField label="Address" name="address" placeholder="Eensemble address" value={address} onChange={(e) => setAddress(e.target.value)} required />
 				<InputField label="Zip Code" name="zipcode" placeholder="****" value={zipCode} onChange={(e) => setZipCode(e.target.value)} required />
 				<Dropdown
-					options={acitveMembersList}
+					options={acitveMembersList.map((item) => ({ label: item, value: item }))}
 					label="Active members"
 					placeholder="Select the number of active members"
 					value={activeMembers}
