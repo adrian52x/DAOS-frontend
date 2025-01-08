@@ -46,33 +46,24 @@ const PostDetails: React.FC<PostDetailsProps> = ({ postData }) => {
 				<h1 className="font-header text-3xl text-center font-medium text-blue-800 mb-2">{postData.title}</h1>
 				<p className="text-sm text-center text-gray-800">{`Post created on ${formattedDate}`}</p>
 
-				{/* Ensemble Info */}
+				{/* If ensemble Info */}
 				{postData.ensemble ? (
 					<div className="flex flex-row gap-4 justify-between items-center bg-gray-200 p-4 my-4 border border-gray-300 rounded-xl shadow-sm">
 						<img src={EnsemblePortrait} alt={postData.ensemble.name} className="w-[50px] h-[50px] object-cover rounded-lg" />
 
 						<div className="grow">
-							{postData.ensemble ? (
-								<Link to={`/ensembles/${postData.ensemble._id}`}>
-									<h3 className="font-body font-bold text-red">{postData.ensemble.name}</h3>
-									<p className="text-gray-800 whitespace-nowrap">
-										<span className="font-body text-sm font-bold pr-2">{postData.ensemble.address}</span>•{' '}
-										<span className="font-body text-sm pl-2">{postData.ensemble.activeMembers} musikere</span>
-									</p>
-								</Link>
-							) : (
-								<>
-									<h3 className="font-body font-bold text-red">{postData.author.name}</h3>
-									<p className="text-gray-800">
-										<span className="font-body text-sm font-bold pr-2">{postData.author.address}</span>
-									</p>
-								</>
-							)}
+							<Link to={`/ensembles/${postData.ensemble._id}`}>
+								<h3 className="font-body font-bold text-red">{postData.ensemble.name}</h3>
+								<p className="text-gray-800 whitespace-nowrap">
+									<span className="font-body text-sm font-bold pr-2">{postData.ensemble.address}</span>•{' '}
+									<span className="font-body text-sm pl-2">{postData.ensemble.activeMembers} musikere</span>
+								</p>
+							</Link>
 						</div>
 						<img src={EnsembleIcon} alt="ensemble icon" className="self-end opacity-20 hidden sm:block" />
 					</div>
 				) : (
-					// User info
+					// If user info
 					<div className="flex items-center bg-white border border-gray-300 rounded-lg p-4 shadow-sm mt-6">
 						<div className="ml-4">
 							<h2 className="font-bold text-lg text-red-800">{postData.author.name}</h2>
