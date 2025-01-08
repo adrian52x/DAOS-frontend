@@ -7,6 +7,8 @@ import { InputField } from '../../components/elements/InputField';
 import { Button } from '../../components/elements/Button';
 import styles from '/src/styles/globalStyles.module.css';
 import { updateEnsembleData } from '../../utils/api';
+import { Dropdown } from '../../components/Dropdown';
+import { acitveMembersList } from '../../types/data';
 
 export const Route = createFileRoute('/ensembles/update')({
 	component: EditEnsemblePage,
@@ -95,13 +97,12 @@ export function EditEnsemblePage() {
 
 				<InputField label="Zip Code" placeholder="Enter zip code" value={zipCode} onChange={(e) => setZipCode(e.target.value)} name="zipCode" required={true} />
 
-				<InputField
+				<Dropdown
 					label="Active Members"
-					placeholder="Number of active members"
+					placeholder="Select active members"
+					options={acitveMembersList.map((item) => ({ label: item, value: item }))}
 					value={activeMembers}
-					onChange={(e) => setActiveMembers(e.target.value)}
-					name="activeMembers"
-					required={true}
+					onChange={(value) => setActiveMembers(value)}
 				/>
 
 				<section>
