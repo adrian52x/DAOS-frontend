@@ -19,6 +19,8 @@ function CreateEnsemble() {
 	const [zipCode, setZipCode] = useState('');
 	const [activeMembers, setActiveMembers] = useState('');
 
+	const navigate = Route.useNavigate();
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		const ensemble = {
@@ -41,6 +43,7 @@ function CreateEnsemble() {
 			if (response.ok) {
 				alert('ensemble created successfully');
 				console.log('ensemble created:', data);
+				navigate({ to: '/profile' });
 			} else {
 				alert(`Error: ${data.message}`);
 			}
