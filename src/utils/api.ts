@@ -1,4 +1,4 @@
-import { JoinRequestAction, UserDataUpdate, User } from '../types/types';
+import { JoinRequestAction, UserDataUpdate, User, EnsembleDataUpdate } from '../types/types';
 
 export async function fetchUserById(userId: string): Promise<User> {
 	try {
@@ -54,6 +54,25 @@ export async function updateUser(token: string, userData: UserDataUpdate) {
 	} catch (error: any) {
 		throw new Error(error.message);
 	}
+}
+
+export async function updateEnsembleData(token: string, ensembleId: string, updatedData: EnsembleDataUpdate) {
+	const response = await fetch(`http://localhost:3000/api/ensembles/edit/${ensembleId}`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify(updatedData),
+	});
+
+	console.log('Update Response Status:', response.status);
+
+	if (!response.ok) {
+		throw new Error('Failed to update ensemble');
+	}
+
+	return response.json();
 }
 
 // Fetch all posts by user

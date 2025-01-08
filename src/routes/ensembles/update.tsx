@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InputField } from '../../components/elements/InputField';
 import { Button } from '../../components/elements/Button';
 import styles from '/src/styles/globalStyles.module.css';
+import { updateEnsembleData } from '../../utils/api';
 
 export const Route = createFileRoute('/ensembles/update')({
 	component: EditEnsemblePage,
@@ -46,21 +47,7 @@ export function EditEnsemblePage() {
 			if (!cachedEnsemble) {
 				throw new Error('No cached ensemble data available!');
 			}
-			//I wasn't sure how to add this request to the APIs page, cause of the cashed ensemble - i get it from here
-			const response = await fetch(`http://localhost:3000/api/ensembles/edit/${cachedEnsemble._id}`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify(updatedData),
-			});
-			console.log('Update Response Statusssss:', response.status);
-
-			if (!response.ok) {
-				throw new Error('Failed to update ensemble');
-			}
-			return response.json();
+			return updateEnsembleData(token, cachedEnsemble._id, updatedData);
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['ensemble'] });
@@ -71,16 +58,6 @@ export function EditEnsemblePage() {
 			alert(`Failed to update ensemble: ${error.message}`);
 		},
 	});
-
-	const handleDeleteMember = (memberId: string, memberName: string) => {
-		if (confirm(`Are you sure you want to remove "${memberName} from this Ensemble"?`)) {
-			try {
-				setMembers((members) => members.filter((member) => member._id !== memberId));
-			} catch (error: any) {
-				alert(`Error: ${error.message}`);
-			}
-		}
-	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -95,6 +72,16 @@ export function EditEnsemblePage() {
 		console.log('Submitting Updated Dataaa:', updatedData);
 
 		updateEnsemble.mutate(updatedData);
+	};
+
+	const handleDeleteMember = (memberId: string, memberName: string) => {
+		if (confirm(`Are you sure you want to remove "${memberName} from this Ensemble"?`)) {
+			try {
+				setMembers((members) => members.filter((member) => member._id !== memberId));
+			} catch (error: any) {
+				alert(`Error: ${error.message}`);
+			}
+		}
 	};
 
 	return (
