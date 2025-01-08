@@ -46,7 +46,7 @@ export function Dropdown({ options, label, placeholder, value, onChange }: Dropd
 			<button
 				type="button"
 				onClick={toggleDropdown}
-				className="w-64 flex gap-8 items-center justify-between border rounded-lg px-4 py-2 font-body text-gray-800 focus:outline-none shadow-sm bg-white whitespace-nowrap"
+				className="w-full flex gap-8 items-center justify-between border rounded-lg px-4 py-2 font-body text-gray-800 focus:outline-none shadow-sm bg-white whitespace-nowrap"
 			>
 				<span>{selectedOption ? selectedOption.label : placeholder}</span>
 				<FaChevronDown className={`w-4 h-4 transform transition-transform ${isOpen ? 'rotate-180' : ''} text-red-500`} />
